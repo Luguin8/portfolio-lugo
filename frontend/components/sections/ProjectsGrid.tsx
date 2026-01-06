@@ -1,12 +1,13 @@
-import { getProjects } from "@/lib/actions"; // Importamos la acción de lectura
-import ProjectGridClient from "./ProjectGridClient"; // Separamos la lógica del cliente
+// NO PONGAS "use client" AQUÍ
+import { getProjects } from "@/lib/actions";
+import ProjectGridClient from "./ProjectGridClient"; // Importamos la parte visual
 
-// Este componente ahora es SERVER COMPONENT (Async)
 export default async function ProjectsGrid() {
-    const projects = await getProjects(); // Fetch desde Supabase
+    // Esta llamada ocurre en el Servidor (Backend)
+    const projects = await getProjects();
 
+    // Pasamos los datos puros al componente Cliente
     return (
-        // Pasamos los datos al componente cliente que tiene la animación y el modal
         <ProjectGridClient initialProjects={projects} />
     );
 }
