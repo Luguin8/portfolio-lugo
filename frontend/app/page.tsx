@@ -2,7 +2,8 @@
 
 import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
-import ProjectsGrid from "@/components/sections/ProjectsGrid"; // <--- Importar
+import ProjectsGrid from "@/components/sections/ProjectsGrid";
+import Contact from "@/components/sections/Contact";
 
 export default function Home() {
   return (
@@ -19,11 +20,7 @@ export default function Home() {
       {/* SECCIÓN PROYECTOS REAL */}
       <ProjectsGrid />
 
-      {/* Placeholder Contacto */}
-      <section id="contact" className="h-[50vh] flex items-center justify-center border-t border-white/5">
-        <h2 className="text-4xl font-mono text-gray-600">[ FASE 4: CONTACTO ]</h2>
-      </section>
-
+      <Contact />
     </main>
   );
 }
