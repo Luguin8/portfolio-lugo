@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme {
+theme {
   /* Paleta de Colores */
   --color-background: #121212;
   --color-foreground: #e0e0e0;
