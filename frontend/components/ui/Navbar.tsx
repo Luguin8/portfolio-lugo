@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, Code, Menu, X, Lock, ShieldAlert, LogIn } from "lucide-react";
+import { Eye, Code, Menu, X, Lock, ShieldAlert, LogIn, Monitor, Smartphone } from "lucide-react"; // Agregué iconos extra por si acaso
 import { useDevMode } from "@/components/providers/DevModeProvider";
 import { cn } from "@/lib/utils";
 
@@ -16,13 +16,20 @@ export default function Navbar() {
     const router = useRouter();
 
     useEffect(() => {
-        const handleScroll = () => setIsScrolled(window.scrollY > 20);
+        // Función optimizada para detectar scroll
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     const handleSimulateAdmin = () => {
-        // Simulamos el acceso redirigiendo con un parámetro de query
         setShowLoginModal(false);
         router.push("/admin?mode=simulation");
     };
@@ -40,11 +47,14 @@ export default function Navbar() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 className={cn(
-                    "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
-                    isScrolled && "bg-[#121212]/80 backdrop-blur-md border-white/5 shadow-lg"
+                    "fixed top-0 left-0 right-0 z-[50] transition-all duration-300 border-b",
+                    // Aquí está la corrección: Fondo transparente por defecto, Glass oscuro al bajar
+                    isScrolled
+                        ? "bg-[#121212]/85 backdrop-blur-xl border-white/10 shadow-lg py-2"
+                        : "bg-transparent border-transparent py-4"
                 )}
             >
-                <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
                     <Link href="/" className="group flex items-center gap-2 font-mono text-lg font-bold tracking-tighter">
                         <span className="text-primary group-hover:animate-pulse">&gt;</span>
@@ -52,6 +62,7 @@ export default function Navbar() {
                         <span className="w-2 h-4 bg-primary animate-pulse ml-1" />
                     </Link>
 
+                    {/* DESKTOP LINKS */}
                     <div className="hidden md:flex items-center gap-8">
                         {navLinks.map((link) => (
                             <Link
@@ -65,8 +76,9 @@ export default function Navbar() {
                         ))}
                     </div>
 
+                    {/* ACTIONS RIGHT */}
                     <div className="flex items-center gap-4">
-                        {/* Toggle Dev Mode */}
+
                         <button
                             onClick={toggleDevMode}
                             className={cn(
@@ -80,7 +92,6 @@ export default function Navbar() {
                             <span className="hidden sm:inline">{isDevMode ? "DEV: ON" : "VIEW: USER"}</span>
                         </button>
 
-                        {/* Login Button (Candado) */}
                         <button
                             onClick={() => setShowLoginModal(true)}
                             className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-full transition-colors"
@@ -89,7 +100,6 @@ export default function Navbar() {
                             <Lock size={18} />
                         </button>
 
-                        {/* Mobile Menu Toggle */}
                         <button
                             className="md:hidden text-white"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -100,7 +110,7 @@ export default function Navbar() {
                 </div>
             </motion.nav>
 
-            {/* LOGIN MODAL */}
+            {/* LOGIN MODAL (Sin cambios funcionales, solo asegurando que funciona) */}
             <AnimatePresence>
                 {showLoginModal && (
                     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
@@ -113,7 +123,6 @@ export default function Navbar() {
                             initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
                             className="relative bg-[#1a1a1a] border border-white/10 p-6 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden"
                         >
-                            {/* Decoración Top */}
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-purple-400 to-primary" />
 
                             <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
@@ -122,23 +131,19 @@ export default function Navbar() {
                             <p className="text-gray-400 text-sm mb-6">Identifícate para acceder al Panel de Control.</p>
 
                             <form className="space-y-4 mb-6">
+                                {/* Inputs ficticios */}
                                 <div>
-                                    <label className="text-xs font-mono text-gray-500 uppercase">System ID (Email)</label>
-                                    <input type="email" className="w-full bg-black/30 border border-white/10 rounded p-2 text-white focus:border-primary focus:outline-none transition-colors" placeholder="admin@lugo.dev" />
+                                    <label className="text-xs font-mono text-gray-500 uppercase">System ID</label>
+                                    <input type="email" className="w-full bg-black/30 border border-white/10 rounded p-2 text-white" placeholder="admin@lugo.dev" />
                                 </div>
                                 <div>
                                     <label className="text-xs font-mono text-gray-500 uppercase">Passcode</label>
-                                    <input type="password" className="w-full bg-black/30 border border-white/10 rounded p-2 text-white focus:border-primary focus:outline-none transition-colors" placeholder="••••••••" />
+                                    <input type="password" className="w-full bg-black/30 border border-white/10 rounded p-2 text-white" placeholder="••••••••" />
                                 </div>
-                                <button type="button" className="w-full py-2 bg-white/5 border border-white/10 text-gray-400 rounded cursor-not-allowed hover:bg-white/10 flex items-center justify-center gap-2">
-                                    <LogIn size={16} /> Ingresar (Solo Real Admin)
+                                <button type="button" className="w-full py-2 bg-white/5 border border-white/10 text-gray-400 rounded cursor-not-allowed">
+                                    Ingresar (Deshabilitado)
                                 </button>
                             </form>
-
-                            <div className="relative flex items-center justify-center mb-6">
-                                <div className="absolute inset-0 h-[1px] bg-white/5" />
-                                <span className="relative bg-[#1a1a1a] px-2 text-xs text-gray-500">O VISITA COMO INVITADO</span>
-                            </div>
 
                             <button
                                 onClick={handleSimulateAdmin}

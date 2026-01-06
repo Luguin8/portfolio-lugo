@@ -87,3 +87,7 @@ body {
   animation: global-glitch 12s infinite, global-rgb-shift 12s infinite;
   /* El 12s indica que pasa cada 12 segundos. Ajusta si quieres más/menos tiempo */
 }
+
+.mask-gradient-sides {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
