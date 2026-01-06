@@ -3,7 +3,7 @@
 import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
 import ProjectsGrid from "@/components/sections/ProjectsGrid";
-import Contact from "@/components/sections/contact";
+import Contact from "@/components/sections/Contact";
 
 export default function Home() {
   return (
