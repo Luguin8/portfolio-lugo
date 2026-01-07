@@ -75,12 +75,12 @@ export default function Hero() {
                             Lugo Martin
                         </h1>
                         <h2 className="text-2xl md:text-3xl text-gray-400 font-light">
-                            Full Stack <span className="text-white font-medium">Architect</span>
+                            Full Stack <span className="text-white font-medium">Developer</span>
                         </h2>
                         <p className="text-gray-500 max-w-lg text-lg leading-relaxed pt-2 mx-auto lg:mx-0">
                             Transformando ideas complejas en código limpio y escalable.
                             <span className="block mt-1 font-mono text-sm text-primary">
-                                Stack: Python Ecosystem + React Next.js
+                                Python, React, Next.js, React Native, Node.js, JS Vanilla
                             </span>
                         </p>
                     </div>
