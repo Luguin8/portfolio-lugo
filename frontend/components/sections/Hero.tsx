@@ -7,6 +7,7 @@ import { FaReact, FaPython, FaDocker, FaGithub, FaLinkedin, FaEnvelope } from "r
 import { SiNextdotjs, SiFastapi, SiSupabase, SiTypescript, SiPostgresql, SiGodotengine } from "react-icons/si";
 import { useDevMode } from "@/components/providers/DevModeProvider";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const ORBITS = [
     { radius: 180, duration: 30, icons: [<FaReact key="react" />, <SiNextdotjs key="next" />, <SiTypescript key="ts" />], reverse: false },
@@ -95,7 +96,7 @@ export default function Hero() {
                         </a>
 
                         <a
-                            href="/cv.pdf"
+                            href="/CV - Lugo Martin Adrian.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="px-8 py-3 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-lg font-medium transition-all flex items-center gap-2"
@@ -126,7 +127,13 @@ export default function Hero() {
                     <div className="relative w-64 h-64 md:w-96 md:h-96 grayscale hover:grayscale-0 transition-all duration-500 rounded-2xl overflow-hidden border-2 border-white/10 group-hover:border-primary/50 z-20 bg-[#1a1a1a]">
                         <div className="w-full h-full flex flex-col items-center justify-center text-gray-600 font-mono bg-[#1a1a1a]">
                             <span className="text-4xl mb-2">📸</span>
-                            <span>[ YOUR_PHOTO.JPG ]</span>
+                            <Image
+                                src="/profile.png" // Asegúrate que el nombre coincida con tu archivo en /public
+                                alt="Lugo Martin"
+                                fill
+                                className="object-cover"
+                                priority // Carga prioritaria para el Hero (LCP)
+                            />
                         </div>
 
                         {/* Overlay Glitch */}
