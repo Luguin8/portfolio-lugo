@@ -17,14 +17,14 @@ export function DevModeProvider({ children }: { children: ReactNode }) {
     const toggleDevMode = () => setIsDevMode(!isDevMode);
 
     useEffect(() => {
-        // Solo rastreamos el mouse si el modo Dev está activo para ahorrar recursos
         const handleMouseMove = (e: MouseEvent) => {
-            if (isDevMode) {
-                setMousePos({ x: e.clientX, y: e.clientY }); // Usamos clientX/Y para coordenadas relativas a la ventana (fixed)
-            }
+            // USAMOS pageX / pageY PARA QUE FUNCIONE CON EL SCROLL
+            setMousePos({ x: e.pageX, y: e.pageY });
         };
 
-        window.addEventListener("mousemove", handleMouseMove);
+        if (isDevMode) {
+            window.addEventListener("mousemove", handleMouseMove);
+        }
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, [isDevMode]);
 

@@ -1,44 +1,44 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Terminal, Cpu, Database, Layout, Server, Wrench } from "lucide-react";
+import { Cpu, Terminal, Database, Globe, Smartphone, Wrench } from "lucide-react";
 import { FaReact, FaPython, FaDocker, FaNodeJs, FaGitAlt } from "react-icons/fa";
-import { SiNextdotjs, SiFastapi, SiSupabase, SiTypescript, SiTailwindcss, SiPostgresql, SiMongodb, SiRedis, SiLinux, SiFigma } from "react-icons/si";
+import { SiNextdotjs, SiFastapi, SiSupabase, SiTypescript, SiTailwindcss, SiPostgresql, SiTampermonkey, SiArduino } from "react-icons/si";
 import { useDevMode } from "@/components/providers/DevModeProvider";
 import { cn } from "@/lib/utils";
 
 const SKILL_CATEGORIES = [
     {
-        title: "Frontend Architecture",
-        icon: <Layout className="text-blue-400" />,
+        title: "Frontend & Mobile",
+        icon: <Globe className="text-blue-400" />,
         skills: [
             { name: "React 19", icon: <FaReact className="text-[#61DAFB]" /> },
             { name: "Next.js 15", icon: <SiNextdotjs className="text-white" /> },
             { name: "TypeScript", icon: <SiTypescript className="text-[#3178C6]" /> },
+            { name: "React Native", icon: <Smartphone size={18} className="text-[#61DAFB]" /> },
             { name: "Tailwind CSS", icon: <SiTailwindcss className="text-[#06B6D4]" /> },
-            { name: "Framer Motion", icon: <div className="font-bold text-white">FM</div> }, // Icono texto si no hay logo
         ]
     },
     {
-        title: "Backend & Systems",
-        icon: <Server className="text-green-400" />,
+        title: "Backend & Data",
+        icon: <Database className="text-green-400" />,
         skills: [
             { name: "Python 3.12", icon: <FaPython className="text-[#3776AB]" /> },
             { name: "FastAPI", icon: <SiFastapi className="text-[#009688]" /> },
-            { name: "Node.js", icon: <FaNodeJs className="text-[#339933]" /> },
             { name: "Supabase", icon: <SiSupabase className="text-[#3ECF8E]" /> },
             { name: "PostgreSQL", icon: <SiPostgresql className="text-[#4169E1]" /> },
+            { name: "Node.js", icon: <FaNodeJs className="text-[#339933]" /> },
         ]
     },
     {
-        title: "DevOps & Tools",
+        title: "Tools & Automation",
         icon: <Wrench className="text-purple-400" />,
         skills: [
             { name: "Docker", icon: <FaDocker className="text-[#2496ED]" /> },
-            { name: "Git / GitHub", icon: <FaGitAlt className="text-[#F05032]" /> },
-            { name: "Linux / Bash", icon: <SiLinux className="text-white" /> },
-            { name: "Redis", icon: <SiRedis className="text-[#DC382D]" /> },
-            { name: "Figma", icon: <SiFigma className="text-[#F24E1E]" /> },
+            { name: "AppSheet (No-Code)", icon: <Terminal className="text-white" /> },
+            { name: "Violentmonkey", icon: <SiTampermonkey className="text-[#004d40]" /> },
+            { name: "Arduino / IoT", icon: <SiArduino className="text-[#00979D]" /> },
+            { name: "Git", icon: <FaGitAlt className="text-[#F05032]" /> },
         ]
     }
 ];
@@ -48,8 +48,6 @@ export default function SkillsGrid() {
 
     return (
         <section id="skills" className="py-32 px-6 relative bg-[#151515]/50 border-y border-white/5">
-
-            {/* HEADER */}
             <div className="max-w-7xl mx-auto mb-16">
                 <div className="flex items-center gap-2 text-primary font-mono text-sm mb-4">
                     <Cpu size={16} />
@@ -59,11 +57,10 @@ export default function SkillsGrid() {
                     Arsenal <span className="text-gray-500">Tecnológico</span>
                 </h2>
                 <p className="text-gray-400 max-w-2xl text-lg">
-                    Stack moderno enfocado en rendimiento, escalabilidad y experiencia de usuario.
+                    Stack híbrido: Desde desarrollo web de alto rendimiento hasta automatización y scripting.
                 </p>
             </div>
 
-            {/* GRID CATEGORÍAS */}
             <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
                 {SKILL_CATEGORIES.map((category, idx) => (
                     <motion.div
@@ -77,13 +74,6 @@ export default function SkillsGrid() {
                             isDevMode && "hover:bg-transparent cursor-crosshair border-dashed"
                         )}
                     >
-                        {/* Dev Mode Label */}
-                        {isDevMode && (
-                            <div className="absolute top-2 right-2 text-[10px] font-mono text-gray-600">
-                                Array_ID: {idx}
-                            </div>
-                        )}
-
                         <div className="flex items-center gap-3 mb-8">
                             <div className="p-3 bg-white/5 rounded-lg border border-white/10 group-hover:border-primary/50 transition-colors">
                                 {category.icon}
@@ -102,7 +92,6 @@ export default function SkillsGrid() {
                     </motion.div>
                 ))}
             </div>
-
         </section>
     );
 }

@@ -1,7 +1,9 @@
 "use server";
 
 import { createClient } from "@supabase/supabase-js";
-import { revalidatePath } from "next/cache"; // Para refrescar la página al instante
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation"; // IMPORTANTE
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -12,61 +14,104 @@ export type ActionState = {
     message: string;
 };
 
-// --- LEER PROYECTOS (Para el Grid) ---
-export async function getProjects() {
-    const { data, error } = await supabase
-        .from("projects")
-        .select("*")
-        .order("id", { ascending: false }); // Los más nuevos primero
+// --- AUTH ---
+export async function loginAction(prevState: ActionState, formData: FormData): Promise<ActionState> {
+    const password = formData.get("password") as string;
+    const adminPassword = process.env.ADMIN_PASSWORD;
 
-    if (error) {
-        console.error("Error fetching projects:", error);
-        return [];
+    // Login Real
+    if (password === adminPassword) {
+        const cookieStore = await cookies();
+        cookieStore.set("admin_session", "true", { httpOnly: true, secure: true, path: "/" });
+        cookieStore.delete("admin_demo"); // Borrar demo si entra como real
+        return { success: true, message: "OK" };
     }
+
+    return { success: false, message: "Contraseña incorrecta" };
+}
+
+export async function enableDemoMode() {
+    const cookieStore = await cookies();
+    cookieStore.set("admin_demo", "true", { path: "/" });
+    redirect("/admin");
+}
+
+export async function logoutAction() {
+    const cookieStore = await cookies();
+    cookieStore.delete("admin_session");
+    cookieStore.delete("admin_demo");
+    redirect("/"); // REDIRECCIÓN FORZADA
+}
+
+export async function checkAuth() {
+    const cookieStore = await cookies();
+    const isRealAdmin = cookieStore.has("admin_session");
+    const isDemo = cookieStore.has("admin_demo");
+
+    return { isAuth: isRealAdmin || isDemo, role: isRealAdmin ? 'admin' : isDemo ? 'demo' : null };
+}
+
+// --- PROYECTOS ---
+export async function getProjects() {
+    const { data } = await supabase.from("projects").select("*").order("id", { ascending: false });
     return data || [];
 }
 
-// --- CREAR PROYECTO (Para el Admin) ---
 export async function createProject(prevState: ActionState, formData: FormData): Promise<ActionState> {
+    // Verificar Auth antes de crear
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') {
+        return { success: false, message: "Modo Demo: No puedes guardar cambios." };
+    }
 
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
     const project_type = formData.get("project_type") as string;
     const demo_link = formData.get("demo_link") as string;
     const repo_link = formData.get("repo_link") as string;
-    const tagsString = formData.get("tags") as string; // Vendrá separado por comas
-
-    // Procesar Tags
-    const tags = tagsString.split(",").map(t => t.trim()).filter(t => t.length > 0);
-
-    // Procesar Imágenes (URLs que vienen del cliente)
-    // Nota: Subiremos las imágenes en el cliente (Admin Page) y aquí solo recibiremos las URLs
+    const tagsString = formData.get("tags") as string;
     const imageUrlsString = formData.get("image_urls") as string;
+
+    // Procesamiento seguro de Tags
+    const tags = tagsString
+        ? tagsString.split(",").map(t => t.trim()).filter(t => t.length > 0)
+        : [];
+
     const images = imageUrlsString ? JSON.parse(imageUrlsString) : [];
 
     if (!title || !description || images.length === 0) {
-        return { success: false, message: "Faltan datos obligatorios (Título, Descripción o Imágenes)." };
+        return { success: false, message: "Faltan Título, Descripción o Imágenes." };
     }
 
-    try {
-        const { error } = await supabase.from("projects").insert([
-            { title, description, project_type, demo_link, repo_link, tags, images }
-        ]);
+    const { error } = await supabase.from("projects").insert([
+        { title, description, project_type, demo_link, repo_link, tags, images }
+    ]);
 
-        if (error) throw error;
-
-        revalidatePath("/"); // Actualiza la home para que aparezca el proyecto nuevo
-        return { success: true, message: "¡Proyecto creado con éxito!" };
-
-    } catch (error) {
-        console.error("Error creating project:", error);
-        return { success: false, message: "Error al guardar en base de datos." };
+    if (error) {
+        console.error(error);
+        return { success: false, message: "Error Supabase: " + error.message };
     }
+
+    revalidatePath("/");
+    return { success: true, message: "¡Proyecto creado con éxito!" };
 }
 
-// --- CONTACTO (Mantenemos la que ya tenías) ---
+// --- MENSAJES ---
+export async function getMessages() {
+    const { data } = await supabase.from("messages").select("*").order("created_at", { ascending: false });
+    return data || [];
+}
+
+export async function deleteMessage(formData: FormData) {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return;
+
+    const id = formData.get("id");
+    await supabase.from("messages").delete().eq("id", id);
+    revalidatePath("/admin");
+}
+
 export async function sendContactMessage(prevState: ActionState, formData: FormData): Promise<ActionState> {
-    // ... (Mismo código de contacto de antes)
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const content = formData.get("message") as string;
