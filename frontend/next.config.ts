@@ -5,8 +5,14 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        // hostname: '**.supabase.co', // Permite cualquier proyecto de Supabase
-        hostname: 'images.unsplash.com', // Permite imágenes de Unsplash
+        // Este es TU dominio específico de Supabase que salió en el error
+        hostname: 'waazfbtohtrztjmjevie.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com', // Mantenemos Unsplash por si usas fotos de stock
       },
     ],
   },
