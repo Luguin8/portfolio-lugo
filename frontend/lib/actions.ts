@@ -10,15 +10,11 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-// Debug: Verificar si la llave maestra está cargada
 if (!supabaseServiceKey) {
-    console.error("🚨 ALERTA CRÍTICA: SUPABASE_SERVICE_ROLE_KEY no está definida en .env.local. Las subidas fallarán.");
+    console.error("🚨 ALERTA CRÍTICA: SUPABASE_SERVICE_ROLE_KEY no está definida.");
 }
 
-// Cliente PÚBLICO (Solo lectura)
 const supabasePublic = createClient(supabaseUrl, supabaseAnonKey);
-
-// Cliente ADMIN (Escritura con Poderes Absolutos)
 const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey || supabaseAnonKey);
 
 export type ActionState = {
@@ -72,74 +68,90 @@ export async function getProjects() {
     return data || [];
 }
 
-// frontend/lib/actions.ts
+// 🔥 FUNCIÓN ACTUALIZADA: Maneja Portada y Galería
+export async function createProject(prevState: ActionState, formData: FormData): Promise<ActionState> {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') {
+        return { success: false, message: "Modo Demo: No tienes permisos para crear." };
+    }
 
-export async function createProject(prevState: any, formData: FormData) {
+    // 1. Datos de Texto
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const project_type = formData.get("project_type") as string;
+    const demo_link = formData.get("demo_link") as string;
+    const repo_link = formData.get("repo_link") as string;
+    const tagsString = formData.get("tags") as string;
+
+    // 2. NUEVO: Extraer Imágenes por Separado (Coincide con AdminDashboard)
+    const coverFile = formData.get("coverImage") as File;       // Portada obligatoria
+    const galleryFiles = formData.getAll("galleryImages") as File[]; // Galería opcional
+
+    if (!title || !description || !coverFile || coverFile.size === 0) {
+        return { success: false, message: "Faltan datos: Título, Descripción o Foto de Portada." };
+    }
+
     try {
-        const title = formData.get("title") as string;
-        const description = formData.get("description") as string;
-        const tags = formData.get("tags") as string;
-        const link = formData.get("link") as string;
-
-        // 1. CAPTURAMOS LOS ARCHIVOS POR SEPARADO
-        const coverFile = formData.get("coverImage") as File; // El input de portada
-        const galleryFiles = formData.getAll("galleryImages") as File[]; // El input múltiple
-
-        if (!coverFile || coverFile.size === 0) {
-            return { success: false, message: "La imagen de portada es obligatoria." };
-        }
-
         const imageUrls: string[] = [];
+        const bucketName = 'portfolio-images'; // Tu bucket actual
 
-        // 2. SUBIMOS PRIMERO LA PORTADA (Para asegurar que sea el index 0)
-        // Nota: Agrega un timestamp al nombre para evitar duplicados/caché
-        const coverName = `${Date.now()}-cover-${coverFile.name}`;
-        const { data: coverData, error: coverError } = await supabaseAdmin.storage
-            .from("projects") // Tu bucket
-            .upload(coverName, coverFile);
+        // A) Subir Portada (Siempre va primero -> Index 0)
+        const coverExt = coverFile.name.split('.').pop();
+        const coverName = `${Date.now()}-cover-${Math.random().toString(36).substring(2)}.${coverExt}`;
+        const coverBuffer = await coverFile.arrayBuffer();
 
-        if (coverError) throw coverError;
+        const { error: coverError } = await supabaseAdmin.storage
+            .from(bucketName)
+            .upload(coverName, coverBuffer, { contentType: coverFile.type, upsert: false });
 
-        // Obtenemos la URL pública de la portada
-        const { data: publicUrlData } = supabaseAdmin.storage.from("projects").getPublicUrl(coverName);
-        imageUrls.push(publicUrlData.publicUrl);
+        if (coverError) throw new Error(`Error subiendo portada: ${coverError.message}`);
 
-        // 3. SUBIMOS LA GALERÍA (Si hay)
+        const { data: coverData } = supabaseAdmin.storage.from(bucketName).getPublicUrl(coverName);
+        imageUrls.push(coverData.publicUrl);
+
+        // B) Subir Galería (Opcional)
         for (const file of galleryFiles) {
             if (file.size > 0) {
-                const fileName = `${Date.now()}-${file.name}`;
-                const { data, error } = await supabaseAdmin.storage
-                    .from("projects")
-                    .upload(fileName, file);
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+                const buffer = await file.arrayBuffer();
+
+                const { error } = await supabaseAdmin.storage
+                    .from(bucketName)
+                    .upload(fileName, buffer, { contentType: file.type, upsert: false });
 
                 if (!error) {
-                    const { data: urlData } = supabaseAdmin.storage.from("projects").getPublicUrl(fileName);
-                    imageUrls.push(urlData.publicUrl);
+                    const { data } = supabaseAdmin.storage.from(bucketName).getPublicUrl(fileName);
+                    imageUrls.push(data.publicUrl);
                 }
             }
         }
 
-        // 4. GUARDAMOS EN BASE DE DATOS
-        // El array imageUrls ahora es: [URL_PORTADA, URL_GALERIA_1, URL_GALERIA_2...]
-        const { error: dbError } = await supabaseAdmin
-            .from("projects")
-            .insert({
+        // 3. Insertar en Base de Datos
+        const tags = tagsString ? tagsString.split(",").map(t => t.trim()).filter(t => t.length > 0) : [];
+
+        const { error: dbError } = await supabaseAdmin.from("projects").insert([
+            {
                 title,
                 description,
-                tags: tags.split(",").map(t => t.trim()), // Convertimos tags a array
-                link,
-                images: imageUrls, // Guardamos el array ordenado
-            });
+                project_type,
+                demo_link,
+                repo_link,
+                tags,
+                images: imageUrls // [0] siempre será la portada
+            }
+        ]);
 
-        if (dbError) throw dbError;
+        if (dbError) throw new Error(`Error BD: ${dbError.message}`);
 
-        revalidatePath("/"); // Actualizamos la home
-        return { success: true, message: "Proyecto creado correctamente." };
-
-    } catch (error) {
-        console.error(error);
-        return { success: false, message: "Error al crear el proyecto." };
+    } catch (error: any) {
+        console.error("Error en createProject:", error);
+        return { success: false, message: error.message || "Error al crear proyecto." };
     }
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    return { success: true, message: "¡Proyecto publicado correctamente!" };
 }
 
 export async function deleteProject(formData: FormData) {
