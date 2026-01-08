@@ -72,82 +72,74 @@ export async function getProjects() {
     return data || [];
 }
 
-// 🔥 AQUÍ ESTÁ EL CAMBIO CLAVE: Subida Server-Side
-export async function createProject(prevState: ActionState, formData: FormData): Promise<ActionState> {
-    // 1. Verificar Permisos
-    const auth = await checkAuth();
-    if (auth.role !== 'admin') {
-        return { success: false, message: "Modo Demo: No tienes permisos para crear." };
-    }
+// frontend/lib/actions.ts
 
-    // 2. Extraer Datos de Texto
-    const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
-    const project_type = formData.get("project_type") as string;
-    const demo_link = formData.get("demo_link") as string;
-    const repo_link = formData.get("repo_link") as string;
-
-    // Procesar Tags
-    const tagsString = formData.get("tags") as string;
-    const tags = tagsString
-        ? tagsString.split(",").map(t => t.trim()).filter(t => t.length > 0)
-        : [];
-
-    // 3. Procesar IMÁGENES (Recibimos Archivos, no URLs)
-    const files = formData.getAll("images") as File[];
-    const uploadedUrls: string[] = [];
-
-    if (!title || !description || files.length === 0 || files[0].size === 0) {
-        return { success: false, message: "Faltan datos: Título, Descripción o Imágenes." };
-    }
-
+export async function createProject(prevState: any, formData: FormData) {
     try {
-        // Subir cada archivo usando la LLAVE MAESTRA (Bypassing RLS)
-        for (const file of files) {
-            // Ignorar si no es un archivo real
-            if (!(file instanceof File) || file.size === 0) continue;
+        const title = formData.get("title") as string;
+        const description = formData.get("description") as string;
+        const tags = formData.get("tags") as string;
+        const link = formData.get("link") as string;
 
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-            const buffer = await file.arrayBuffer(); // Convertir a buffer para subir
+        // 1. CAPTURAMOS LOS ARCHIVOS POR SEPARADO
+        const coverFile = formData.get("coverImage") as File; // El input de portada
+        const galleryFiles = formData.getAll("galleryImages") as File[]; // El input múltiple
 
-            const { error: uploadError } = await supabaseAdmin.storage
-                .from('portfolio-images')
-                .upload(fileName, buffer, {
-                    contentType: file.type,
-                    upsert: false
-                });
-
-            if (uploadError) throw new Error(`Error subiendo imagen: ${uploadError.message}`);
-
-            // Obtener URL pública
-            const { data } = supabaseAdmin.storage.from('portfolio-images').getPublicUrl(fileName);
-            uploadedUrls.push(data.publicUrl);
+        if (!coverFile || coverFile.size === 0) {
+            return { success: false, message: "La imagen de portada es obligatoria." };
         }
 
-        // 4. Insertar en Base de Datos
-        const { error: dbError } = await supabaseAdmin.from("projects").insert([
-            {
+        const imageUrls: string[] = [];
+
+        // 2. SUBIMOS PRIMERO LA PORTADA (Para asegurar que sea el index 0)
+        // Nota: Agrega un timestamp al nombre para evitar duplicados/caché
+        const coverName = `${Date.now()}-cover-${coverFile.name}`;
+        const { data: coverData, error: coverError } = await supabaseAdmin.storage
+            .from("projects") // Tu bucket
+            .upload(coverName, coverFile);
+
+        if (coverError) throw coverError;
+
+        // Obtenemos la URL pública de la portada
+        const { data: publicUrlData } = supabaseAdmin.storage.from("projects").getPublicUrl(coverName);
+        imageUrls.push(publicUrlData.publicUrl);
+
+        // 3. SUBIMOS LA GALERÍA (Si hay)
+        for (const file of galleryFiles) {
+            if (file.size > 0) {
+                const fileName = `${Date.now()}-${file.name}`;
+                const { data, error } = await supabaseAdmin.storage
+                    .from("projects")
+                    .upload(fileName, file);
+
+                if (!error) {
+                    const { data: urlData } = supabaseAdmin.storage.from("projects").getPublicUrl(fileName);
+                    imageUrls.push(urlData.publicUrl);
+                }
+            }
+        }
+
+        // 4. GUARDAMOS EN BASE DE DATOS
+        // El array imageUrls ahora es: [URL_PORTADA, URL_GALERIA_1, URL_GALERIA_2...]
+        const { error: dbError } = await supabaseAdmin
+            .from("projects")
+            .insert({
                 title,
                 description,
-                project_type,
-                demo_link,
-                repo_link,
-                tags,
-                images: uploadedUrls // Guardamos las URLs que acabamos de generar
-            }
-        ]);
+                tags: tags.split(",").map(t => t.trim()), // Convertimos tags a array
+                link,
+                images: imageUrls, // Guardamos el array ordenado
+            });
 
-        if (dbError) throw new Error(`Error BD: ${dbError.message}`);
+        if (dbError) throw dbError;
 
-    } catch (error: any) {
-        console.error("Error en createProject:", error);
-        return { success: false, message: error.message || "Error desconocido al crear proyecto." };
+        revalidatePath("/"); // Actualizamos la home
+        return { success: true, message: "Proyecto creado correctamente." };
+
+    } catch (error) {
+        console.error(error);
+        return { success: false, message: "Error al crear el proyecto." };
     }
-
-    revalidatePath("/");
-    revalidatePath("/admin");
-    return { success: true, message: "¡Proyecto publicado correctamente!" };
 }
 
 export async function deleteProject(formData: FormData) {
