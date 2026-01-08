@@ -1,18 +1,23 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // AUMENTAR LÍMITE DE SUBIDA PARA SERVER ACTIONS
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb', // Puedes subirlo a '10mb' si usas fotos muy pesadas
+    },
+  },
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        // Este es TU dominio específico de Supabase que salió en el error
-        hostname: 'waazfbtohtrztjmjevie.supabase.co',
+        hostname: 'waazfbtohtrztjmjevie.supabase.co', // Tu bucket real
         port: '',
         pathname: '/storage/v1/object/public/**',
       },
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com', // Mantenemos Unsplash por si usas fotos de stock
+        hostname: 'images.unsplash.com',
       },
     ],
   },

@@ -68,24 +68,29 @@ export async function getProjects() {
     return data || [];
 }
 
-// 🔥 FUNCIÓN ACTUALIZADA: Maneja Portada y Galería
 export async function createProject(prevState: ActionState, formData: FormData): Promise<ActionState> {
     const auth = await checkAuth();
     if (auth.role !== 'admin') {
         return { success: false, message: "Modo Demo: No tienes permisos para crear." };
     }
 
-    // 1. Datos de Texto
+    // 1. Datos de Texto (CON BLINDAJE PARA URLs VACÍAS)
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
     const project_type = formData.get("project_type") as string;
-    const demo_link = formData.get("demo_link") as string;
-    const repo_link = formData.get("repo_link") as string;
+
+    // CORRECCIÓN: Si viene vacío (""), lo convertimos a null para que Supabase no se queje
+    const rawDemo = formData.get("demo_link") as string;
+    const demo_link = rawDemo && rawDemo.trim() !== "" ? rawDemo.trim() : null;
+
+    const rawRepo = formData.get("repo_link") as string;
+    const repo_link = rawRepo && rawRepo.trim() !== "" ? rawRepo.trim() : null;
+
     const tagsString = formData.get("tags") as string;
 
-    // 2. NUEVO: Extraer Imágenes por Separado (Coincide con AdminDashboard)
-    const coverFile = formData.get("coverImage") as File;       // Portada obligatoria
-    const galleryFiles = formData.getAll("galleryImages") as File[]; // Galería opcional
+    // 2. Extraer Imágenes
+    const coverFile = formData.get("coverImage") as File;
+    const galleryFiles = formData.getAll("galleryImages") as File[];
 
     if (!title || !description || !coverFile || coverFile.size === 0) {
         return { success: false, message: "Faltan datos: Título, Descripción o Foto de Portada." };
@@ -93,9 +98,9 @@ export async function createProject(prevState: ActionState, formData: FormData):
 
     try {
         const imageUrls: string[] = [];
-        const bucketName = 'portfolio-images'; // Tu bucket actual
+        const bucketName = 'portfolio-images';
 
-        // A) Subir Portada (Siempre va primero -> Index 0)
+        // A) Subir Portada
         const coverExt = coverFile.name.split('.').pop();
         const coverName = `${Date.now()}-cover-${Math.random().toString(36).substring(2)}.${coverExt}`;
         const coverBuffer = await coverFile.arrayBuffer();
@@ -109,7 +114,7 @@ export async function createProject(prevState: ActionState, formData: FormData):
         const { data: coverData } = supabaseAdmin.storage.from(bucketName).getPublicUrl(coverName);
         imageUrls.push(coverData.publicUrl);
 
-        // B) Subir Galería (Opcional)
+        // B) Subir Galería
         for (const file of galleryFiles) {
             if (file.size > 0) {
                 const fileExt = file.name.split('.').pop();
@@ -135,10 +140,10 @@ export async function createProject(prevState: ActionState, formData: FormData):
                 title,
                 description,
                 project_type,
-                demo_link,
-                repo_link,
+                demo_link, // Ahora enviamos null si está vacío
+                repo_link, // Ahora enviamos null si está vacío
                 tags,
-                images: imageUrls // [0] siempre será la portada
+                images: imageUrls
             }
         ]);
 
