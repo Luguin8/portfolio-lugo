@@ -1,4 +1,5 @@
 "use client";
+import { playHoverLight } from "@/lib/sounds";
 
 import { motion } from "framer-motion";
 import { Cpu, Globe, Database, Wrench, Network, FileSpreadsheet } from "lucide-react";
@@ -136,7 +137,7 @@ export default function SkillsGrid() {
                         {/* Skill rows */}
                         <div>
                             {category.skills.map((skill) => (
-                                <div key={skill.name} className="bb-stat-row">
+                                <div key={skill.name} className="bb-stat-row" onMouseEnter={() => playHoverLight()}>
                                     <span
                                         className="w-5 flex-shrink-0 flex justify-center text-sm"
                                         style={{ color: "var(--bb-muted)" }}

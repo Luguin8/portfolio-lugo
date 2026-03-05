@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { motion } from "framer-motion";
 import { Send, Mail, MapPin, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { sendContactMessage } from "@/lib/actions";
+import { playNavigate, playSelect, playSubmit, playError } from "@/lib/sounds";
 
 const initialState = {
     success: false,
@@ -161,6 +162,7 @@ export default function Contact() {
                                     required
                                     className="bb-input"
                                     placeholder="Tu nombre"
+                                    onFocus={() => playNavigate()}
                                 />
                             </div>
                             <div className="space-y-1.5">
@@ -178,6 +180,7 @@ export default function Contact() {
                                     required
                                     className="bb-input"
                                     placeholder="tu@email.com"
+                                    onFocus={() => playNavigate()}
                                 />
                             </div>
                         </div>
@@ -234,6 +237,13 @@ export default function Contact() {
                             type="submit"
                             disabled={isPending}
                             className="bb-btn w-full"
+                            onMouseEnter={() => playNavigate()}
+                            onClick={() => {
+                                if (!isPending) {
+                                    // sound fires right away on submit attempt
+                                    playSubmit();
+                                }
+                            }}
                         >
                             {isPending ? (
                                 <>

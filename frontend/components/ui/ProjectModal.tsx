@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Github, ExternalLink, Smartphone, Monitor, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Project } from "./ProjectCard";
+import { playOpen, playClose, playGalleryNav, playNavigate, playSelect } from "@/lib/sounds";
 
 interface ProjectModalProps {
     project: Project;
@@ -18,16 +19,19 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
     useEffect(() => {
         document.body.style.overflow = "hidden";
+        playOpen();
         return () => { document.body.style.overflow = "unset"; };
     }, []);
 
     const nextImage = (e?: React.MouseEvent) => {
         e?.stopPropagation();
+        playGalleryNav();
         setCurrentImgIndex((prev) => (prev === project.images.length - 1 ? 0 : prev + 1));
     };
 
     const prevImage = (e?: React.MouseEvent) => {
         e?.stopPropagation();
+        playGalleryNav();
         setCurrentImgIndex((prev) => (prev === 0 ? project.images.length - 1 : prev - 1));
     };
 
@@ -43,7 +47,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             <div
                 className="absolute inset-0"
                 style={{ background: "rgba(2,1,0,0.93)", backdropFilter: "blur(6px)" }}
-                onClick={onClose}
+                onClick={() => { playClose(); onClose(); }}
             />
 
             {/* Modal panel */}
@@ -62,10 +66,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
                 {/* Close button */}
                 <button
-                    onClick={onClose}
+                    onClick={() => { playClose(); onClose(); }}
                     className="absolute top-4 right-4 z-50 p-2 transition-colors duration-200"
                     style={{ color: "var(--bb-muted)", border: "1px solid var(--bb-border)", background: "rgba(5,4,3,0.80)" }}
                     onMouseEnter={(e) => {
+                        playNavigate();
                         (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)";
                         (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-gold)";
                     }}
@@ -209,6 +214,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                                     target="_blank"
                                     rel="noreferrer"
                                     className="bb-btn w-full"
+                                    onMouseEnter={() => playNavigate()}
+                                    onClick={() => playSelect()}
                                 >
                                     <ExternalLink size={14} />
                                     Ver Demo Live
@@ -220,6 +227,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                                     target="_blank"
                                     rel="noreferrer"
                                     className="bb-btn-secondary w-full"
+                                    onMouseEnter={() => playNavigate()}
+                                    onClick={() => playSelect()}
                                 >
                                     <Github size={14} />
                                     Ver Código

@@ -6,6 +6,7 @@ import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { useDevMode } from "@/components/providers/DevModeProvider";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { playNavigate, playSelect } from "@/lib/sounds";
 
 export default function Hero() {
     const { isDevMode } = useDevMode();
@@ -78,7 +79,12 @@ export default function Hero() {
 
                     {/* CTA Buttons */}
                     <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-                        <a href="#projects" className="bb-btn">
+                        <a
+                            href="#projects"
+                            className="bb-btn"
+                            onMouseEnter={() => playNavigate()}
+                            onClick={() => playSelect()}
+                        >
                             Explorar Obras
                         </a>
                         <a
@@ -86,6 +92,8 @@ export default function Hero() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="bb-btn-secondary flex items-center gap-2"
+                            onMouseEnter={() => playNavigate()}
+                            onClick={() => playSelect()}
                         >
                             <FileText size={14} />
                             Resume / CV
@@ -187,8 +195,12 @@ function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode
             title={label}
             className="transition-colors duration-200"
             style={{ color: "var(--bb-muted)" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)"; }}
+            onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)";
+                playNavigate();
+            }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)"; }}
+            onClick={() => playSelect()}
         >
             {icon}
         </a>

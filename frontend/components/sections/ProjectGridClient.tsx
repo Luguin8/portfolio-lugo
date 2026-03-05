@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard, { Project } from "@/components/ui/ProjectCard";
 import ProjectModal from "@/components/ui/ProjectModal";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { playNavigate, playSelect } from "@/lib/sounds";
 
 export default function ProjectGridClient({ initialProjects }: { initialProjects: any[] }) {
     const [isManual, setIsManual] = useState(false);
@@ -71,10 +72,11 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
                 {/* Navigation arrows */}
                 <div className="flex gap-2">
                     <button
-                        onClick={() => handleManualControl('prev')}
+                        onClick={() => { playSelect(); handleManualControl('prev'); }}
                         className="p-3 border transition-all duration-200"
                         style={{ borderColor: "var(--bb-border)", color: "var(--bb-muted)", background: "transparent" }}
                         onMouseEnter={(e) => {
+                            playNavigate();
                             (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)";
                             (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-gold)";
                         }}
@@ -86,10 +88,11 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
                         <ChevronLeft size={20} />
                     </button>
                     <button
-                        onClick={() => handleManualControl('next')}
+                        onClick={() => { playSelect(); handleManualControl('next'); }}
                         className="p-3 border transition-all duration-200"
                         style={{ borderColor: "var(--bb-border)", color: "var(--bb-muted)", background: "transparent" }}
                         onMouseEnter={(e) => {
+                            playNavigate();
                             (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)";
                             (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-gold)";
                         }}

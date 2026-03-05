@@ -4,10 +4,19 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lock, LogIn, Shield } from "lucide-react";
+import { Lock, LogIn, Shield, Eye } from "lucide-react";
 import { useDevMode } from "@/components/providers/DevModeProvider";
 import { cn } from "@/lib/utils";
 import { loginAction, enableDemoMode } from "@/lib/actions";
+import {
+    playNavigate,
+    playSelect,
+    playOpen,
+    playClose,
+    playInsightGain,
+    playInsightLoss,
+    playError,
+} from "@/lib/sounds";
 
 const NAV_LINKS = [
     { href: "#hero", label: "Inicio" },
@@ -29,12 +38,34 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    function handleInsightToggle() {
+        if (isDevMode) {
+            playInsightLoss();
+        } else {
+            playInsightGain();
+        }
+        toggleDevMode();
+    }
+
+    function openLoginModal() {
+        playOpen();
+        setShowLoginModal(true);
+        setLoginMessage("");
+    }
+
+    function closeLoginModal() {
+        playClose();
+        setShowLoginModal(false);
+    }
+
     async function handleLogin(formData: FormData) {
         const res = await loginAction({ success: false, message: "" }, formData);
         if (res.success) {
+            playSelect();
             setShowLoginModal(false);
             router.push("/admin");
         } else {
+            playError();
             setLoginMessage(res.message);
         }
     }
@@ -45,14 +76,9 @@ export default function Navbar() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className={cn(
-                    "fixed top-0 left-0 right-0 z-[50] transition-all duration-500",
-                    isScrolled
-                        ? "border-b"
-                        : "border-b border-transparent"
-                )}
+                className={cn("fixed top-0 left-0 right-0 z-[50] transition-all duration-500", isScrolled ? "border-b" : "border-b border-transparent")}
                 style={isScrolled ? {
-                    background: "rgba(5, 4, 3, 0.95)",
+                    background: "rgba(5, 4, 3, 0.96)",
                     borderBottomColor: "var(--bb-border)",
                     backdropFilter: "blur(12px)",
                     paddingTop: "0.5rem",
@@ -69,8 +95,9 @@ export default function Navbar() {
                         href="/"
                         className="group flex items-center gap-3"
                         style={{ textDecoration: "none" }}
+                        onMouseEnter={() => playNavigate()}
+                        onClick={() => playSelect()}
                     >
-                        {/* Ornamento */}
                         <span
                             className="text-base leading-none transition-colors duration-300"
                             style={{ color: "var(--bb-gold)", fontFamily: "var(--font-title)" }}
@@ -97,7 +124,7 @@ export default function Navbar() {
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className="text-sm tracking-widest transition-all duration-200 hover:text-opacity-100 relative group"
+                                className="relative group text-sm tracking-widest transition-all duration-200"
                                 style={{
                                     fontFamily: "var(--font-title)",
                                     color: "var(--bb-muted)",
@@ -105,11 +132,16 @@ export default function Navbar() {
                                     fontSize: "0.72rem",
                                     textDecoration: "none",
                                 }}
-                                onMouseEnter={(e) => { (e.target as HTMLElement).style.color = "var(--bb-gold)"; }}
-                                onMouseLeave={(e) => { (e.target as HTMLElement).style.color = "var(--bb-muted)"; }}
+                                onMouseEnter={(e) => {
+                                    (e.target as HTMLElement).style.color = "var(--bb-gold)";
+                                    playNavigate();
+                                }}
+                                onMouseLeave={(e) => {
+                                    (e.target as HTMLElement).style.color = "var(--bb-muted)";
+                                }}
+                                onClick={() => playSelect()}
                             >
                                 {link.label}
-                                {/* Underline dorado sutil */}
                                 <span
                                     className="absolute bottom-[-3px] left-0 w-0 h-[1px] transition-all duration-300 group-hover:w-full"
                                     style={{ background: "var(--bb-gold-dim)" }}
@@ -118,32 +150,72 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    {/* ACCIONES */}
+                    {/* ACTIONS */}
                     <div className="flex items-center gap-4">
-                        {/* Dev Mode Toggle */}
+
+                        {/* ── INSIGHT STAT ROW BUTTON ── */}
                         <button
-                            onClick={toggleDevMode}
-                            className="text-xs tracking-widest transition-all duration-200 px-3 py-1 border"
+                            onClick={handleInsightToggle}
+                            onMouseEnter={() => playNavigate()}
+                            className="group flex items-center gap-2 px-3 py-1.5 border transition-all duration-300"
                             style={{
                                 fontFamily: "var(--font-title)",
-                                color: isDevMode ? "var(--bb-gold)" : "var(--bb-muted)",
                                 borderColor: isDevMode ? "var(--bb-gold)" : "var(--bb-border)",
                                 background: isDevMode ? "rgba(201,168,76,0.08)" : "transparent",
-                                letterSpacing: "0.15em",
+                                boxShadow: isDevMode ? "0 0 14px rgba(201,168,76,0.18), inset 0 0 8px rgba(201,168,76,0.06)" : "none",
                             }}
+                            title={isDevMode ? "Desactivar Insight" : "Activar Insight"}
                         >
-                            {isDevMode ? "DEV: ON" : "DEV: OFF"}
+                            {/* Eye icon */}
+                            <Eye
+                                size={13}
+                                className="transition-all duration-300"
+                                style={{
+                                    color: isDevMode ? "var(--bb-gold)" : "var(--bb-muted)",
+                                    filter: isDevMode ? "drop-shadow(0 0 4px rgba(201,168,76,0.60))" : "none",
+                                }}
+                            />
+                            {/* INSIGHT label */}
+                            <span
+                                className="text-[0.62rem] tracking-widest transition-colors duration-300 hidden sm:inline"
+                                style={{
+                                    color: isDevMode ? "var(--bb-gold)" : "var(--bb-muted)",
+                                    letterSpacing: "0.22em",
+                                }}
+                            >
+                                INSIGHT
+                            </span>
+                            {/* Separator dot */}
+                            <span
+                                className="transition-colors duration-300 text-[0.62rem] hidden sm:inline"
+                                style={{ color: isDevMode ? "var(--bb-gold)" : "var(--bb-border)" }}
+                            >
+                                ·
+                            </span>
+                            {/* Numeric value */}
+                            <span
+                                className="text-[0.62rem] font-semibold tabular-nums transition-all duration-300"
+                                style={{
+                                    color: isDevMode ? "var(--bb-gold-bright)" : "var(--bb-muted)",
+                                    textShadow: isDevMode ? "0 0 8px rgba(232,200,122,0.70)" : "none",
+                                    letterSpacing: "0.05em",
+                                }}
+                            >
+                                {isDevMode ? "1" : "0"}
+                            </span>
                         </button>
 
-                        {/* Login */}
+                        {/* Lock */}
                         <button
-                            onClick={() => setShowLoginModal(true)}
+                            onClick={openLoginModal}
+                            onMouseEnter={() => playNavigate()}
                             className="p-2 transition-colors duration-200"
                             style={{ color: "var(--bb-muted)" }}
-                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)"; }}
                             onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)"; }}
+                            onFocus={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)"; }}
+                            onBlur={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)"; }}
                         >
-                            <Lock size={16} />
+                            <Lock size={15} />
                         </button>
                     </div>
                 </div>
@@ -153,13 +225,11 @@ export default function Navbar() {
             <AnimatePresence>
                 {showLoginModal && (
                     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-                        {/* Backdrop */}
                         <div
                             className="absolute inset-0"
-                            style={{ background: "rgba(3,2,1,0.85)", backdropFilter: "blur(4px)" }}
-                            onClick={() => setShowLoginModal(false)}
+                            style={{ background: "rgba(3,2,1,0.88)", backdropFilter: "blur(4px)" }}
+                            onClick={closeLoginModal}
                         />
-
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -169,21 +239,19 @@ export default function Navbar() {
                             style={{ background: "var(--bb-panel)", border: "1px solid var(--bb-border)" }}
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {/* Corner accents */}
                             <span className="bb-corner-tr" />
                             <span className="bb-corner-bl" />
 
-                            {/* Separator top */}
                             <div className="bb-separator mb-6" />
 
                             <h2
                                 className="text-lg mb-1 flex items-center gap-3"
                                 style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.15em" }}
                             >
-                                <Lock size={16} style={{ color: "var(--bb-gold)" }} />
+                                <Lock size={15} style={{ color: "var(--bb-gold)" }} />
                                 ACCESO RESTRINGIDO
                             </h2>
-                            <p className="text-sm mb-6" style={{ color: "var(--bb-muted)", fontFamily: "var(--font-body)" }}>
+                            <p className="text-sm mb-6" style={{ color: "var(--bb-muted)", fontFamily: "var(--font-body)", fontStyle: "italic" }}>
                                 Solo para el cazador autorizado.
                             </p>
 
@@ -201,6 +269,7 @@ export default function Navbar() {
                                         required
                                         className="bb-input"
                                         placeholder="••••••••"
+                                        onFocus={() => playNavigate()}
                                     />
                                 </div>
                                 {loginMessage && (
@@ -208,7 +277,12 @@ export default function Navbar() {
                                         ✦ {loginMessage}
                                     </p>
                                 )}
-                                <button type="submit" className="bb-btn w-full">
+                                <button
+                                    type="submit"
+                                    className="bb-btn w-full"
+                                    onMouseEnter={() => playNavigate()}
+                                    onClick={() => playSelect()}
+                                >
                                     <LogIn size={14} />
                                     Ingresar
                                 </button>
@@ -217,7 +291,12 @@ export default function Navbar() {
                             <div className="bb-separator my-5" />
 
                             <form action={enableDemoMode}>
-                                <button type="submit" className="bb-btn-secondary w-full">
+                                <button
+                                    type="submit"
+                                    className="bb-btn-secondary w-full"
+                                    onMouseEnter={() => playNavigate()}
+                                    onClick={() => playSelect()}
+                                >
                                     <Shield size={14} />
                                     Modo Demo
                                 </button>

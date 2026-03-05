@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
 import { useDevMode } from "@/components/providers/DevModeProvider";
 import { cn } from "@/lib/utils";
+import { playNavigate, playOpen } from "@/lib/sounds";
 
 export interface Project {
     id: number;
@@ -31,7 +32,6 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
         <motion.div
             whileHover={{ y: -4 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            onClick={onClick}
             className={cn(
                 "relative group flex flex-col cursor-pointer h-full bb-corner-box",
                 isDevMode && "outline outline-dashed outline-1 outline-yellow-400/30"
@@ -41,8 +41,12 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
                 border: "1px solid var(--bb-border)",
                 transition: "border-color 0.2s",
             }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-gold)"; }}
+            onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-gold)";
+                playNavigate();
+            }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-border)"; }}
+            onClick={() => { playOpen(); onClick(); }}
         >
             {/* BB corner accents rendered via CSS class – extras via spans */}
             <span className="bb-corner-tr" />
