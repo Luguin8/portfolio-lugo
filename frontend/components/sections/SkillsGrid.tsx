@@ -1,66 +1,75 @@
 "use client";
-import { playHoverLight } from "@/lib/sounds";
 
 import { motion } from "framer-motion";
-import { Cpu, Globe, Database, Wrench, Network, FileSpreadsheet } from "lucide-react";
 import {
     FaReact, FaPython, FaDocker, FaNodeJs, FaGitAlt,
-    FaHtml5, FaCss3Alt, FaJs, FaJava, FaGithub, FaCode, FaFileExcel
+    FaHtml5, FaCss3Alt, FaJs, FaGithub, FaCode, FaTools, FaWindows
 } from "react-icons/fa";
 import {
     SiNextdotjs, SiFastapi, SiSupabase, SiTypescript, SiTailwindcss,
-    SiPostgresql, SiTampermonkey, SiArduino, SiExpo, SiFlutter,
-    SiGodotengine, SiC, SiSqlite, SiAdobephotoshop, SiOpenai
+    SiPostgresql, SiArduino, SiExpo, SiGodotengine, SiSqlite,
+    SiVercel, SiBootstrap, SiLinux, SiGoogleanalytics, SiGoogletagmanager, SiOpenai
 } from "react-icons/si";
+import { BarChart2, Network, Globe, Database, Wrench, Cpu, Brain, Hammer, Headphones } from "lucide-react";
 
 const SKILL_CATEGORIES = [
     {
         title: "Frontend & Mobile",
         label: "DISCIPLINA I",
-        icon: <Globe size={14} />,
+        icon: <Globe size={12} />,
         skills: [
-            { name: "React 19 / Web", icon: <FaReact /> },
-            { name: "Next.js 15", icon: <SiNextdotjs /> },
+            { name: "React.js / Next.js App Router", icon: <span className="flex gap-1"><FaReact /><SiNextdotjs /></span> },
             { name: "TypeScript", icon: <SiTypescript /> },
-            { name: "JavaScript Vanilla", icon: <FaJs /> },
+            { name: "JavaScript Vanilla (DOM Avz.)", icon: <FaJs /> },
             { name: "HTML5 & CSS3", icon: <span className="flex gap-1"><FaHtml5 /><FaCss3Alt /></span> },
-            { name: "React Native", icon: <FaReact /> },
-            { name: "Expo Go", icon: <SiExpo /> },
-            { name: "Flutter", icon: <SiFlutter /> },
+            { name: "React Native (Expo)", icon: <SiExpo /> },
             { name: "Tailwind CSS", icon: <SiTailwindcss /> },
+            { name: "Bootstrap 5", icon: <SiBootstrap /> },
         ],
     },
     {
-        title: "Backend, Data & Core",
+        title: "Backend & Bases de Datos",
         label: "DISCIPLINA II",
-        icon: <Database size={14} />,
+        icon: <Database size={12} />,
         skills: [
-            { name: "Python 3.12", icon: <FaPython /> },
+            { name: "Python (FastAPI, Scripts)", icon: <FaPython /> },
             { name: "Node.js", icon: <FaNodeJs /> },
-            { name: "Java", icon: <FaJava /> },
-            { name: "C Language", icon: <SiC /> },
-            { name: "Lisp", icon: <FaCode /> },
-            { name: "FastAPI", icon: <SiFastapi /> },
-            { name: "SQL & SQLite", icon: <SiSqlite /> },
-            { name: "PostgreSQL", icon: <SiPostgresql /> },
-            { name: "Supabase", icon: <SiSupabase /> },
-            { name: "API Integrations", icon: <Network size={14} /> },
+            { name: "Supabase (Auth, DB relacional)", icon: <SiSupabase /> },
+            { name: "SQLite (Mobile)", icon: <SiSqlite /> },
+            { name: "IndexedDB / Dexie.js", icon: <FaCode /> },
+            { name: "APIs REST / Webhooks", icon: <Network size={12} /> },
+            { name: "Docker", icon: <FaDocker /> },
+            { name: "Linux (Debian Servers)", icon: <SiLinux /> },
         ],
     },
     {
-        title: "Tools, AI & Design",
+        title: "Arquitectura, Herramientas & Tracking",
         label: "DISCIPLINA III",
-        icon: <Wrench size={14} />,
+        icon: <Wrench size={12} />,
         skills: [
             { name: "Git & GitHub", icon: <span className="flex gap-1"><FaGitAlt /><FaGithub /></span> },
-            { name: "Docker", icon: <FaDocker /> },
-            { name: "Godot Engine", icon: <SiGodotengine /> },
-            { name: "AI Prompting/Dev", icon: <SiOpenai /> },
-            { name: "AppSheet (No-Code)", icon: <FileSpreadsheet size={14} /> },
-            { name: "Excel / Sheets", icon: <FaFileExcel /> },
-            { name: "Photoshop", icon: <SiAdobephotoshop /> },
-            { name: "Violentmonkey", icon: <SiTampermonkey /> },
-            { name: "Arduino / IoT", icon: <SiArduino /> },
+            { name: "Vercel / Google Play Console", icon: <SiVercel /> },
+            { name: "Gestión de Dominios", icon: <Globe size={12} /> },
+            { name: "Meta Graph API (WhatsApp)", icon: <Network size={12} /> },
+            { name: "Google Tag Manager (GTM)", icon: <SiGoogletagmanager /> },
+            { name: "Google Analytics 4 (GA4)", icon: <SiGoogleanalytics /> },
+            { name: "AppSheet (No-Code)", icon: <FaTools /> },
+            { name: "OpenAI / AI Dev", icon: <SiOpenai /> },
+        ],
+    },
+    {
+        title: "Análisis, Hardware & Game Dev",
+        label: "DISCIPLINA IV",
+        icon: <Brain size={12} />,
+        skills: [
+            { name: "Simulación Monte Carlo (Python)", icon: <BarChart2 size={12} /> },
+            { name: "Modelado Matemático / RTP", icon: <FaCode /> },
+            { name: "Arquitectura Local-First", icon: <Cpu size={12} /> },
+            { name: "Background Tasks / Geoloc.", icon: <Cpu size={12} /> },
+            { name: "Godot 4 (GDScript, Físicas 3D)", icon: <SiGodotengine /> },
+            { name: "Diagnóstico & Reparación HW", icon: <Hammer size={12} /> },
+            { name: "PC Building / Armado", icon: <FaWindows /> },
+            { name: "Soporte Remoto (TeamViewer)", icon: <Headphones size={12} /> },
         ],
     },
 ];
@@ -79,7 +88,7 @@ export default function SkillsGrid() {
                     style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.3em" }}
                 >
                     <Cpu size={12} className="inline mr-2" />
-                    ESTADÍSTICAS
+                    ESTADÍSTICAS DEL CAZADOR
                 </p>
                 <h2
                     className="text-4xl md:text-5xl mb-4"
@@ -93,12 +102,12 @@ export default function SkillsGrid() {
                     className="mt-4 text-lg max-w-2xl"
                     style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--bb-muted)" }}
                 >
-                    Stack híbrido y expansivo: desde desarrollo web y móvil hasta bajo nivel y automatización con IA.
+                    Stack integral: desde interfaces web y apps móviles hasta análisis de datos, soporte técnico de hardware y desarrollo de videojuegos.
                 </p>
             </div>
 
-            {/* Category grid */}
-            <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6">
+            {/* Category grid – 2 cols on md, 4 cols on xl */}
+            <div className="max-w-7xl mx-auto grid md:grid-cols-2 xl:grid-cols-4 gap-5">
                 {SKILL_CATEGORIES.map((category, idx) => (
                     <motion.div
                         key={category.title}
@@ -119,14 +128,14 @@ export default function SkillsGrid() {
                         {/* Category header */}
                         <div className="mb-1">
                             <p
-                                className="text-[0.6rem] tracking-[0.3em] uppercase mb-2"
-                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-muted)", letterSpacing: "0.25em" }}
+                                className="text-[0.58rem] tracking-[0.28em] uppercase mb-2 flex items-center gap-1.5"
+                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-muted)" }}
                             >
-                                {category.icon} &nbsp; {category.label}
+                                {category.icon} {category.label}
                             </p>
                             <h3
-                                className="text-base"
-                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.08em" }}
+                                className="text-sm leading-snug"
+                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.06em" }}
                             >
                                 {category.title}
                             </h3>
@@ -137,7 +146,13 @@ export default function SkillsGrid() {
                         {/* Skill rows */}
                         <div>
                             {category.skills.map((skill) => (
-                                <div key={skill.name} className="bb-stat-row" onMouseEnter={() => playHoverLight()}>
+                                <div
+                                    key={skill.name}
+                                    className="bb-stat-row"
+                                    onMouseEnter={() => {
+                                        import("@/lib/sounds").then(({ playHoverLight }) => playHoverLight());
+                                    }}
+                                >
                                     <span
                                         className="w-5 flex-shrink-0 flex justify-center text-sm"
                                         style={{ color: "var(--bb-muted)" }}

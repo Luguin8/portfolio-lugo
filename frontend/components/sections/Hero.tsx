@@ -38,7 +38,7 @@ export default function Hero() {
                         className="text-xs tracking-[0.35em] uppercase"
                         style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.35em" }}
                     >
-                        ✦ &nbsp; Portafolio · Full Stack &nbsp; ✦
+                        ✦ &nbsp; Full Stack · Mobile · Data · Automatización &nbsp; ✦
                     </p>
 
                     {/* Main title */}
@@ -58,7 +58,7 @@ export default function Hero() {
                             className="text-xl md:text-2xl font-normal"
                             style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--bb-muted)" }}
                         >
-                            Full Stack Developer & Architect
+                            Full Stack · Mobile · Data · Hardware
                         </h2>
                     </div>
 
@@ -67,13 +67,14 @@ export default function Hero() {
                         className="text-lg leading-relaxed max-w-md mx-auto lg:mx-0"
                         style={{ fontFamily: "var(--font-body)", color: "var(--bb-muted)" }}
                     >
-                        Transformando ideas complejas en código limpio y escalable.
+                        Desarrollo web, mobile, scripts de datos y automatización.
+                        Cada sistema: limpio, modular y listo para producción.
                         <br />
                         <span
                             className="text-sm tracking-wider not-italic mt-1 block"
                             style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.12em", fontSize: "0.72rem" }}
                         >
-                            Python · React · Next.js · Node.js · FastAPI · Docker
+                            Python · React · Next.js · Node.js · FastAPI · Docker · React Native
                         </span>
                     </p>
 

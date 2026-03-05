@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Lugo Martin Adrian</title>
+    <style>
+        /* --- ESTILO CONTINUO / ATS FRIENDLY --- */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #fff;
+            color: #111;
+            line-height: 1.5;
+            font-size: 10.5pt;
+            margin: 0;
+            padding: 40px;
+            max-width: 210mm;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #111;
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            text-transform: uppercase;
+            font-size: 24pt;
+            margin: 0 0 5px 0;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+
+        .contact-info {
+            font-size: 10.5pt;
+            margin-top: 5px;
+        }
+
+        .contact-info a {
+            color: #111;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        h2 {
+            font-size: 14pt;
+            text-transform: uppercase;
+            border-bottom: 1px solid #ccc;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        h3 {
+            font-size: 11.5pt;
+            font-weight: 700;
+            margin: 15px 0 2px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .subtitle {
+            font-style: italic;
+            font-size: 11pt;
+            margin: 0 0 6px 0;
+            color: #444;
+        }
+
+        ul {
+            margin: 0 0 15px 18px;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 4px;
+            text-align: justify;
+        }
+
+        .meta-right {
+            font-weight: normal;
+            text-align: right;
+            font-size: 10pt;
+            color: #666;
+        }
+
+        /* --- SKILLS GRID --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .skill-category strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #000;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 9.5pt;
+        }
+
+        /* --- CONTROL DE IMPRESIÓN --- */
+        @media print {
+            body {
+                padding: 0;
+                margin: 15mm 20mm;
+                width: auto;
+            }
+
+            .project-item,
+            .job-item,
+            .education-item {
+                page-break-inside: avoid;
+            }
+
+            h2 {
+                page-break-after: avoid;
+            }
+
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Lugo Martin Adrian</h1>
+        <div class="contact-info">
+            Corrientes, Argentina &nbsp;|&nbsp;
+            (+54) 379 4385978 &nbsp;|&nbsp;
+            <a href="mailto:lugoamartin@gmail.com">lugoamartin@gmail.com</a>
+        </div>
+        <div class="contact-info">
+            <a href="https://portfolio-lugo.vercel.app/" target="_blank">portfolio-lugo.vercel.app</a> &nbsp;|&nbsp;
+            <a href="https://github.com/Luquin8" target="_blank">github.com/Luquin8</a> &nbsp;|&nbsp;
+            <a href="https://www.linkedin.com/in/lugoamartin" target="_blank">linkedin.com/in/lugoamartin</a>
+        </div>
+    </header>
+
+    <section>
+        <h2>Habilidades Técnicas</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <strong>Frontend & Mobile</strong>
+                React.js, Next.js (App Router), TypeScript, React Native (Expo), Vanilla JS, Tailwind CSS, Bootstrap 5,
+                HTML5/CSS3, Manipulación Avanzada del DOM.
+            </div>
+            <div class="skill-category">
+                <strong>Backend & Bases de Datos</strong>
+                Node.js, Python (FastAPI, Scripts base), Supabase (Auth, Database relacional), SQLite (Mobile),
+                IndexedDB (Dexie.js), Integración de APIs REST, Webhooks.
+            </div>
+            <div class="skill-category">
+                <strong>Arquitectura, Herramientas & Tracking</strong>
+                Git/GitHub, Docker, Linux (Debian Servers), Meta Graph API, Google Tag Manager (GTM), Google Analytics 4
+                (GA4), Vercel, Gestión de Dominios, Google Play Console.
+            </div>
+            <div class="skill-category">
+                <strong>Análisis, Lógica & Game Dev</strong>
+                Sistemas Modulares, Arquitectura Local-First, Background Tasks, Simulación Monte Carlo, Modelado
+                Matemático puro, Godot 4 (GDScript, Físicas 3D), Procesamiento JSON.
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Experiencia Técnica & Portfolio de Proyectos</h2>
+
+        <div class="project-item">
+            <h3>CAJIX (SaaS B2B) <span class="meta-right">Full Stack Developer</span></h3>
+            <p class="subtitle">Plataforma en producción para gestión de PyMEs (<a href="https://cajix.site"
+                    target="_blank">cajix.site</a>)</p>
+            <ul>
+                <li>Desarrollo integral de un SaaS escalable con <strong>Next.js, TypeScript y Tailwind CSS</strong>,
+                    integrando y configurando exitosamente el dominio comercial (cajix.site).</li>
+                <li>Implementación de backend robusto mediante integración profunda con <strong>Supabase</strong> para
+                    el manejo de autenticación de usuarios y base de datos relacional.</li>
+                <li>Diseño de una arquitectura modular preparada para la venta segmentada, desarrollando hasta la fecha
+                    módulos independientes y complejos como Caja y Gestión de Turnos.</li>
+            </ul>
+        </div>
+
+        <div class="project-item">
+            <h3>Ecosistema DCA King <span class="meta-right">Freelance | Full Stack Python</span></h3>
+            <p class="subtitle">Suite de gestión y monitoreo para Bots de Trading Cripto</p>
+            <ul>
+                <li><strong>DCA King Interface:</strong> Desarrollo del frontend administrativo y consumo de API REST,
+                    gestionando el flujo de trabajo colaborativo en equipo mediante GitHub.</li>
+                <li><strong>Trading Monitor DCA:</strong> Diseño de arquitectura backend de alta concurrencia en
+                    <strong>Python (FastAPI)</strong> para procesar de manera estable altos volúmenes de datos y
+                    webhooks desde TradingView.</li>
+                <li><strong>Visualizador Bots DCA:</strong> Creación de un micro-frontend de alto rendimiento en Vanilla
+                    JS capaz de renderizar estrategias de inversión complejas en tiempo real.</li>
+            </ul>
+        </div>
+
+        <div class="project-item">
+            <h3>Sistema de Control de Stock <span class="meta-right">Consultor de Automatización</span></h3>
+            <p class="subtitle">Solución logística automatizada con tecnología No-Code</p>
+            <ul>
+                <li>Transformación digital de registros manuales a una aplicación <strong>AppSheet</strong>, generando
+                    un ahorro comprobado de 4 a 5 horas diarias de trabajo manual.</li>
+                <li>Configuración de seguridad y accesos estructurando la aplicación para manejar múltiples roles
+                    (operarios, administradores) manteniendo la integridad del inventario.</li>
+                <li>Desarrollo de lógica de negocio para la trazabilidad del stock en tiempo real y la automatización en
+                    la generación y envío de remitos en formato PDF.</li>
+            </ul>
+        </div>
+
+        <div class="project-item">
+            <h3>DriverBoostIA <span class="meta-right">Freelance | Chatbot & Automation</span></h3>
+            <p class="subtitle">Bot de captación y gestión de clientes para Autoescuelas (España)</p>
+            <ul>
+                <li>Diseño de flujos conversacionales interactivos utilizando Typebot basados en lógica pura y
+                    condicionales, automatizando casi el 100% del agendamiento de citas.</li>
+                <li>Integración directa y oficial con el ecosistema de WhatsApp mediante la <strong>Meta Graph
+                        API</strong> para garantizar estabilidad en la mensajería.</li>
+                <li>Implementación de pipelines de datos integrados con Google Sheets para centralizar de forma
+                    inmediata los leads calificados generados por el bot.</li>
+            </ul>
+        </div>
+
+        <div class="project-item">
+            <h3>PlugToSell <span class="meta-right">Frontend Developer</span></h3>
+            <p class="subtitle">Sistema de inyección dinámica de Widgets para E-commerce</p>
+            <ul>
+                <li>Desarrollo de scripts optimizados en <strong>Vanilla JS</strong> para la inyección de componentes
+                    visuales (widgets) directamente en tiendas virtuales operativas.</li>
+                <li>Adaptación técnica y despliegue de scripts diferenciados para asegurar compatibilidad total tanto en
+                    plataformas <strong>TiendaNube</strong> como en <strong>Shopify</strong>.</li>
+                <li>Integración avanzada de métricas comerciales configurando eventos y etiquetas de seguimiento
+                    utilizando <strong>Google Tag Manager (GTM)</strong> y <strong>Google Analytics 4 (GA4)</strong>.
+                </li>
+            </ul>
+        </div>
+
+        <div class="project-item">
+            <h3>Ebook "Florecillas" <span class="meta-right">Freelance | Mobile Developer</span></h3>
+            <p class="subtitle">Aplicación nativa de lectura accesible publicada en Stores</p>
+            <ul>
+                <li>Desarrollo nativo completo con <strong>React Native y Expo</strong>, abarcando desde el código hasta
+                    la gestión del proceso de publicación en <strong>Google Play Store</strong> (+100 descargas).</li>
+                <li>Implementación de funciones de accesibilidad integrando el motor nativo <em>Text-to-Speech</em>
+                    (TTS) y cargando el contenido literario mediante archivos JSON estructurados.</li>
+                <li>Gestión del estado de la aplicación (Context API / AsyncStorage) para permitir el guardado
+                    automático de la página actual y las preferencias del usuario lector.</li>
+            </ul>
+        </div>
+
+        <div class="project-item">
+            <h3>Airwilens <span class="meta-right">Proyecto Personal | Integración Mobile-Desktop</span></h3>
+            <p class="subtitle">Aplicación de transmisión de cámara web en red local</p>
+            <ul>
+                <li>Desarrollo de un ecosistema interconectado con un cliente móvil en <strong>React Native</strong> y
+                    un servidor receptor de escritorio programado en <strong>Python</strong>.</li>
+                <li>Implementación de lógica de captura de video en tiempo real desde el dispositivo móvil para su
+                    empaquetado y transmisión a través de la red local.</li>
+                <li>Creación de la interfaz gráfica y los sockets de recepción en el entorno de escritorio Python para
+                    procesar el stream de video de forma fluida.</li>
+            </ul>
+        </div>
+
+        <div class="project-item">
+            <h3>Diseño Matemático & Simulación Slot Machine <span class="meta-right">Freelance | Data Python</span></h3>
+            <p class="subtitle">Modelo probabilístico para nuevo título de casino</p>
+            <ul>
+                <li>Desarrollo desde cero de scripts de simulación <strong>Monte Carlo en Python puro</strong> (lógica
+                    core) para validar el comportamiento estadístico de un nuevo juego.</li>
+                <li>Creación de modelos de probabilidad exactos para ajustar la volatilidad y certificar el Retorno al
+                    Jugador (RTP) esperado por el cliente.</li>
+                <li>Automatización en la generación de la documentación técnica (Parsheets) requerida obligatoriamente
+                    para la certificación en la industria de juegos de azar.</li>
+            </ul>
+        </div>
+
+        <div class="project-item">
+            <h3>Personal Lifestyle App <span class="meta-right">Mobile Developer</span></h3>
+            <p class="subtitle">Suite de gestión personal con React Native & SQLite</p>
+            <ul>
+                <li>Implementación de <strong>Background Tasks</strong> para ejecutar geolocalización pasiva y calcular
+                    automáticamente la asistencia mensual al gimnasio.</li>
+                <li>Desarrollo de una base de datos local utilizando <strong>SQLite</strong> para asegurar la
+                    persistencia offline de listas de compras y seguimiento de métricas personales.</li>
+                <li>Maquetado completo de la interfaz de usuario aplicando estilos CSS personalizados (Custom Styles) en
+                    React Native, abarcando desde módulos de cronómetro hasta trackers de precios.</li>
+            </ul>
+        </div>
+
+        <div class="project-item">
+            <h3>Otros Proyectos Destacados <span class="meta-right">Diversos Entornos</span></h3>
+            <ul>
+                <li><strong>Multiplayer 3rd Person Shooter:</strong> Prototipo competitivo en <strong>Godot 4
+                        (GDScript)</strong> con implementación de físicas 3D y máquina de estados avanzada.</li>
+                <li><strong>Club Arturo Frondizi Web:</strong> Landing page institucional responsiva desarrollada con
+                    <strong>Bootstrap 5</strong> y componentes dinámicos interactivos.</li>
+                <li><strong>Martin's TV Center:</strong> Extensión de Chrome (Manifest V3) orientada a la gestión y
+                    casting de medios locales (Portainer, AdGuard).</li>
+            </ul>
+        </div>
+
+    </section>
+
+    <section>
+        <h2>Experiencia Laboral</h2>
+        <div class="job-item">
+            <h3>Servicio Técnico Autogestionado <span class="meta-right">2020 - Actualidad</span></h3>
+            <p class="subtitle">Freelance | Corrientes, Argentina</p>
+            <ul>
+                <li>Diagnóstico, reparación y mantenimiento de hardware y software para particulares y PyMEs.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>Educación</h2>
+        <div class="education-item">
+            <h3>Licenciatura en Sistemas de Información <span class="meta-right">En curso</span></h3>
+            <p class="subtitle">Universidad Nacional del Nordeste (UNNE)</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Idiomas</h2>
+        <ul>
+            <li><strong>Español:</strong> Nativo.</li>
+            <li><strong>Inglés:</strong> Nivel Técnico Intermedio (Lectura fluida de documentación y manuales técnicos).
+            </li>
+        </ul>
+    </section>
+
+</body>
+
+</html>
