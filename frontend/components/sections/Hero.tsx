@@ -1,156 +1,195 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, FileText } from "lucide-react";
-// Importamos los iconos correctos: LinkedIn y Envelope (Email)
-import { FaReact, FaPython, FaDocker, FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
-import { SiNextdotjs, SiFastapi, SiSupabase, SiTypescript, SiPostgresql, SiGodotengine } from "react-icons/si";
+import { FileText } from "lucide-react";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { useDevMode } from "@/components/providers/DevModeProvider";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-
-const ORBITS = [
-    { radius: 180, duration: 30, icons: [<FaReact key="react" />, <SiNextdotjs key="next" />, <SiTypescript key="ts" />], reverse: false },
-    { radius: 280, duration: 45, icons: [<FaPython key="py" />, <SiFastapi key="fast" />, <SiPostgresql key="pg" />], reverse: true },
-    { radius: 380, duration: 60, icons: [<FaDocker key="docker" />, <SiSupabase key="supa" />, <SiGodotengine key="godot" />], reverse: false },
-];
 
 export default function Hero() {
     const { isDevMode } = useDevMode();
 
     return (
-        <section id="hero" className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+        <section
+            id="hero"
+            className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden"
+        >
+            {/* Gradient overlay (atmospheric depth) */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: "radial-gradient(ellipse 70% 60% at 50% 40%, rgba(60,40,10,0.08) 0%, transparent 70%)"
+                }}
+            />
 
-            {/* FONDO GRID */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#121212]/50 to-[#121212] pointer-events-none" />
+            <div className="relative z-10 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
 
-            {/* SISTEMA DE ÓRBITAS */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none hidden lg:flex select-none opacity-40 hover:opacity-100 transition-opacity duration-700">
-                {ORBITS.map((orbit, i) => (
-                    <div
-                        key={i}
-                        className="absolute rounded-full border border-white/5"
-                        style={{
-                            width: orbit.radius * 2,
-                            height: orbit.radius * 2,
-                            animation: `spin ${orbit.duration}s linear infinite ${orbit.reverse ? 'reverse' : ''}`
-                        }}
+                {/* ── LEFT: TEXT ── */}
+                <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="space-y-8 text-center lg:text-left"
+                >
+                    {/* Eyebrow */}
+                    <p
+                        className="text-xs tracking-[0.35em] uppercase"
+                        style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.35em" }}
                     >
-                        {orbit.icons.map((icon, j) => {
-                            const angle = (360 / orbit.icons.length) * j;
-                            return (
-                                <div
-                                    key={j}
-                                    className="absolute text-gray-500 hover:text-primary transition-colors transform hover:scale-150"
-                                    style={{
-                                        top: '50%',
-                                        left: '50%',
-                                        width: 40,
-                                        height: 40,
-                                        marginLeft: -20,
-                                        marginTop: -20,
-                                        transform: `rotate(${angle}deg) translate(${orbit.radius}px) rotate(-${angle}deg) rotate(-${isDevMode ? 0 : 0}deg)`,
-                                    }}
-                                >
-                                    <div className="animate-[spin_10s_linear_infinite_reverse] text-2xl">
-                                        {icon}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                ))}
-            </div>
+                        ✦ &nbsp; Portafolio · Full Stack &nbsp; ✦
+                    </p>
 
-            {/* CONTENIDO PRINCIPAL */}
-            <div className="relative z-10 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-
-                {/* TEXTO */}
-                <div className="space-y-8 text-center lg:text-left">
+                    {/* Main title */}
                     <div className="space-y-2">
-                        <p className="font-mono text-primary text-sm tracking-widest animate-pulse">
-                            &gt; INITIALIZING SYSTEM...
-                        </p>
-                        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-white">
-                            Lugo Martin
+                        <h1
+                            className="text-5xl md:text-7xl font-bold leading-tight"
+                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.06em" }}
+                        >
+                            Lugo
+                            <br />
+                            <span style={{ color: "var(--bb-white)" }}>Martin</span>
                         </h1>
-                        <h2 className="text-2xl md:text-3xl text-gray-400 font-light">
-                            Full Stack <span className="text-white font-medium">Developer</span>
+
+                        <div className="bb-separator mt-4 mb-4" style={{ maxWidth: "320px" }} />
+
+                        <h2
+                            className="text-xl md:text-2xl font-normal"
+                            style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--bb-muted)" }}
+                        >
+                            Full Stack Developer & Architect
                         </h2>
-                        <p className="text-gray-500 max-w-lg text-lg leading-relaxed pt-2 mx-auto lg:mx-0">
-                            Transformando ideas complejas en código limpio y escalable.
-                            <span className="block mt-1 font-mono text-sm text-primary">
-                                Python, React, Next.js, React Native, Node.js, JS Vanilla
-                            </span>
-                        </p>
                     </div>
 
-                    <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-                        <a
-                            href="#projects"
-                            className="px-8 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg font-medium transition-all shadow-[0_0_20px_rgba(102,71,169,0.3)] hover:shadow-[0_0_30px_rgba(102,71,169,0.5)] flex items-center gap-2 group"
+                    {/* Description */}
+                    <p
+                        className="text-lg leading-relaxed max-w-md mx-auto lg:mx-0"
+                        style={{ fontFamily: "var(--font-body)", color: "var(--bb-muted)" }}
+                    >
+                        Transformando ideas complejas en código limpio y escalable.
+                        <br />
+                        <span
+                            className="text-sm tracking-wider not-italic mt-1 block"
+                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.12em", fontSize: "0.72rem" }}
                         >
-                            Explorar Trabajo
-                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                        </a>
+                            Python · React · Next.js · Node.js · FastAPI · Docker
+                        </span>
+                    </p>
 
+                    {/* CTA Buttons */}
+                    <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                        <a href="#projects" className="bb-btn">
+                            Explorar Obras
+                        </a>
                         <a
                             href="/CV - Lugo Martin Adrian.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-8 py-3 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-lg font-medium transition-all flex items-center gap-2"
+                            className="bb-btn-secondary flex items-center gap-2"
                         >
-                            <FileText size={18} />
+                            <FileText size={14} />
                             Resume / CV
                         </a>
                     </div>
 
-                    <div className="flex items-center gap-6 text-gray-400 pt-4 justify-center lg:justify-start">
-                        {/* ICONOS CORREGIDOS: Grises por defecto, blancos/primary al hover */}
-                        <SocialLink href="https://github.com/Luquin8" icon={<FaGithub size={24} />} />
-                        <SocialLink href="https://linkedin.com/in/lugoamartin" icon={<FaLinkedin size={24} />} />
-                        <SocialLink href="mailto:lugoamartin@gmail.com" icon={<FaEnvelope size={24} />} />
+                    {/* Social links */}
+                    <div className="flex items-center gap-6 justify-center lg:justify-start pt-2">
+                        <SocialLink href="https://github.com/Luquin8" icon={<FaGithub size={20} />} label="GitHub" />
+                        <SocialLink href="https://linkedin.com/in/lugoamartin" icon={<FaLinkedin size={20} />} label="LinkedIn" />
+                        <SocialLink href="mailto:lugoamartin@gmail.com" icon={<FaEnvelope size={20} />} label="Email" />
                     </div>
-                </div>
+                </motion.div>
 
-                {/* FOTO */}
-                <div className={cn("relative group mx-auto", isDevMode && "dev-border")}>
+                {/* ── RIGHT: PHOTO ── */}
+                <motion.div
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
+                    className={cn("relative mx-auto flex items-center justify-center", isDevMode && "outline outline-1 outline-dashed outline-yellow-400/30")}
+                >
+                    {/* Dev mode label */}
                     {isDevMode && (
-                        // CORRECCIÓN: Cartel movido abajo para no tapar la cara
-                        <div className="absolute -bottom-12 left-0 right-0 mx-auto w-max bg-black/80 border border-primary/50 text-primary text-[10px] font-mono p-2 rounded">
-                            <div>Detected: OrbitSystem.tsx</div>
-                            <div>Animations: CSS Keyframes | Z-Index: 10</div>
+                        <div
+                            className="absolute -bottom-8 left-0 right-0 w-max mx-auto text-[10px] px-2 py-1 border"
+                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", borderColor: "var(--bb-border)", background: "var(--bb-panel)", letterSpacing: "0.12em" }}
+                        >
+                            Hero.tsx · ProfileFrame
                         </div>
                     )}
 
-                    <div className="relative w-64 h-64 md:w-96 md:h-96 grayscale hover:grayscale-0 transition-all duration-500 rounded-2xl overflow-hidden border-2 border-white/10 group-hover:border-primary/50 z-20 bg-[#1a1a1a]">
-                        <div className="w-full h-full flex flex-col items-center justify-center text-gray-600 font-mono bg-[#1a1a1a]">
-                            <span className="text-4xl mb-2">📸</span>
+                    {/* Photo frame with BB corner accents */}
+                    <div className="bb-corner-box relative group">
+                        <span className="bb-corner-tr" />
+                        <span className="bb-corner-bl" />
+
+                        {/* Outer atmospheric ring */}
+                        <div
+                            className="absolute -inset-6 pointer-events-none"
+                            style={{
+                                background: "radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%)"
+                            }}
+                        />
+
+                        {/* Photo */}
+                        <div
+                            className="relative w-64 h-64 md:w-80 md:h-80 overflow-hidden"
+                            style={{ border: "1px solid var(--bb-border)" }}
+                        >
                             <Image
-                                src="/profile.png" // Asegúrate que el nombre coincida con tu archivo en /public
+                                src="/profile.png"
                                 alt="Lugo Martin"
                                 fill
                                 className="object-cover"
-                                priority // Carga prioritaria para el Hero (LCP)
+                                priority
+                            />
+                            {/* Hover golden tint */}
+                            <div
+                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                style={{ background: "rgba(201,168,76,0.08)", mixBlendMode: "overlay" }}
                             />
                         </div>
 
-                        {/* Overlay Glitch */}
-                        <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity mix-blend-overlay" />
+                        {/* Bottom label plate */}
+                        <div
+                            className="absolute left-0 right-0 bottom-0 py-2 text-center"
+                            style={{
+                                background: "rgba(5,4,3,0.80)",
+                                borderTop: "1px solid var(--bb-border)",
+                                backdropFilter: "blur(4px)"
+                            }}
+                        >
+                            <span
+                                className="text-xs tracking-widest uppercase"
+                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.2em" }}
+                            >
+                                Full Stack Dev
+                            </span>
+                        </div>
                     </div>
+                </motion.div>
 
-                    <div className="absolute -inset-4 border border-primary/20 rounded-2xl -z-10 translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform" />
-                </div>
+            </div>
 
+            {/* Bottom separator */}
+            <div className="absolute bottom-0 left-0 right-0">
+                <div className="bb-separator" />
             </div>
         </section>
     );
 }
 
-function SocialLink({ href, icon }: { href: string; icon: React.ReactNode }) {
+function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
     return (
-        <a href={href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors hover:scale-110 transform">
+        <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={label}
+            className="transition-colors duration-200"
+            style={{ color: "var(--bb-muted)" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)"; }}
+        >
             {icon}
         </a>
     );

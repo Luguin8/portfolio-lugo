@@ -1,93 +1,412 @@
+/* ============================================================
+   BLOODBORNE UI – Global Styles
+   Fuentes: Cinzel (títulos) · EB Garamond (cuerpo)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
 @import "tailwindcss";
 
-@theme {
-  --color-background: #121212;
-  --color-foreground: #e0e0e0;
-  --color-primary: #6647A9;
-  --color-primary-hover: #53398f;
-  --color-card: #1e1e1e;
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-
-  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* ── Design Tokens ──────────────────────────────────────── */
+:root {
+  --bb-bg: #05040a;
+  --bb-gold: #c9a84c;
+  --bb-gold-bright: #e8c87a;
+  --bb-gold-dim: rgba(201, 168, 76, 0.35);
+  --bb-crimson: #8b1a1a;
+  --bb-white: #d4cfc8;
+  --bb-muted: #8a8278;
+  --bb-panel: rgba(10, 8, 6, 0.88);
+  --bb-panel-light: rgba(22, 18, 14, 0.90);
+  --bb-border: rgba(140, 110, 60, 0.40);
+  --bb-border-dim: rgba(90, 70, 35, 0.25);
+  --font-title: 'Cinzel', 'Palatino Linotype', serif;
+  --font-body: 'EB Garamond', 'Garamond', 'Georgia', serif;
 }
 
-/* Reset básico para asegurar el modo oscuro forzado */
-:root {
+/* ── Base ────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
   color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-sans);
+  background-color: var(--bb-bg);
+  color: var(--bb-white);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Utilidades para el estilo "Hacker" */
-.font-mono {
-  font-family: var(--font-mono);
+/* ── Custom Scrollbar ────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-.dev-border {
-  border: 1px dashed rgba(102, 71, 169, 0.3);
+::-webkit-scrollbar-track {
+  background: var(--bb-bg);
 }
 
-.glass-panel {
-  background: rgba(30, 30, 30, 0.6);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+::-webkit-scrollbar-thumb {
+  background: var(--bb-border);
+  border-radius: 0;
 }
 
-@keyframes global-glitch {
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bb-gold-dim);
+}
+
+/* ── Selection ───────────────────────────────────────────── */
+::selection {
+  background: rgba(201, 168, 76, 0.25);
+  color: var(--bb-gold-bright);
+}
+
+/* ============================================================
+   FOG EFFECT – Pure CSS, no external images
+   ============================================================ */
+@keyframes bb-fog-1 {
   0% {
-    transform: translate(0);
+    opacity: 0.12;
+    transform: translate(0, 0) scale(1);
   }
 
-  2% {
-    transform: translate(-2px, 1px);
+  33% {
+    opacity: 0.22;
+    transform: translate(2%, 1.5%) scale(1.04);
   }
 
-  4% {
-    transform: translate(2px, -1px);
-  }
-
-  6% {
-    transform: translate(0);
+  66% {
+    opacity: 0.14;
+    transform: translate(-1%, 3%) scale(1.02);
   }
 
   100% {
-    transform: translate(0);
+    opacity: 0.12;
+    transform: translate(0, 0) scale(1);
   }
 }
 
-@keyframes global-rgb-shift {
+@keyframes bb-fog-2 {
   0% {
-    text-shadow: none;
+    opacity: 0.08;
+    transform: translate(0, 0) scale(1);
   }
 
-  2% {
-    text-shadow: -2px 0 #ff00c1, 2px 0 #00fff9;
+  40% {
+    opacity: 0.18;
+    transform: translate(-3%, -2%) scale(1.05);
   }
 
-  4% {
-    text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9;
-  }
-
-  6% {
-    text-shadow: none;
+  75% {
+    opacity: 0.10;
+    transform: translate(2%, -1%) scale(1.02);
   }
 
   100% {
-    text-shadow: none;
+    opacity: 0.08;
+    transform: translate(0, 0) scale(1);
   }
 }
 
-.glitch-effect {
-  animation: global-glitch 12s infinite, global-rgb-shift 12s infinite;
-  /* El 12s indica que pasa cada 12 segundos. Ajusta si quieres más/menos tiempo */
+@keyframes bb-fog-3 {
+  0% {
+    opacity: 0.06;
+    transform: translate(0, 0);
+  }
+
+  50% {
+    opacity: 0.14;
+    transform: translate(1.5%, 2%);
+  }
+
+  100% {
+    opacity: 0.06;
+    transform: translate(0, 0);
+  }
 }
 
+.bb-fog-layer {
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bb-fog-layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 30% 40%,
+      rgba(180, 140, 50, 0.08) 0%,
+      rgba(60, 30, 10, 0.18) 40%,
+      transparent 70%);
+  animation: bb-fog-1 28s ease-in-out infinite;
+}
+
+.bb-fog-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 70% at 70% 65%,
+      rgba(20, 10, 5, 0.30) 0%,
+      rgba(100, 60, 20, 0.06) 45%,
+      transparent 70%);
+  animation: bb-fog-2 38s ease-in-out infinite;
+}
+
+.bb-fog-mid {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 90% 50% at 50% 20%,
+      rgba(60, 40, 10, 0.12) 0%,
+      transparent 65%);
+  animation: bb-fog-3 22s ease-in-out infinite;
+}
+
+/* ============================================================
+   BB UTILITY CLASSES
+   ============================================================ */
+
+/* Títulos en Cinzel */
+.bb-title {
+  font-family: var(--font-title);
+  color: var(--bb-gold);
+  letter-spacing: 0.08em;
+}
+
+.bb-title-white {
+  font-family: var(--font-title);
+  color: var(--bb-white);
+  letter-spacing: 0.06em;
+}
+
+/* Panel oscuro */
+.bb-panel {
+  background: var(--bb-panel);
+  border: 1px solid var(--bb-border);
+}
+
+/* Separator: línea horizontal con fade en los extremos */
+.bb-separator {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  border: none;
+  background: linear-gradient(to right,
+      transparent 0%,
+      var(--bb-border) 15%,
+      var(--bb-gold-dim) 50%,
+      var(--bb-border) 85%,
+      transparent 100%);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* Separator con ornamento central */
+.bb-separator-ornate::before {
+  content: '✦';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.55rem;
+  color: var(--bb-gold);
+  background: var(--bb-bg);
+  padding: 0 6px;
+  line-height: 1;
+}
+
+/* Tag estilo inventario */
+.bb-tag {
+  font-family: var(--font-title);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--bb-muted);
+  border: 1px solid var(--bb-border-dim);
+  padding: 2px 8px;
+  background: rgba(10, 8, 6, 0.60);
+  text-transform: uppercase;
+}
+
+.bb-tag:hover {
+  color: var(--bb-gold);
+  border-color: var(--bb-border);
+}
+
+/* Caja con acentos de esquina (marco victoriano CSS) */
+.bb-corner-box {
+  position: relative;
+}
+
+.bb-corner-box::before,
+.bb-corner-box::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--bb-gold);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.bb-corner-box::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+
+.bb-corner-box::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+/* Acentos de esquina extra (via span hijos) */
+.bb-corner-box .bb-corner-tr,
+.bb-corner-box .bb-corner-bl {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--bb-gold);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.bb-corner-box .bb-corner-tr {
+  top: -1px;
+  right: -1px;
+  border-width: 2px 2px 0 0;
+}
+
+.bb-corner-box .bb-corner-bl {
+  bottom: -1px;
+  left: -1px;
+  border-width: 0 0 2px 2px;
+}
+
+/* Input / textarea estilo BB */
+.bb-input {
+  background: rgba(5, 4, 3, 0.70);
+  border: 1px solid var(--bb-border);
+  border-radius: 0;
+  color: var(--bb-white);
+  font-family: var(--font-body);
+  padding: 0.55rem 0.75rem;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.bb-input:focus {
+  border-color: var(--bb-gold);
+  box-shadow: 0 0 0 1px var(--bb-gold-dim);
+}
+
+.bb-input::placeholder {
+  color: var(--bb-muted);
+  font-style: italic;
+}
+
+.bb-input option {
+  background: #0a0806;
+  color: var(--bb-white);
+}
+
+/* Botón primario BB */
+.bb-btn {
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid var(--bb-gold);
+  color: var(--bb-gold);
+  background: transparent;
+  padding: 0.65rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.bb-btn:hover {
+  background: var(--bb-gold);
+  color: #0a0806;
+  box-shadow: 0 0 18px rgba(201, 168, 76, 0.30);
+}
+
+.bb-btn:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Botón secundario BB */
+.bb-btn-secondary {
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid var(--bb-border);
+  color: var(--bb-muted);
+  background: transparent;
+  padding: 0.65rem 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.bb-btn-secondary:hover {
+  color: var(--bb-white);
+  border-color: var(--bb-gold-dim);
+}
+
+/* Fila de estadística (SkillsGrid) */
+.bb-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0.25rem;
+  border-bottom: 1px solid var(--bb-border-dim);
+  transition: background 0.15s;
+}
+
+.bb-stat-row:last-child {
+  border-bottom: none;
+}
+
+.bb-stat-row:hover {
+  background: rgba(201, 168, 76, 0.05);
+}
+
+.bb-stat-row:hover .bb-stat-name {
+  color: var(--bb-gold-bright);
+}
+
+.bb-stat-name {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--bb-white);
+  flex: 1;
+  transition: color 0.15s;
+}
+
+/* Mask gradient laterales (ProjectsGrid) */
 .mask-gradient-sides {
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
 }

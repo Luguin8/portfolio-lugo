@@ -1,24 +1,35 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
-import ClientLayout from "@/components/ClientLayout"; // Importamos el componente que acabamos de crear
+import { Cinzel, EB_Garamond } from "next/font/google";
+import ClientLayout from "@/components/ClientLayout";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-cinzel",
+  display: "swap",
+});
+
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
+  variable: "--font-garamond",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Lugo Martin | Full Stack Architect",
   description: "Portfolio profesional de Lugo Martin. Desarrollador Full Stack.",
   icons: {
-    icon: "/icon.png", // Asegúrate de subir tu imagen como icon.png a /public
+    icon: "/icon.png",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className="scroll-smooth">
-      {/* Pasamos las variables de fuente y los hijos al ClientLayout */}
-      <ClientLayout fontVariables={`${inter.variable} ${mono.variable}`}>
+      <ClientLayout fontVariables={`${cinzel.variable} ${ebGaramond.variable}`}>
         {children}
       </ClientLayout>
     </html>

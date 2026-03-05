@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import { motion } from "framer-motion";
 import { Send, Mail, MapPin, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
-import { sendContactMessage } from "@/lib/actions"; // Importamos la acción del paso 1
+import { sendContactMessage } from "@/lib/actions";
 
 const initialState = {
     success: false,
@@ -11,112 +11,186 @@ const initialState = {
 };
 
 export default function Contact() {
-    // Hook mágico de Next.js para formularios server-side
     const [state, formAction, isPending] = useActionState(sendContactMessage, initialState);
 
     return (
-        <section id="contact" className="py-32 px-6 relative overflow-hidden">
-
-            {/* Fondo Decorativo */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
-                <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-20" />
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl opacity-20" />
-            </div>
-
+        <section
+            id="contact"
+            className="py-28 px-6 relative overflow-hidden"
+        >
             <div className="max-w-6xl mx-auto relative z-10 grid md:grid-cols-2 gap-16 items-start">
 
-                {/* COLUMNA IZQUIERDA: Info */}
+                {/* ── LEFT: Info ── */}
                 <div className="space-y-8">
                     <div>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                            Hablemos de tu <span className="text-primary">Próximo Proyecto</span>
+                        <p
+                            className="text-xs tracking-[0.3em] uppercase mb-3"
+                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.28em" }}
+                        >
+                            ✦ &nbsp; TRANSMISIÓN
+                        </p>
+                        <h2
+                            className="text-4xl md:text-5xl mb-4"
+                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)" }}
+                        >
+                            Hablemos de tu{" "}
+                            <span style={{ color: "var(--bb-white)" }}>Próximo Proyecto</span>
                         </h2>
-                        <p className="text-gray-400 text-lg leading-relaxed">
+                        <div className="bb-separator" style={{ maxWidth: "360px" }} />
+                        <p
+                            className="mt-5 text-lg leading-relaxed"
+                            style={{ fontFamily: "var(--font-body)", color: "var(--bb-muted)", fontStyle: "italic" }}
+                        >
                             ¿Tienes una idea innovadora o necesitas escalar tu arquitectura actual?
                             Estoy disponible para proyectos freelance y consultoría técnica.
                         </p>
                     </div>
 
-                    <div className="space-y-6 pt-4">
-                        <div className="flex items-center gap-4 text-gray-300">
-                            <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/10 text-primary">
-                                <Mail size={20} />
+                    <div className="space-y-5 pt-2">
+                        {/* Email row */}
+                        <div className="flex items-center gap-5">
+                            <div
+                                className="w-11 h-11 flex items-center justify-center shrink-0"
+                                style={{ border: "1px solid var(--bb-border)", color: "var(--bb-gold)" }}
+                            >
+                                <Mail size={18} />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500 font-mono uppercase tracking-wider">Email</p>
-                                <a href="mailto:lugoamartin@gmail.com" className="hover:text-white transition-colors">lugoamartin@gmail.com</a>
+                                <p
+                                    className="text-[0.6rem] tracking-[0.25em] uppercase mb-0.5"
+                                    style={{ fontFamily: "var(--font-title)", color: "var(--bb-muted)", letterSpacing: "0.22em" }}
+                                >
+                                    Email
+                                </p>
+                                <a
+                                    href="mailto:lugoamartin@gmail.com"
+                                    className="text-base transition-colors duration-200"
+                                    style={{ fontFamily: "var(--font-body)", color: "var(--bb-white)" }}
+                                    onMouseEnter={(e) => { (e.target as HTMLElement).style.color = "var(--bb-gold)"; }}
+                                    onMouseLeave={(e) => { (e.target as HTMLElement).style.color = "var(--bb-white)"; }}
+                                >
+                                    lugoamartin@gmail.com
+                                </a>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-4 text-gray-300">
-                            <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/10 text-primary">
-                                <MapPin size={20} />
+                        {/* Location row */}
+                        <div className="flex items-center gap-5">
+                            <div
+                                className="w-11 h-11 flex items-center justify-center shrink-0"
+                                style={{ border: "1px solid var(--bb-border)", color: "var(--bb-gold)" }}
+                            >
+                                <MapPin size={18} />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500 font-mono uppercase tracking-wider">Ubicación</p>
-                                <p>Corrientes, Argentina (Remote)</p>
+                                <p
+                                    className="text-[0.6rem] tracking-[0.25em] uppercase mb-0.5"
+                                    style={{ fontFamily: "var(--font-title)", color: "var(--bb-muted)", letterSpacing: "0.22em" }}
+                                >
+                                    Ubicación
+                                </p>
+                                <p className="text-base" style={{ fontFamily: "var(--font-body)", color: "var(--bb-white)" }}>
+                                    Corrientes, Argentina (Remote)
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* COLUMNA DERECHA: Formulario */}
-                <div className="bg-[#1a1a1a] border border-white/5 p-8 rounded-2xl shadow-2xl relative overflow-hidden">
+                {/* ── RIGHT: Form ── */}
+                <div
+                    className="bb-corner-box relative overflow-hidden"
+                    style={{
+                        background: "var(--bb-panel-light)",
+                        border: "1px solid var(--bb-border)",
+                        padding: "2rem",
+                    }}
+                >
+                    <span className="bb-corner-tr" />
+                    <span className="bb-corner-bl" />
 
-                    {state.success ? (
-                        // Mensaje de Éxito
+                    {/* Success overlay */}
+                    {state.success && (
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="absolute inset-0 z-20 bg-[#1a1a1a] flex flex-col items-center justify-center text-center p-8"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center p-8"
+                            style={{ background: "var(--bb-panel)" }}
                         >
-                            <div className="w-20 h-20 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-6">
-                                <CheckCircle2 size={40} />
-                            </div>
-                            <h3 className="text-2xl font-bold text-white mb-2">¡Mensaje Recibido!</h3>
-                            <p className="text-gray-400 mb-6">{state.message}</p>
-                            <button
-                                onClick={() => window.location.reload()} // Reset simple
-                                className="text-sm text-primary hover:underline"
+                            <div
+                                className="w-16 h-16 flex items-center justify-center mb-6"
+                                style={{ border: "1px solid var(--bb-gold)", color: "var(--bb-gold)" }}
                             >
-                                Enviar otro mensaje
+                                <CheckCircle2 size={32} />
+                            </div>
+                            <h3
+                                className="text-xl mb-2"
+                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.1em" }}
+                            >
+                                MENSAJE RECIBIDO
+                            </h3>
+                            <p className="mb-6" style={{ fontFamily: "var(--font-body)", color: "var(--bb-muted)", fontStyle: "italic" }}>
+                                {state.message}
+                            </p>
+                            <button
+                                onClick={() => window.location.reload()}
+                                className="text-sm transition-colors duration-200"
+                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.15em" }}
+                                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-gold-bright)"; }}
+                                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)"; }}
+                            >
+                                ✦ Enviar otro mensaje
                             </button>
                         </motion.div>
-                    ) : null}
+                    )}
 
-                    <form action={formAction} className="space-y-6">
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label htmlFor="name" className="text-xs font-mono text-gray-500 uppercase">Nombre</label>
+                    <form action={formAction} className="space-y-5">
+                        <div className="grid md:grid-cols-2 gap-5">
+                            <div className="space-y-1.5">
+                                <label
+                                    htmlFor="name"
+                                    className="block text-[0.6rem] tracking-[0.25em] uppercase"
+                                    style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.22em" }}
+                                >
+                                    Nombre
+                                </label>
                                 <input
                                     type="text"
                                     name="name"
                                     id="name"
                                     required
-                                    className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:outline-none transition-colors"
+                                    className="bb-input"
                                     placeholder="Tu nombre"
                                 />
                             </div>
-                            <div className="space-y-2">
-                                <label htmlFor="email" className="text-xs font-mono text-gray-500 uppercase">Email</label>
+                            <div className="space-y-1.5">
+                                <label
+                                    htmlFor="email"
+                                    className="block text-[0.6rem] tracking-[0.25em] uppercase"
+                                    style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.22em" }}
+                                >
+                                    Email
+                                </label>
                                 <input
                                     type="email"
                                     name="email"
                                     id="email"
                                     required
-                                    className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:outline-none transition-colors"
+                                    className="bb-input"
                                     placeholder="tu@email.com"
                                 />
                             </div>
                         </div>
 
-                        <div className="space-y-2">
-                            <label htmlFor="subject" className="text-xs font-mono text-gray-500 uppercase">Asunto (Opcional)</label>
-                            <select
-                                name="subject"
-                                id="subject"
-                                className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:outline-none transition-colors appearance-none"
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="subject"
+                                className="block text-[0.6rem] tracking-[0.25em] uppercase"
+                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.22em" }}
                             >
+                                Asunto
+                            </label>
+                            <select name="subject" id="subject" className="bb-input">
                                 <option value="General">Consulta General</option>
                                 <option value="Freelance">Proyecto Freelance</option>
                                 <option value="Job Offer">Oferta Laboral</option>
@@ -124,39 +198,51 @@ export default function Contact() {
                             </select>
                         </div>
 
-                        <div className="space-y-2">
-                            <label htmlFor="message" className="text-xs font-mono text-gray-500 uppercase">Mensaje</label>
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="message"
+                                className="block text-[0.6rem] tracking-[0.25em] uppercase"
+                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.22em" }}
+                            >
+                                Mensaje
+                            </label>
                             <textarea
                                 name="message"
                                 id="message"
                                 required
                                 rows={5}
-                                className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:outline-none transition-colors resize-none"
+                                className="bb-input"
                                 placeholder="Cuéntame sobre tu proyecto..."
+                                style={{ resize: "none" }}
                             />
                         </div>
 
-                        {/* Mensaje de Error (si falla el envío) */}
+                        {/* Error */}
                         {!state.success && state.message && (
-                            <div className="flex items-center gap-2 text-red-400 text-sm bg-red-400/10 p-3 rounded">
-                                <AlertCircle size={16} />
+                            <div
+                                className="flex items-center gap-2 text-sm p-3"
+                                style={{ background: "rgba(139,26,26,0.15)", border: "1px solid rgba(139,26,26,0.40)", color: "var(--bb-crimson)", fontFamily: "var(--font-body)" }}
+                            >
+                                <AlertCircle size={14} />
                                 {state.message}
                             </div>
                         )}
 
+                        <div className="bb-separator my-2" />
+
                         <button
                             type="submit"
                             disabled={isPending}
-                            className="w-full py-4 bg-primary hover:bg-primary/90 text-white rounded-lg font-medium transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="bb-btn w-full"
                         >
                             {isPending ? (
                                 <>
-                                    <Loader2 size={20} className="animate-spin" />
+                                    <Loader2 size={16} className="animate-spin" />
                                     Transmitiendo...
                                 </>
                             ) : (
                                 <>
-                                    <Send size={20} />
+                                    <Send size={14} />
                                     Enviar Mensaje
                                 </>
                             )}
