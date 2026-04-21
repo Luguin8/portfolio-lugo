@@ -8,21 +8,24 @@ import {
 import {
     SiNextdotjs, SiFastapi, SiSupabase, SiTypescript, SiTailwindcss,
     SiPostgresql, SiArduino, SiExpo, SiGodotengine, SiSqlite,
-    SiVercel, SiBootstrap, SiLinux, SiGoogleanalytics, SiGoogletagmanager, SiOpenai
+    SiVercel, SiBootstrap, SiLinux, SiGoogleanalytics, SiGoogletagmanager, SiOpenai,
+    SiVite, SiRust, SiTauri
 } from "react-icons/si";
 import { BarChart2, Network, Globe, Database, Wrench, Cpu, Brain, Hammer, Headphones } from "lucide-react";
 
 const SKILL_CATEGORIES = [
     {
-        title: "Frontend & Mobile",
+        title: "Frontend, Mobile & Desktop",
         label: "DISCIPLINA I",
         icon: <Globe size={12} />,
         skills: [
             { name: "React.js / Next.js App Router", icon: <span className="flex gap-1"><FaReact /><SiNextdotjs /></span> },
+            { name: "Vite", icon: <SiVite /> },
             { name: "TypeScript", icon: <SiTypescript /> },
             { name: "JavaScript Vanilla (DOM Avz.)", icon: <FaJs /> },
             { name: "HTML5 & CSS3", icon: <span className="flex gap-1"><FaHtml5 /><FaCss3Alt /></span> },
             { name: "React Native (Expo)", icon: <SiExpo /> },
+            { name: "Tauri (Desktop Apps)", icon: <SiTauri /> },
             { name: "Tailwind CSS", icon: <SiTailwindcss /> },
             { name: "Bootstrap 5", icon: <SiBootstrap /> },
         ],
@@ -33,6 +36,7 @@ const SKILL_CATEGORIES = [
         icon: <Database size={12} />,
         skills: [
             { name: "Python (FastAPI, Scripts)", icon: <FaPython /> },
+            { name: "Rust", icon: <SiRust /> },
             { name: "Node.js", icon: <FaNodeJs /> },
             { name: "Supabase (Auth, DB relacional)", icon: <SiSupabase /> },
             { name: "SQLite (Mobile)", icon: <SiSqlite /> },
@@ -83,25 +87,16 @@ export default function SkillsGrid() {
         >
             {/* Section header */}
             <div className="max-w-7xl mx-auto mb-14">
-                <p
-                    className="text-xs tracking-[0.35em] uppercase mb-3"
-                    style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.3em" }}
-                >
+                <p className="text-xs tracking-[0.3em] uppercase mb-3 font-title text-bb-gold">
                     <Cpu size={12} className="inline mr-2" />
                     ESTADÍSTICAS DEL CAZADOR
                 </p>
-                <h2
-                    className="text-4xl md:text-5xl mb-4"
-                    style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)" }}
-                >
+                <h2 className="text-4xl md:text-5xl mb-4 font-title text-bb-gold">
                     Arsenal{" "}
-                    <span style={{ color: "var(--bb-white)" }}>Tecnológico</span>
+                    <span className="text-bb-white">Tecnológico</span>
                 </h2>
-                <div className="bb-separator" style={{ maxWidth: "400px" }} />
-                <p
-                    className="mt-4 text-lg max-w-2xl"
-                    style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--bb-muted)" }}
-                >
+                <div className="bb-separator max-w-[400px]" />
+                <p className="mt-4 text-lg max-w-2xl font-body italic text-bb-muted">
                     Stack integral: desde interfaces web y apps móviles hasta análisis de datos, soporte técnico de hardware y desarrollo de videojuegos.
                 </p>
             </div>
@@ -115,28 +110,17 @@ export default function SkillsGrid() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: idx * 0.1, duration: 0.5 }}
                         viewport={{ once: true }}
-                        className="bb-corner-box"
-                        style={{
-                            background: "var(--bb-panel)",
-                            border: "1px solid var(--bb-border)",
-                            padding: "1.75rem",
-                        }}
+                        className="bb-corner-box bg-bb-panel border border-bb-border p-7"
                     >
                         <span className="bb-corner-tr" />
                         <span className="bb-corner-bl" />
 
                         {/* Category header */}
                         <div className="mb-1">
-                            <p
-                                className="text-[0.58rem] tracking-[0.28em] uppercase mb-2 flex items-center gap-1.5"
-                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-muted)" }}
-                            >
+                            <p className="text-[0.58rem] tracking-[0.28em] uppercase mb-2 flex items-center gap-1.5 font-title text-bb-muted">
                                 {category.icon} {category.label}
                             </p>
-                            <h3
-                                className="text-sm leading-snug"
-                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.06em" }}
-                            >
+                            <h3 className="text-sm leading-snug font-title text-bb-gold tracking-[0.06em]">
                                 {category.title}
                             </h3>
                         </div>
@@ -153,10 +137,7 @@ export default function SkillsGrid() {
                                         import("@/lib/sounds").then(({ playHoverLight }) => playHoverLight());
                                     }}
                                 >
-                                    <span
-                                        className="w-5 flex-shrink-0 flex justify-center text-sm"
-                                        style={{ color: "var(--bb-muted)" }}
-                                    >
+                                    <span className="w-5 flex-shrink-0 flex justify-center text-sm text-bb-muted">
                                         {skill.icon}
                                     </span>
                                     <span className="bb-stat-name">{skill.name}</span>

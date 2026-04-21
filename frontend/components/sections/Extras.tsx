@@ -49,18 +49,12 @@ export default function Extras() {
 
                 {/* Section header */}
                 <div className="mb-14">
-                    <p
-                        className="text-xs tracking-[0.35em] uppercase mb-3"
-                        style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.3em" }}
-                    >
+                    <p className="text-xs tracking-[0.3em] uppercase mb-3 font-title text-bb-gold">
                         ✦ &nbsp; HISTORIA DEL CAZADOR
                     </p>
-                    <h2
-                        className="text-4xl md:text-5xl mb-4"
-                        style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)" }}
-                    >
+                    <h2 className="text-4xl md:text-5xl mb-4 font-title text-bb-gold">
                         Formación &{" "}
-                        <span style={{ color: "var(--bb-white)" }}>Trayectoria</span>
+                        <span className="text-bb-white">Trayectoria</span>
                     </h2>
                     <div className="bb-separator" style={{ maxWidth: "360px" }} />
                 </div>
@@ -76,16 +70,10 @@ export default function Extras() {
                         viewport={{ once: true }}
                     >
                         <div className="flex items-center gap-3 mb-6">
-                            <div
-                                className="w-9 h-9 flex items-center justify-center shrink-0"
-                                style={{ border: "1px solid var(--bb-border)", color: "var(--bb-gold)" }}
-                            >
+                            <div className="w-9 h-9 flex items-center justify-center shrink-0 border border-bb-border text-bb-gold">
                                 <GraduationCap size={16} />
                             </div>
-                            <h3
-                                className="text-sm tracking-widest uppercase"
-                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.2em" }}
-                            >
+                            <h3 className="text-sm tracking-[0.2em] uppercase font-title text-bb-gold">
                                 Educación
                             </h3>
                         </div>
@@ -94,56 +82,32 @@ export default function Extras() {
                             {EDUCATION.map((edu) => (
                                 <div
                                     key={edu.title}
-                                    className="bb-corner-box relative p-5"
-                                    style={{ background: "var(--bb-panel)", border: "1px solid var(--bb-border)" }}
+                                    className="bb-corner-box relative p-5 bg-bb-panel border border-bb-border"
                                 >
                                     <span className="bb-corner-tr" />
                                     {/* Status badge */}
-                                    <span
-                                        className="text-[0.58rem] tracking-[0.25em] uppercase mb-2 block"
-                                        style={{ fontFamily: "var(--font-title)", color: "var(--bb-muted)" }}
-                                    >
+                                    <span className="text-[0.58rem] tracking-[0.25em] uppercase mb-2 block font-title text-bb-muted">
                                         {edu.period}
                                     </span>
-                                    <p
-                                        className="text-sm leading-snug mb-1"
-                                        style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.04em" }}
-                                    >
+                                    <p className="text-sm leading-snug mb-1 font-title text-bb-gold tracking-[0.04em]">
                                         {edu.title}
                                     </p>
                                     <div className="bb-separator my-2" />
-                                    <p
-                                        className="text-xs"
-                                        style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--bb-muted)" }}
-                                    >
+                                    <p className="text-xs font-body italic text-bb-muted">
                                         {edu.institution}
                                     </p>
-                                    <span
-                                        className="mt-2 inline-block text-[0.58rem] tracking-widest uppercase px-2 py-0.5"
-                                        style={{
-                                            fontFamily: "var(--font-title)",
-                                            color: "var(--bb-gold)",
-                                            border: "1px solid var(--bb-gold)",
-                                            letterSpacing: "0.15em",
-                                        }}
-                                    >
+                                    <span className="mt-2 inline-block text-[0.58rem] tracking-[0.15em] uppercase px-2 py-0.5 font-title text-bb-gold border border-bb-gold">
                                         {edu.status}
                                     </span>
                                 </div>
                             ))}
 
                             {/* Self-taught note */}
-                            <div
-                                className="p-4"
-                                style={{ border: "1px solid var(--bb-border-dim)", background: "rgba(201,168,76,0.04)" }}
-                            >
+                            <div className="p-4 border border-bb-border-dim bg-bb-gold/5">
                                 <div className="flex items-start gap-3">
-                                    <BookOpen size={14} className="mt-0.5 shrink-0" style={{ color: "var(--bb-gold)" }} />
-                                    <p
-                                        className="text-xs leading-relaxed"
-                                        style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--bb-muted)" }}
-                                    >
-                                        Formación complementaria <strong style={{ color: "var(--bb-white)" }}>100% autodidacta</strong>: documentación oficial, proyectos reales y resolución práctica de problemas.
+                                    <BookOpen size={14} className="mt-0.5 shrink-0 text-bb-gold" />
+                                    <p className="text-xs leading-relaxed font-body italic text-bb-muted">
+                                        Formación complementaria <strong className="text-bb-white">100% autodidacta</strong>: documentación oficial, proyectos reales y resolución práctica de problemas.
                                     </p>
                                 </div>
                             </div>

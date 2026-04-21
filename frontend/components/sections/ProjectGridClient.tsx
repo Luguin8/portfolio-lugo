@@ -6,22 +6,33 @@ import ProjectCard, { Project } from "@/components/ui/ProjectCard";
 import ProjectModal from "@/components/ui/ProjectModal";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { playNavigate, playSelect } from "@/lib/sounds";
+import { cn } from "@/lib/utils";
 
 export default function ProjectGridClient({ initialProjects }: { initialProjects: any[] }) {
     const [isManual, setIsManual] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const [filter, setFilter] = useState<string>("all");
 
     const projects = initialProjects.length > 0 ? initialProjects : [];
-    const infiniteProjects = projects.length > 0 ? [...projects, ...projects, ...projects] : [];
+    const filteredProjects = filter === "all" ? projects : projects.filter(p => p.project_type === filter);
+    const infiniteProjects = filteredProjects.length > 0 ? [...filteredProjects, ...filteredProjects, ...filteredProjects] : [];
 
     const handleManualControl = (direction: 'prev' | 'next') => {
         setIsManual(true);
+        if (filteredProjects.length === 0) return;
         if (direction === 'prev') {
-            setCurrentIndex((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
+            setCurrentIndex((prev) => (prev === 0 ? filteredProjects.length - 1 : prev - 1));
         } else {
-            setCurrentIndex((prev) => (prev === projects.length - 1 ? 0 : prev + 1));
+            setCurrentIndex((prev) => (prev === filteredProjects.length - 1 ? 0 : prev + 1));
         }
+    };
+
+    const handleFilter = (type: string) => {
+        playSelect();
+        setFilter(type);
+        setCurrentIndex(0);
+        setIsManual(true);
     };
 
     if (projects.length === 0) {
@@ -69,40 +80,41 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
                     </p>
                 </div>
 
-                {/* Navigation arrows */}
-                <div className="flex gap-2">
-                    <button
-                        onClick={() => { playSelect(); handleManualControl('prev'); }}
-                        className="p-3 border transition-all duration-200"
-                        style={{ borderColor: "var(--bb-border)", color: "var(--bb-muted)", background: "transparent" }}
-                        onMouseEnter={(e) => {
-                            playNavigate();
-                            (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)";
-                            (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-gold)";
-                        }}
-                        onMouseLeave={(e) => {
-                            (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)";
-                            (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-border)";
-                        }}
-                    >
-                        <ChevronLeft size={20} />
-                    </button>
-                    <button
-                        onClick={() => { playSelect(); handleManualControl('next'); }}
-                        className="p-3 border transition-all duration-200"
-                        style={{ borderColor: "var(--bb-border)", color: "var(--bb-muted)", background: "transparent" }}
-                        onMouseEnter={(e) => {
-                            playNavigate();
-                            (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)";
-                            (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-gold)";
-                        }}
-                        onMouseLeave={(e) => {
-                            (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)";
-                            (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-border)";
-                        }}
-                    >
-                        <ChevronRight size={20} />
-                    </button>
+                {/* Navigation arrows & Filters */}
+                <div className="flex flex-col items-end gap-4">
+                    <div className="flex flex-wrap justify-end gap-2">
+                        {['all', 'web', 'mobile', 'desktop'].map((type) => (
+                            <button
+                                key={type}
+                                onClick={() => handleFilter(type)}
+                                className={cn(
+                                    "px-3 py-1 text-xs uppercase tracking-widest border transition-colors",
+                                    filter === type
+                                        ? "border-bb-gold text-bb-gold bg-bb-gold/10"
+                                        : "border-bb-border text-bb-muted hover:border-bb-gold hover:text-bb-gold"
+                                )}
+                                style={{ fontFamily: "var(--font-title)" }}
+                            >
+                                {type === 'all' ? 'Todos' : type}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() => { playSelect(); handleManualControl('prev'); }}
+                            className="p-3 border transition-all duration-200 border-bb-border text-bb-muted hover:border-bb-gold hover:text-bb-gold bg-transparent"
+                            onMouseEnter={() => playNavigate()}
+                        >
+                            <ChevronLeft size={20} />
+                        </button>
+                        <button
+                            onClick={() => { playSelect(); handleManualControl('next'); }}
+                            className="p-3 border transition-all duration-200 border-bb-border text-bb-muted hover:border-bb-gold hover:text-bb-gold bg-transparent"
+                            onMouseEnter={() => playNavigate()}
+                        >
+                            <ChevronRight size={20} />
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -124,20 +136,31 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
                     </div>
                 ) : (
                     <div className="max-w-7xl mx-auto">
-                        <motion.div
-                            key={currentIndex}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.4 }}
-                            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-                        >
-                            {[0, 1, 2].map((offset) => {
-                                const project = projects[(currentIndex + offset) % projects.length];
-                                return project ? (
-                                    <ProjectCard key={`${project.id}-manual`} project={project} onClick={() => setSelectedProject(project)} />
-                                ) : null;
-                            })}
-                        </motion.div>
+                        {filteredProjects.length === 0 ? (
+                            <p className="text-center italic font-body text-bb-muted py-10">
+                                No hay proyectos en esta categoría.
+                            </p>
+                        ) : (
+                            <motion.div
+                                key={`${currentIndex}-${filter}`}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.4 }}
+                                className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+                            >
+                                {filteredProjects.length < 3 
+                                    ? filteredProjects.map((project, idx) => (
+                                        <ProjectCard key={`${project.id}-manual-${idx}`} project={project} onClick={() => setSelectedProject(project)} />
+                                    ))
+                                    : [0, 1, 2].map((offset) => {
+                                        const project = filteredProjects[(currentIndex + offset) % filteredProjects.length];
+                                        return project ? (
+                                            <ProjectCard key={`${project.id}-manual-${offset}`} project={project} onClick={() => setSelectedProject(project)} />
+                                        ) : null;
+                                    })
+                                }
+                            </motion.div>
+                        )}
                     </div>
                 )}
             </div>

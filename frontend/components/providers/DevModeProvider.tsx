@@ -14,7 +14,13 @@ export function DevModeProvider({ children }: { children: ReactNode }) {
     const [isDevMode, setIsDevMode] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-    const toggleDevMode = () => setIsDevMode(!isDevMode);
+    const toggleDevMode = () => {
+        if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
+            console.log("Insight mode is disabled on touch devices.");
+            return;
+        }
+        setIsDevMode(!isDevMode);
+    };
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {

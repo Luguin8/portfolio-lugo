@@ -24,24 +24,15 @@ export default function Contact() {
                 {/* ── LEFT: Info ── */}
                 <div className="space-y-8">
                     <div>
-                        <p
-                            className="text-xs tracking-[0.3em] uppercase mb-3"
-                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.28em" }}
-                        >
+                        <p className="text-xs tracking-[0.28em] uppercase mb-3 font-title text-bb-gold">
                             ✦ &nbsp; TRANSMISIÓN
                         </p>
-                        <h2
-                            className="text-4xl md:text-5xl mb-4"
-                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)" }}
-                        >
+                        <h2 className="text-4xl md:text-5xl mb-4 font-title text-bb-gold">
                             Hablemos de tu{" "}
-                            <span style={{ color: "var(--bb-white)" }}>Próximo Proyecto</span>
+                            <span className="text-bb-white">Próximo Proyecto</span>
                         </h2>
                         <div className="bb-separator" style={{ maxWidth: "360px" }} />
-                        <p
-                            className="mt-5 text-lg leading-relaxed"
-                            style={{ fontFamily: "var(--font-body)", color: "var(--bb-muted)", fontStyle: "italic" }}
-                        >
+                        <p className="mt-5 text-lg leading-relaxed font-body italic text-bb-muted">
                             ¿Tienes una idea innovadora o necesitas escalar tu arquitectura actual?
                             Estoy disponible para proyectos freelance y consultoría técnica.
                         </p>
@@ -50,25 +41,16 @@ export default function Contact() {
                     <div className="space-y-5 pt-2">
                         {/* Email row */}
                         <div className="flex items-center gap-5">
-                            <div
-                                className="w-11 h-11 flex items-center justify-center shrink-0"
-                                style={{ border: "1px solid var(--bb-border)", color: "var(--bb-gold)" }}
-                            >
+                            <div className="w-11 h-11 flex items-center justify-center shrink-0 border border-bb-border text-bb-gold">
                                 <Mail size={18} />
                             </div>
                             <div>
-                                <p
-                                    className="text-[0.6rem] tracking-[0.25em] uppercase mb-0.5"
-                                    style={{ fontFamily: "var(--font-title)", color: "var(--bb-muted)", letterSpacing: "0.22em" }}
-                                >
+                                <p className="text-[0.6rem] tracking-[0.22em] uppercase mb-0.5 font-title text-bb-muted">
                                     Email
                                 </p>
                                 <a
                                     href="mailto:lugoamartin@gmail.com"
-                                    className="text-base transition-colors duration-200"
-                                    style={{ fontFamily: "var(--font-body)", color: "var(--bb-white)" }}
-                                    onMouseEnter={(e) => { (e.target as HTMLElement).style.color = "var(--bb-gold)"; }}
-                                    onMouseLeave={(e) => { (e.target as HTMLElement).style.color = "var(--bb-white)"; }}
+                                    className="text-base transition-colors duration-200 font-body text-bb-white hover:text-bb-gold"
                                 >
                                     lugoamartin@gmail.com
                                 </a>
@@ -77,20 +59,14 @@ export default function Contact() {
 
                         {/* Location row */}
                         <div className="flex items-center gap-5">
-                            <div
-                                className="w-11 h-11 flex items-center justify-center shrink-0"
-                                style={{ border: "1px solid var(--bb-border)", color: "var(--bb-gold)" }}
-                            >
+                            <div className="w-11 h-11 flex items-center justify-center shrink-0 border border-bb-border text-bb-gold">
                                 <MapPin size={18} />
                             </div>
                             <div>
-                                <p
-                                    className="text-[0.6rem] tracking-[0.25em] uppercase mb-0.5"
-                                    style={{ fontFamily: "var(--font-title)", color: "var(--bb-muted)", letterSpacing: "0.22em" }}
-                                >
+                                <p className="text-[0.6rem] tracking-[0.22em] uppercase mb-0.5 font-title text-bb-muted">
                                     Ubicación
                                 </p>
-                                <p className="text-base" style={{ fontFamily: "var(--font-body)", color: "var(--bb-white)" }}>
+                                <p className="text-base font-body text-bb-white">
                                     Corrientes, Argentina (Remote)
                                 </p>
                             </div>
@@ -99,14 +75,7 @@ export default function Contact() {
                 </div>
 
                 {/* ── RIGHT: Form ── */}
-                <div
-                    className="bb-corner-box relative overflow-hidden"
-                    style={{
-                        background: "var(--bb-panel-light)",
-                        border: "1px solid var(--bb-border)",
-                        padding: "2rem",
-                    }}
-                >
+                <div className="bb-corner-box relative overflow-hidden bg-bb-panel-light border border-bb-border p-8">
                     <span className="bb-corner-tr" />
                     <span className="bb-corner-bl" />
 
@@ -115,30 +84,20 @@ export default function Contact() {
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center p-8"
-                            style={{ background: "var(--bb-panel)" }}
+                            className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center p-8 bg-bb-panel"
                         >
-                            <div
-                                className="w-16 h-16 flex items-center justify-center mb-6"
-                                style={{ border: "1px solid var(--bb-gold)", color: "var(--bb-gold)" }}
-                            >
+                            <div className="w-16 h-16 flex items-center justify-center mb-6 border border-bb-gold text-bb-gold">
                                 <CheckCircle2 size={32} />
                             </div>
-                            <h3
-                                className="text-xl mb-2"
-                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.1em" }}
-                            >
+                            <h3 className="text-xl mb-2 font-title text-bb-gold tracking-[0.1em]">
                                 MENSAJE RECIBIDO
                             </h3>
-                            <p className="mb-6" style={{ fontFamily: "var(--font-body)", color: "var(--bb-muted)", fontStyle: "italic" }}>
+                            <p className="mb-6 font-body text-bb-muted italic">
                                 {state.message}
                             </p>
                             <button
                                 onClick={() => window.location.reload()}
-                                className="text-sm transition-colors duration-200"
-                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.15em" }}
-                                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-gold-bright)"; }}
-                                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)"; }}
+                                className="text-sm transition-colors duration-200 font-title text-bb-gold tracking-[0.15em] hover:text-bb-gold-bright"
                             >
                                 ✦ Enviar otro mensaje
                             </button>
@@ -150,8 +109,7 @@ export default function Contact() {
                             <div className="space-y-1.5">
                                 <label
                                     htmlFor="name"
-                                    className="block text-[0.6rem] tracking-[0.25em] uppercase"
-                                    style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.22em" }}
+                                    className="block text-[0.6rem] tracking-[0.22em] uppercase font-title text-bb-gold"
                                 >
                                     Nombre
                                 </label>
@@ -168,8 +126,7 @@ export default function Contact() {
                             <div className="space-y-1.5">
                                 <label
                                     htmlFor="email"
-                                    className="block text-[0.6rem] tracking-[0.25em] uppercase"
-                                    style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.22em" }}
+                                    className="block text-[0.6rem] tracking-[0.22em] uppercase font-title text-bb-gold"
                                 >
                                     Email
                                 </label>
@@ -188,8 +145,7 @@ export default function Contact() {
                         <div className="space-y-1.5">
                             <label
                                 htmlFor="subject"
-                                className="block text-[0.6rem] tracking-[0.25em] uppercase"
-                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.22em" }}
+                                className="block text-[0.6rem] tracking-[0.22em] uppercase font-title text-bb-gold"
                             >
                                 Asunto
                             </label>
@@ -204,8 +160,7 @@ export default function Contact() {
                         <div className="space-y-1.5">
                             <label
                                 htmlFor="message"
-                                className="block text-[0.6rem] tracking-[0.25em] uppercase"
-                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.22em" }}
+                                className="block text-[0.6rem] tracking-[0.22em] uppercase font-title text-bb-gold"
                             >
                                 Mensaje
                             </label>
@@ -222,10 +177,7 @@ export default function Contact() {
 
                         {/* Error */}
                         {!state.success && state.message && (
-                            <div
-                                className="flex items-center gap-2 text-sm p-3"
-                                style={{ background: "rgba(139,26,26,0.15)", border: "1px solid rgba(139,26,26,0.40)", color: "var(--bb-crimson)", fontFamily: "var(--font-body)" }}
-                            >
+                            <div className="flex items-center gap-2 text-sm p-3 bg-bb-crimson/15 border border-bb-crimson/40 text-bb-crimson font-body">
                                 <AlertCircle size={14} />
                                 {state.message}
                             </div>

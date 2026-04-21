@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Github, ExternalLink } from "lucide-react";
+import { Github, ExternalLink, Download } from "lucide-react";
+import Tilt from "react-parallax-tilt";
 import { useDevMode } from "@/components/providers/DevModeProvider";
 import { cn } from "@/lib/utils";
 import { playNavigate, playOpen } from "@/lib/sounds";
@@ -15,7 +16,8 @@ export interface Project {
     tags: string[];
     demo_link?: string;
     repo_link?: string;
-    project_type: 'web' | 'mobile';
+    download_link?: string;
+    project_type: 'web' | 'mobile' | 'desktop' | 'game' | string;
 }
 
 interface ProjectCardProps {
@@ -25,17 +27,27 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, onClick }: ProjectCardProps) {
     const { isDevMode } = useDevMode();
-    const isWeb = project.project_type === 'web';
+    const isMobileLayout = project.project_type === 'mobile';
     const mainImage = project.images[0];
 
     return (
-        <motion.div
-            whileHover={{ y: -4 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className={cn(
-                "relative group flex flex-col cursor-pointer h-full bb-corner-box",
-                isDevMode && "outline outline-dashed outline-1 outline-yellow-400/30"
-            )}
+        <Tilt
+            tiltMaxAngleX={8}
+            tiltMaxAngleY={8}
+            scale={1.02}
+            transitionSpeed={2000}
+            className="h-full"
+            glareEnable={true}
+            glareMaxOpacity={0.15}
+            glareColor="#c9a84c"
+            glarePosition="all"
+            glareBorderRadius="0px"
+        >
+            <motion.div
+                className={cn(
+                    "relative group flex flex-col cursor-pointer h-full bb-corner-box",
+                    isDevMode && "outline outline-dashed outline-1 outline-yellow-400/30"
+                )}
             style={{
                 background: "var(--bb-panel)",
                 border: "1px solid var(--bb-border)",
@@ -79,12 +91,12 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
 
             {/* CONTENT */}
             <div className={cn("p-5 flex-1 transition-opacity duration-300", isDevMode && "group-hover:opacity-20")}>
-                {isWeb ? (
-                    /* WEB layout */
+                {!isMobileLayout ? (
+                    /* WEB / DESKTOP layout */
                     <div className="flex flex-col h-full">
                         {/* Image */}
                         <div
-                            className="relative w-full aspect-video mb-5 overflow-hidden shrink-0"
+                            className="relative w-full aspect-video mb-5 overflow-hidden shrink-0 group/image"
                             style={{ border: "1px solid var(--bb-border-dim)", background: "#000" }}
                         >
                             <Image
@@ -105,6 +117,27 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
                             >
                                 +{project.images.length - 1} IMGS
                             </div>
+                            
+                            {/* Hover Actions over Image */}
+                            {(project.demo_link || project.download_link || project.repo_link) && (
+                                <div className="absolute inset-0 flex flex-col justify-center items-center gap-2 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 bg-bb-panel/80 backdrop-blur-[2px]">
+                                    {project.demo_link && (
+                                        <a href={project.demo_link} target="_blank" rel="noopener noreferrer" className="bb-btn bg-bb-bg w-40 text-xs py-1.5" onClick={(e) => e.stopPropagation()}>
+                                            <ExternalLink size={12} /> Visitar Web
+                                        </a>
+                                    )}
+                                    {project.download_link && (
+                                        <a href={project.download_link} target="_blank" rel="noopener noreferrer" className="bb-btn bg-bb-bg w-40 text-xs py-1.5 border-bb-gold text-bb-gold hover:bg-bb-gold hover:text-bb-bg" onClick={(e) => e.stopPropagation()} download>
+                                            <Download size={12} /> Descargar App
+                                        </a>
+                                    )}
+                                    {project.repo_link && (
+                                        <a href={project.repo_link} target="_blank" rel="noopener noreferrer" className="bb-btn-secondary bg-bb-bg w-40 text-xs py-1.5" onClick={(e) => e.stopPropagation()}>
+                                            <Github size={12} /> Repositorio
+                                        </a>
+                                    )}
+                                </div>
+                            )}
                         </div>
 
                         <div className="flex flex-col flex-1">
@@ -171,24 +204,48 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
                             >
                                 {project.description}
                             </p>
-                            <div className="grid grid-cols-2 gap-2 mt-auto opacity-60 group-hover:opacity-100 transition-opacity">
-                                <div
-                                    className="py-1.5 text-[10px] flex items-center justify-center gap-1.5 border"
-                                    style={{ borderColor: "var(--bb-border)", color: "var(--bb-muted)", fontFamily: "var(--font-title)", letterSpacing: "0.1em" }}
-                                >
-                                    <ExternalLink size={10} /> INFO
-                                </div>
-                                <div
-                                    className="py-1.5 text-[10px] flex items-center justify-center gap-1.5 border"
-                                    style={{ borderColor: "var(--bb-border)", color: "var(--bb-muted)", fontFamily: "var(--font-title)", letterSpacing: "0.1em" }}
-                                >
-                                    <Github size={10} /> CODE
-                                </div>
+                            <div className="grid grid-cols-2 gap-2 mt-auto opacity-60 group-hover:opacity-100 transition-opacity relative z-20">
+                                {project.demo_link ? (
+                                    <a
+                                        href={project.demo_link} target="_blank" rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="py-1.5 text-[10px] flex items-center justify-center gap-1.5 border border-bb-border text-bb-muted hover:border-bb-gold hover:text-bb-gold font-title tracking-[0.1em] transition-colors"
+                                    >
+                                        <ExternalLink size={10} /> INFO
+                                    </a>
+                                ) : project.download_link ? (
+                                    <a
+                                        href={project.download_link} target="_blank" rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()} download
+                                        className="py-1.5 text-[10px] flex items-center justify-center gap-1.5 border border-bb-border text-bb-muted hover:border-bb-gold hover:text-bb-gold font-title tracking-[0.1em] transition-colors"
+                                    >
+                                        <Download size={10} /> APK
+                                    </a>
+                                ) : (
+                                    <div className="py-1.5 text-[10px] flex items-center justify-center gap-1.5 border border-bb-border text-bb-muted font-title tracking-[0.1em] opacity-50">
+                                        <ExternalLink size={10} /> INFO
+                                    </div>
+                                )}
+                                
+                                {project.repo_link ? (
+                                    <a
+                                        href={project.repo_link} target="_blank" rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="py-1.5 text-[10px] flex items-center justify-center gap-1.5 border border-bb-border text-bb-muted hover:border-bb-gold hover:text-bb-gold font-title tracking-[0.1em] transition-colors"
+                                    >
+                                        <Github size={10} /> CODE
+                                    </a>
+                                ) : (
+                                    <div className="py-1.5 text-[10px] flex items-center justify-center gap-1.5 border border-bb-border text-bb-muted font-title tracking-[0.1em] opacity-50">
+                                        <Github size={10} /> CODE
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
                 )}
             </div>
-        </motion.div>
+            </motion.div>
+        </Tilt>
     );
 }

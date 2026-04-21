@@ -23,6 +23,22 @@
   --font-body: 'EB Garamond', 'Garamond', 'Georgia', serif;
 }
 
+@theme {
+  --color-bb-bg: var(--bb-bg);
+  --color-bb-gold: var(--bb-gold);
+  --color-bb-gold-bright: var(--bb-gold-bright);
+  --color-bb-gold-dim: var(--bb-gold-dim);
+  --color-bb-crimson: var(--bb-crimson);
+  --color-bb-white: var(--bb-white);
+  --color-bb-muted: var(--bb-muted);
+  --color-bb-panel: var(--bb-panel);
+  --color-bb-panel-light: var(--bb-panel-light);
+  --color-bb-border: var(--bb-border);
+  --color-bb-border-dim: var(--bb-border-dim);
+  --font-title: var(--font-title);
+  --font-body: var(--font-body);
+}
+
 /* ── Base ────────────────────────────────────────────────── */
 *,
 *::before,
@@ -67,6 +83,12 @@ body {
 ::selection {
   background: rgba(201, 168, 76, 0.25);
   color: var(--bb-gold-bright);
+}
+
+/* ── Accessibility ───────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--bb-gold-dim);
+  outline-offset: 2px;
 }
 
 /* ============================================================

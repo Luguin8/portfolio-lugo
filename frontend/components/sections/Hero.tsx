@@ -34,46 +34,31 @@ export default function Hero() {
                     className="space-y-8 text-center lg:text-left"
                 >
                     {/* Eyebrow */}
-                    <p
-                        className="text-xs tracking-[0.35em] uppercase"
-                        style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.35em" }}
-                    >
+                    <p className="text-xs tracking-[0.35em] uppercase font-title text-bb-gold">
                         ✦ &nbsp; Full Stack · Mobile · Data · Automatización &nbsp; ✦
                     </p>
 
                     {/* Main title */}
                     <div className="space-y-2">
-                        <h1
-                            className="text-5xl md:text-7xl font-bold leading-tight"
-                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.06em" }}
-                        >
+                        <h1 className="text-5xl md:text-7xl font-bold leading-tight font-title text-bb-gold tracking-[0.06em]">
                             Lugo
                             <br />
-                            <span style={{ color: "var(--bb-white)" }}>Martin</span>
+                            <span className="text-bb-white">Martin</span>
                         </h1>
 
                         <div className="bb-separator mt-4 mb-4" style={{ maxWidth: "320px" }} />
 
-                        <h2
-                            className="text-xl md:text-2xl font-normal"
-                            style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--bb-muted)" }}
-                        >
+                        <h2 className="text-xl md:text-2xl font-normal font-body italic text-bb-muted">
                             Full Stack · Mobile · Data · Hardware
                         </h2>
                     </div>
 
                     {/* Description */}
-                    <p
-                        className="text-lg leading-relaxed max-w-md mx-auto lg:mx-0"
-                        style={{ fontFamily: "var(--font-body)", color: "var(--bb-muted)" }}
-                    >
+                    <p className="text-lg leading-relaxed max-w-md mx-auto lg:mx-0 font-body text-bb-muted">
                         Desarrollo web, mobile, scripts de datos y automatización.
                         Cada sistema: limpio, modular y listo para producción.
                         <br />
-                        <span
-                            className="text-sm tracking-wider not-italic mt-1 block"
-                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.12em", fontSize: "0.72rem" }}
-                        >
+                        <span className="text-[0.72rem] tracking-[0.12em] not-italic mt-1 block font-title text-bb-gold">
                             Python · React · Next.js · Node.js · FastAPI · Docker · React Native
                         </span>
                     </p>
@@ -114,7 +99,7 @@ export default function Hero() {
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
-                    className={cn("relative mx-auto flex items-center justify-center", isDevMode && "outline outline-1 outline-dashed outline-yellow-400/30")}
+                    className={cn("relative mx-auto flex flex-col items-center justify-center gap-6", isDevMode && "outline outline-1 outline-dashed outline-yellow-400/30")}
                 >
                     {/* Dev mode label */}
                     {isDevMode && (
@@ -125,6 +110,21 @@ export default function Hero() {
                             Hero.tsx · ProfileFrame
                         </div>
                     )}
+
+                    {/* Spotify Widget Fijo */}
+                    <div className="w-64 md:w-80 bb-corner-box relative p-1 z-20" style={{ background: "var(--bb-panel)", border: "1px solid var(--bb-border)" }}>
+                        <span className="bb-corner-tr" />
+                        <span className="bb-corner-bl" />
+                        <iframe 
+                            style={{ borderRadius: '0px', border: 'none' }} 
+                            src="https://open.spotify.com/embed/playlist/6eKcFaXbmb87Xbkdrewz2E?utm_source=generator&theme=0" 
+                            width="100%" 
+                            height="80" 
+                            allowFullScreen={false} 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy"
+                        ></iframe>
+                    </div>
 
                     {/* Photo frame with BB corner accents */}
                     <div className="bb-corner-box relative group">
@@ -167,10 +167,7 @@ export default function Hero() {
                                 backdropFilter: "blur(4px)"
                             }}
                         >
-                            <span
-                                className="text-xs tracking-widest uppercase"
-                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.2em" }}
-                            >
+                            <span className="text-xs tracking-[0.2em] uppercase font-title text-bb-gold">
                                 Full Stack Dev
                             </span>
                         </div>
@@ -194,13 +191,8 @@ function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode
             target="_blank"
             rel="noopener noreferrer"
             title={label}
-            className="transition-colors duration-200"
-            style={{ color: "var(--bb-muted)" }}
-            onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)";
-                playNavigate();
-            }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)"; }}
+            className="transition-colors duration-200 text-bb-muted hover:text-bb-gold"
+            onMouseEnter={() => playNavigate()}
             onClick={() => playSelect()}
         >
             {icon}

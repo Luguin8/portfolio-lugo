@@ -86,6 +86,9 @@ export async function createProject(prevState: ActionState, formData: FormData):
     const rawRepo = formData.get("repo_link") as string;
     const repo_link = rawRepo && rawRepo.trim() !== "" ? rawRepo.trim() : null;
 
+    const rawDownload = formData.get("download_link") as string;
+    const download_link = rawDownload && rawDownload.trim() !== "" ? rawDownload.trim() : null;
+
     const tagsString = formData.get("tags") as string;
 
     // 2. Extraer Imágenes
@@ -142,6 +145,7 @@ export async function createProject(prevState: ActionState, formData: FormData):
                 project_type,
                 demo_link, // Ahora enviamos null si está vacío
                 repo_link, // Ahora enviamos null si está vacío
+                download_link,
                 tags,
                 images: imageUrls
             }
@@ -157,6 +161,55 @@ export async function createProject(prevState: ActionState, formData: FormData):
     revalidatePath("/");
     revalidatePath("/admin");
     return { success: true, message: "¡Proyecto publicado correctamente!" };
+}
+
+export async function updateProject(prevState: ActionState, formData: FormData): Promise<ActionState> {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') {
+        return { success: false, message: "Modo Demo: No tienes permisos para editar." };
+    }
+
+    const id = formData.get("id") as string;
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const project_type = formData.get("project_type") as string;
+    
+    const rawDemo = formData.get("demo_link") as string;
+    const demo_link = rawDemo && rawDemo.trim() !== "" ? rawDemo.trim() : null;
+
+    const rawRepo = formData.get("repo_link") as string;
+    const repo_link = rawRepo && rawRepo.trim() !== "" ? rawRepo.trim() : null;
+
+    const rawDownload = formData.get("download_link") as string;
+    const download_link = rawDownload && rawDownload.trim() !== "" ? rawDownload.trim() : null;
+
+    const tagsString = formData.get("tags") as string;
+    const tags = tagsString ? tagsString.split(",").map(t => t.trim()).filter(t => t.length > 0) : [];
+
+    if (!id || !title || !description) {
+        return { success: false, message: "Faltan datos obligatorios." };
+    }
+
+    try {
+        const { error: dbError } = await supabaseAdmin.from("projects").update({
+            title,
+            description,
+            project_type,
+            demo_link,
+            repo_link,
+            download_link,
+            tags
+        }).eq("id", id);
+
+        if (dbError) throw new Error(`Error BD: ${dbError.message}`);
+    } catch (error: any) {
+        console.error("Error en updateProject:", error);
+        return { success: false, message: error.message || "Error al actualizar proyecto." };
+    }
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    return { success: true, message: "¡Proyecto actualizado correctamente!" };
 }
 
 export async function deleteProject(formData: FormData) {
