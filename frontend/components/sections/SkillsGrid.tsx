@@ -19,6 +19,7 @@ const SKILL_CATEGORIES = [
         label: "DISCIPLINA I",
         icon: <Globe size={12} />,
         skills: [
+            { name: "Vue 3 & Nuxt 3 (Layers)", icon: <FaCode /> },
             { name: "React.js / Next.js App Router", icon: <span className="flex gap-1"><FaReact /><SiNextdotjs /></span> },
             { name: "Vite", icon: <SiVite /> },
             { name: "TypeScript", icon: <SiTypescript /> },
@@ -35,9 +36,10 @@ const SKILL_CATEGORIES = [
         label: "DISCIPLINA II",
         icon: <Database size={12} />,
         skills: [
+            { name: "NestJS & Node.js", icon: <FaNodeJs /> },
+            { name: "GraphQL (Apollo Client)", icon: <Network size={12} /> },
             { name: "Python (FastAPI, Scripts)", icon: <FaPython /> },
             { name: "Rust", icon: <SiRust /> },
-            { name: "Node.js", icon: <FaNodeJs /> },
             { name: "Supabase (Auth, DB relacional)", icon: <SiSupabase /> },
             { name: "SQLite (Mobile)", icon: <SiSqlite /> },
             { name: "IndexedDB / Dexie.js", icon: <FaCode /> },
@@ -51,6 +53,7 @@ const SKILL_CATEGORIES = [
         label: "DISCIPLINA III",
         icon: <Wrench size={12} />,
         skills: [
+            { name: "Turborepo & pnpm workspaces", icon: <Wrench size={12} /> },
             { name: "Git, GitHub, Gitea & Codeberg", icon: <span className="flex gap-1"><FaGitAlt /><FaGithub /></span> },
             { name: "Vercel / Google Play Console", icon: <SiVercel /> },
             { name: "Gestión de Dominios", icon: <Globe size={12} /> },
