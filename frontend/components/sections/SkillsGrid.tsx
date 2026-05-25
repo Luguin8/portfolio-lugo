@@ -51,7 +51,7 @@ const SKILL_CATEGORIES = [
         label: "DISCIPLINA III",
         icon: <Wrench size={12} />,
         skills: [
-            { name: "Git & GitHub", icon: <span className="flex gap-1"><FaGitAlt /><FaGithub /></span> },
+            { name: "Git, GitHub, Gitea & Codeberg", icon: <span className="flex gap-1"><FaGitAlt /><FaGithub /></span> },
             { name: "Vercel / Google Play Console", icon: <SiVercel /> },
             { name: "Gestión de Dominios", icon: <Globe size={12} /> },
             { name: "Meta Graph API (WhatsApp)", icon: <Network size={12} /> },

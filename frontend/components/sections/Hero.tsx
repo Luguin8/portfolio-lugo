@@ -56,10 +56,10 @@ export default function Hero() {
                     {/* Description */}
                     <p className="text-lg leading-relaxed max-w-md mx-auto lg:mx-0 font-body text-bb-muted">
                         Desarrollo web, mobile, scripts de datos y automatización.
-                        Cada sistema: limpio, modular y listo para producción.
+                        Arquitectura Monorepo y sistemas modulares listos para producción.
                         <br />
                         <span className="text-[0.72rem] tracking-[0.12em] not-italic mt-1 block font-title text-bb-gold">
-                            Python · React · Next.js · Node.js · FastAPI · Docker · React Native
+                            Vue · Nuxt · React · Next.js · NestJS · GraphQL · Turborepo · Python · Docker
                         </span>
                     </p>
 
@@ -71,7 +71,7 @@ export default function Hero() {
                             onMouseEnter={() => playNavigate()}
                             onClick={() => playSelect()}
                         >
-                            Explorar Obras
+                            Ver Trabajos
                         </a>
                         <a
                             href="/CV - Lugo Martin Adrian.pdf"

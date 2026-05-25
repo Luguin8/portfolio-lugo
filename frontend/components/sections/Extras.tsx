@@ -272,9 +272,47 @@ export default function Extras() {
                                 </div>
                             </div>
 
-                            {/* MessageSquare extra */}
+                            {/* Soft Skills extra */}
                             <div
                                 className="p-4"
+                                style={{ border: "1px solid var(--bb-border-dim)", background: "rgba(201,168,76,0.04)" }}
+                            >
+                                <div className="flex items-start gap-3">
+                                    <MessageSquare size={14} className="mt-0.5 shrink-0" style={{ color: "var(--bb-gold)" }} />
+                                    <div>
+                                        <p
+                                            className="text-[0.6rem] tracking-widest uppercase mb-1"
+                                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.18em" }}
+                                        >
+                                            Habilidades Blandas & Liderazgo
+                                        </p>
+                                        <ul className="space-y-2 mt-2">
+                                            <li className="flex items-start gap-2">
+                                                <span style={{ color: "var(--bb-gold)", marginTop: "2px", fontSize: "0.5rem" }}>✦</span>
+                                                <p className="text-xs leading-relaxed" style={{ fontFamily: "var(--font-body)", color: "var(--bb-muted)" }}>
+                                                    <strong className="text-bb-white font-normal">Comunicación Corporativa:</strong> Reporte fluido y gestión de expectativas con POs y Tech Leads.
+                                                </p>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span style={{ color: "var(--bb-gold)", marginTop: "2px", fontSize: "0.5rem" }}>✦</span>
+                                                <p className="text-xs leading-relaxed" style={{ fontFamily: "var(--font-body)", color: "var(--bb-muted)" }}>
+                                                    <strong className="text-bb-white font-normal">Análisis Crítico:</strong> Rápida asimilación de arquitectura y propuesta de mejoras sistémicas.
+                                                </p>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span style={{ color: "var(--bb-gold)", marginTop: "2px", fontSize: "0.5rem" }}>✦</span>
+                                                <p className="text-xs leading-relaxed" style={{ fontFamily: "var(--font-body)", color: "var(--bb-muted)" }}>
+                                                    <strong className="text-bb-white font-normal">Pragmatismo Técnico:</strong> Equilibrio entre perfección técnica y plazos (Deuda Técnica).
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* MessageSquare extra */}
+                            <div
+                                className="p-4 mt-2"
                                 style={{ border: "1px solid var(--bb-border-dim)", background: "rgba(201,168,76,0.04)" }}
                             >
                                 <div className="flex items-start gap-3">
