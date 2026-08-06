@@ -94,9 +94,9 @@ export default function SkillsGrid() {
                     <Cpu size={12} className="inline mr-2" />
                     ESTADÍSTICAS DEL CAZADOR
                 </p>
-                <h2 className="text-4xl md:text-5xl mb-4 font-title text-bb-gold">
+                <h2 className="text-4xl md:text-5xl mb-4 font-title text-bb-gold bb-glow-text">
                     Arsenal{" "}
-                    <span className="text-bb-white">Tecnológico</span>
+                    <span className="text-bb-white" style={{ textShadow: "none" }}>Tecnológico</span>
                 </h2>
                 <div className="bb-separator max-w-[400px]" />
                 <p className="mt-4 text-lg max-w-2xl font-body italic text-bb-muted">

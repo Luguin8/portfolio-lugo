@@ -34,11 +34,24 @@ function LayoutContent({ children, fontVariables }: { children: ReactNode; fontV
                 <div className="bb-fog-mid" />
             </div>
 
+            {/* ── EMBER PARTICLES ── */}
+            <div className="bb-embers" aria-hidden="true">
+                {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i} className="bb-ember" />
+                ))}
+            </div>
+
+            {/* ── FILM GRAIN ── */}
+            <div className="bb-grain" aria-hidden="true" />
+
+            {/* ── SCANLINES ── */}
+            <div className="bb-scanlines" aria-hidden="true" />
+
             {/* ── SUBTLE VIGNETTE ── */}
             <div
-                className="fixed inset-0 pointer-events-none z-[1]"
+                className="fixed inset-0 pointer-events-none z-[3]"
                 style={{
-                    background: "radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(3,2,1,0.55) 100%)"
+                    background: "radial-gradient(ellipse 100% 100% at 50% 50%, transparent 38%, rgba(3,2,1,0.60) 100%)"
                 }}
                 aria-hidden="true"
             />

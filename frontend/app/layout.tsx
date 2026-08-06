@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     jobTitle: "Full Stack Developer",
     url: "https://lugomartin.com",
     sameAs: [
-      "https://github.com/Luquin8",
+      "https://github.com/Luguin8",
       "https://linkedin.com/in/lugoamartin"
     ]
   };

@@ -61,9 +61,9 @@ export default function Extras() {
                     <p className="text-xs tracking-[0.3em] uppercase mb-3 font-title text-bb-gold">
                         ✦ &nbsp; HISTORIA DEL CAZADOR
                     </p>
-                    <h2 className="text-4xl md:text-5xl mb-4 font-title text-bb-gold">
+                    <h2 className="text-4xl md:text-5xl mb-4 font-title text-bb-gold bb-glow-text">
                         Formación &{" "}
-                        <span className="text-bb-white">Trayectoria</span>
+                        <span className="text-bb-white" style={{ textShadow: "none" }}>Trayectoria</span>
                     </h2>
                     <div className="bb-separator" style={{ maxWidth: "360px" }} />
                 </div>
@@ -222,7 +222,7 @@ export default function Extras() {
                                     style={{ background: "var(--bb-panel)", border: "1px solid var(--bb-border)" }}
                                 >
                                     <span className="bb-corner-tr" />
-                                    <div className="flex justify-between items-center mb-2">
+                                    <div className="flex justify-between items-center mb-3">
                                         <p
                                             className="text-sm"
                                             style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.08em" }}
@@ -236,15 +236,27 @@ export default function Extras() {
                                             {lng.level}
                                         </span>
                                     </div>
-                                    {/* BB-style progress bar */}
-                                    <div
-                                        className="h-[2px] w-full mb-2"
-                                        style={{ background: "var(--bb-border)" }}
-                                    >
-                                        <div
-                                            className="h-full transition-all duration-700"
-                                            style={{ width: `${lng.bar}%`, background: "var(--bb-gold)" }}
-                                        />
+                                    {/* Segmented HP-bar (Bloodborne style) */}
+                                    <div className="flex gap-[3px] mb-3">
+                                        {Array.from({ length: 20 }).map((_, i) => {
+                                            const filled = i < Math.round(lng.bar / 5);
+                                            return (
+                                                <motion.div
+                                                    key={i}
+                                                    className="flex-1 h-[9px]"
+                                                    style={{
+                                                        background: filled
+                                                            ? `rgba(212, 174, 82, ${Math.max(0.55, 1 - i * 0.018)})`
+                                                            : "rgba(90, 70, 35, 0.22)",
+                                                        boxShadow: filled ? "0 0 4px rgba(212,174,82,0.18)" : "none",
+                                                    }}
+                                                    initial={{ scaleY: 0 }}
+                                                    whileInView={{ scaleY: 1 }}
+                                                    viewport={{ once: true }}
+                                                    transition={{ delay: i * 0.028, duration: 0.14 }}
+                                                />
+                                            );
+                                        })}
                                     </div>
                                     {lng.note && (
                                         <p
