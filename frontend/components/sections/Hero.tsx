@@ -88,7 +88,7 @@ export default function Hero() {
 
                     {/* Social links */}
                     <div className="flex items-center gap-6 justify-center lg:justify-start pt-2">
-                        <SocialLink href="https://github.com/Luquin8" icon={<FaGithub size={20} />} label="GitHub" />
+                        <SocialLink href="https://github.com/Luguin8" icon={<FaGithub size={20} />} label="GitHub" />
                         <SocialLink href="https://linkedin.com/in/lugoamartin" icon={<FaLinkedin size={20} />} label="LinkedIn" />
                         <SocialLink href="mailto:lugoamartin@gmail.com" icon={<FaEnvelope size={20} />} label="Email" />
                     </div>
