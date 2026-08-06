@@ -65,11 +65,11 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
                         ✦ &nbsp; INVENTARIO DE OBRAS
                     </p>
                     <h2
-                        className="text-4xl md:text-5xl mb-2"
+                        className="text-4xl md:text-5xl mb-2 bb-glow-text"
                         style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)" }}
                     >
                         Arquitectura &{" "}
-                        <span style={{ color: "var(--bb-white)" }}>Desarrollo</span>
+                        <span style={{ color: "var(--bb-white)", textShadow: "none" }}>Desarrollo</span>
                     </h2>
                     <div className="bb-separator" style={{ maxWidth: "300px" }} />
                     <p

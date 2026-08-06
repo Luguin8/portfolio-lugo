@@ -27,9 +27,9 @@ export default function Contact() {
                         <p className="text-xs tracking-[0.28em] uppercase mb-3 font-title text-bb-gold">
                             ✦ &nbsp; TRANSMISIÓN
                         </p>
-                        <h2 className="text-4xl md:text-5xl mb-4 font-title text-bb-gold">
+                        <h2 className="text-4xl md:text-5xl mb-4 font-title text-bb-gold bb-glow-text">
                             Hablemos de tu{" "}
-                            <span className="text-bb-white">Próximo Proyecto</span>
+                            <span className="text-bb-white" style={{ textShadow: "none" }}>Próximo Proyecto</span>
                         </h2>
                         <div className="bb-separator" style={{ maxWidth: "360px" }} />
                         <p className="mt-5 text-lg leading-relaxed font-body italic text-bb-muted">

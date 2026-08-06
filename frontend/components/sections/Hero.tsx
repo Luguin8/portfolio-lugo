@@ -20,7 +20,7 @@ export default function Hero() {
             <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                    background: "radial-gradient(ellipse 70% 60% at 50% 40%, rgba(60,40,10,0.08) 0%, transparent 70%)"
+                    background: "radial-gradient(ellipse 80% 65% at 50% 35%, rgba(80,55,15,0.12) 0%, transparent 72%)"
                 }}
             />
 
@@ -40,10 +40,10 @@ export default function Hero() {
 
                     {/* Main title */}
                     <div className="space-y-2">
-                        <h1 className="text-5xl md:text-7xl font-bold leading-tight font-title text-bb-gold tracking-[0.06em]">
+                        <h1 className="text-5xl md:text-7xl font-bold leading-tight font-title text-bb-gold tracking-[0.06em] bb-glow-text">
                             Lugo
                             <br />
-                            <span className="text-bb-white">Martin</span>
+                            <span className="text-bb-white" style={{ textShadow: "none" }}>Martin</span>
                         </h1>
 
                         <div className="bb-separator mt-4 mb-4" style={{ maxWidth: "320px" }} />
@@ -111,19 +111,32 @@ export default function Hero() {
                         </div>
                     )}
 
-                    {/* Spotify Widget Fijo */}
-                    <div className="w-64 md:w-80 bb-corner-box relative p-1 z-20" style={{ background: "var(--bb-panel)", border: "1px solid var(--bb-border)" }}>
+                    {/* Hunter Status Panel */}
+                    <div className="w-64 md:w-80 bb-corner-box relative z-20" style={{ background: "var(--bb-panel)", border: "1px solid var(--bb-border)" }}>
                         <span className="bb-corner-tr" />
                         <span className="bb-corner-bl" />
-                        <iframe 
-                            style={{ borderRadius: '0px', border: 'none' }} 
-                            src="https://open.spotify.com/embed/playlist/6eKcFaXbmb87Xbkdrewz2E?utm_source=generator&theme=0" 
-                            width="100%" 
-                            height="80" 
-                            allowFullScreen={false} 
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                            loading="lazy"
-                        ></iframe>
+                        <div className="px-5 pt-4 pb-3">
+                            <p className="text-[0.55rem] tracking-[0.3em] uppercase mb-3 font-title text-bb-muted text-center">
+                                ✦ &nbsp; Estado del Cazador &nbsp; ✦
+                            </p>
+                            <div className="bb-separator mb-3" />
+                            <div className="grid grid-cols-3">
+                                {[
+                                    { value: "5+", label: "Años Exp." },
+                                    { value: "16", label: "Proyectos" },
+                                    { value: "3", label: "Plataformas" },
+                                ].map((stat, i) => (
+                                    <div
+                                        key={stat.label}
+                                        className="text-center py-2 px-1"
+                                        style={{ borderLeft: i > 0 ? "1px solid var(--bb-border)" : "none" }}
+                                    >
+                                        <p className="text-2xl leading-none font-title text-bb-gold bb-glow-text">{stat.value}</p>
+                                        <p className="text-[0.5rem] tracking-widest uppercase font-title text-bb-muted mt-1.5">{stat.label}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
 
                     {/* Photo frame with BB corner accents */}
@@ -131,11 +144,11 @@ export default function Hero() {
                         <span className="bb-corner-tr" />
                         <span className="bb-corner-bl" />
 
-                        {/* Outer atmospheric ring */}
+                        {/* Outer atmospheric ring – pulsing glow */}
                         <div
-                            className="absolute -inset-6 pointer-events-none"
+                            className="absolute -inset-8 pointer-events-none bb-photo-glow"
                             style={{
-                                background: "radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%)"
+                                background: "radial-gradient(ellipse 70% 70% at 50% 50%, rgba(212,174,82,0.10) 0%, transparent 68%)"
                             }}
                         />
 
