@@ -16,6 +16,7 @@ interface ProjectModalProps {
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     const [currentImgIndex, setCurrentImgIndex] = useState(0);
     const isWeb = project.project_type === 'web';
+    const isDesktop = project.project_type === 'desktop';
 
     useEffect(() => {
         document.body.style.overflow = "hidden";
@@ -164,8 +165,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                             className="text-[0.6rem] tracking-[0.3em] uppercase mb-2 flex items-center gap-2"
                             style={{ fontFamily: "var(--font-title)", color: "var(--bb-muted)", letterSpacing: "0.28em" }}
                         >
-                            {isWeb ? <Monitor size={11} /> : <Smartphone size={11} />}
-                            {isWeb ? "APLICACIÓN WEB" : "APLICACIÓN MÓVIL"}
+                            {isWeb || isDesktop ? <Monitor size={11} /> : <Smartphone size={11} />}
+                            {isWeb ? "APLICACIÓN WEB" : isDesktop ? "APLICACIÓN DE ESCRITORIO" : "APLICACIÓN MÓVIL"}
                         </p>
 
                         {/* Title */}
