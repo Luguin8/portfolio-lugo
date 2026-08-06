@@ -14,9 +14,18 @@ const EDUCATION = [
 
 const EXPERIENCE = [
     {
+        role: "Full Stack Developer",
+        type: "Brickcode · Francia · Remoto",
+        period: "Mayo 2026 — Actualidad",
+        bullets: [
+            "Migración crítica de autenticación a OIDC/PKCE en monorepo Nuxt/NestJS. Integración de AWS Textract OCR para procesamiento automático de facturas de proveedores.",
+            "Desarrollo full-stack de módulos corporativos (Facturación, Vehículos, Auditoría, Purchases) con Vue 3, GraphQL y DDD. Migración de 6 bricks hacia arquitectura Factory.",
+        ],
+    },
+    {
         role: "Desarrollador Full Stack Freelance",
         type: "Autogestionado",
-        period: "2022 — Actualidad",
+        period: "2020 — Actualidad",
         bullets: [
             "Desarrollo de aplicaciones web y móviles para clientes en Argentina y España.",
             "Proyectos entregados: SaaS (CAJIX), bots de trading, automatización No-Code, e-commerce widgets.",
