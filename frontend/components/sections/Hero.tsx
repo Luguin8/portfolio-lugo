@@ -7,6 +7,8 @@ import { useDevMode } from "@/components/providers/DevModeProvider";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { playNavigate, playSelect } from "@/lib/sounds";
+import Magnetic from "@/components/ui/Magnetic";
+import CountUp from "@/components/ui/CountUp";
 
 export default function Hero() {
     const { isDevMode } = useDevMode();
@@ -65,25 +67,29 @@ export default function Hero() {
 
                     {/* CTA Buttons */}
                     <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-                        <a
-                            href="#projects"
-                            className="bb-btn"
-                            onMouseEnter={() => playNavigate()}
-                            onClick={() => playSelect()}
-                        >
-                            Ver Trabajos
-                        </a>
-                        <a
-                            href="/CV - Lugo Martin Adrian.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bb-btn-secondary flex items-center gap-2"
-                            onMouseEnter={() => playNavigate()}
-                            onClick={() => playSelect()}
-                        >
-                            <FileText size={14} />
-                            Resume / CV
-                        </a>
+                        <Magnetic strength={0.3}>
+                            <a
+                                href="#projects"
+                                className="bb-btn"
+                                onMouseEnter={() => playNavigate()}
+                                onClick={() => playSelect()}
+                            >
+                                Ver Trabajos
+                            </a>
+                        </Magnetic>
+                        <Magnetic strength={0.3}>
+                            <a
+                                href="/CV - Lugo Martin Adrian.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bb-btn-secondary flex items-center gap-2"
+                                onMouseEnter={() => playNavigate()}
+                                onClick={() => playSelect()}
+                            >
+                                <FileText size={14} />
+                                Resume / CV
+                            </a>
+                        </Magnetic>
                     </div>
 
                     {/* Social links */}
@@ -122,16 +128,18 @@ export default function Hero() {
                             <div className="bb-separator mb-3" />
                             <div className="grid grid-cols-3">
                                 {[
-                                    { value: "5+", label: "Años Exp." },
-                                    { value: "16", label: "Proyectos" },
-                                    { value: "3", label: "Plataformas" },
+                                    { value: 5, suffix: "+", label: "Años Exp." },
+                                    { value: 16, suffix: "", label: "Proyectos" },
+                                    { value: 3, suffix: "", label: "Plataformas" },
                                 ].map((stat, i) => (
                                     <div
                                         key={stat.label}
                                         className="text-center py-2 px-1"
                                         style={{ borderLeft: i > 0 ? "1px solid var(--bb-border)" : "none" }}
                                     >
-                                        <p className="text-2xl leading-none font-title text-bb-gold bb-glow-text">{stat.value}</p>
+                                        <p className="text-2xl leading-none font-title text-bb-gold bb-glow-text">
+                                            <CountUp value={stat.value} suffix={stat.suffix} />
+                                        </p>
                                         <p className="text-[0.5rem] tracking-widest uppercase font-title text-bb-muted mt-1.5">{stat.label}</p>
                                     </div>
                                 ))}

@@ -63,7 +63,7 @@ body {
 
 /* ── Custom Scrollbar ────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -71,12 +71,19 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--bb-border);
+  background: linear-gradient(to bottom, var(--bb-gold-dim), var(--bb-border));
   border-radius: 0;
+  border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--bb-gold-dim);
+  background: var(--bb-gold);
+  box-shadow: 0 0 8px rgba(212, 174, 82, 0.5);
+}
+
+html {
+  scrollbar-color: var(--bb-gold-dim) var(--bb-bg);
+  scrollbar-width: thin;
 }
 
 /* ── Selection ───────────────────────────────────────────── */
