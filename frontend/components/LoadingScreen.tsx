@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 // Fires once per full page load (root layout mounts once per session in the
 // App Router) — a brief gothic intro before the page is revealed.
-export default function LoadingScreen() {
+export default function LoadingScreen({ message = "Entrando al Sueño del Cazador" }: { message?: string }) {
     const [visible, setVisible] = useState(true);
     const [fading, setFading] = useState(false);
 
@@ -42,7 +42,7 @@ export default function LoadingScreen() {
                     ✦
                 </p>
                 <p className="text-[0.65rem] tracking-[0.35em] uppercase font-title text-bb-muted">
-                    Entrando al Sueño del Cazador
+                    {message}
                 </p>
             </div>
         </div>

@@ -9,6 +9,7 @@ import ClickBurst from "@/components/ClickBurst";
 import ScrollParallax from "@/components/ScrollParallax";
 import LoadingScreen from "@/components/LoadingScreen";
 import FogWipe from "@/components/FogWipe";
+import PageTransition from "@/components/PageTransition";
 
 export default function ClientLayout({ children, fontVariables }: { children: ReactNode; fontVariables: string }) {
     // Initialize AudioContext on first user gesture (browser policy)
@@ -82,6 +83,7 @@ export default function ClientLayout({ children, fontVariables }: { children: Re
             <ClickBurst />
             <ScrollParallax />
             <FogWipe />
+            <PageTransition />
 
             {/* ── MAIN CONTENT ── */}
             <div className="relative z-10 min-h-screen">

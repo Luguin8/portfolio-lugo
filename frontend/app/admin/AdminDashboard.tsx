@@ -1,16 +1,17 @@
 "use client";
 
 import { useState, useActionState, useEffect } from "react";
-import { X, Loader2, MessageSquare, Trash2, LogOut, List, Monitor, Smartphone, Edit2, Gamepad2, StickyNote, BarChart3 } from "lucide-react";
-import { updateProject, deleteMessage, deleteProject, logoutAction, createPrivateNote, deletePrivateNote, type PrivateNote, type VisitStats } from "@/lib/actions";
+import { X, Loader2, MessageSquare, Trash2, LogOut, List, Monitor, Smartphone, Edit2, Gamepad2, LayoutDashboard, BarChart3 } from "lucide-react";
+import { updateProject, deleteMessage, deleteProject, logoutAction, type BoardData, type VisitStats } from "@/lib/actions";
 import Image from "next/image";
+import Board from "@/components/admin/Board";
+import LoadingScreen from "@/components/LoadingScreen";
 
 const initialState = { success: false, message: "" };
 
-export default function AdminDashboard({ initialProjects, initialMessages, initialNotes, initialVisitStats, role }: { initialProjects: any[], initialMessages: any[], initialNotes: PrivateNote[], initialVisitStats: VisitStats, role: string | null }) {
+export default function AdminDashboard({ initialProjects, initialMessages, initialBoard, initialVisitStats, role }: { initialProjects: any[], initialMessages: any[], initialBoard: BoardData, initialVisitStats: VisitStats, role: string | null }) {
     const [updateState, updateFormAction, isUpdatePending] = useActionState(updateProject, initialState);
-    const [noteState, noteFormAction, isNotePending] = useActionState(createPrivateNote, initialState);
-    const [activeTab, setActiveTab] = useState<'list' | 'messages' | 'notes' | 'visits'>('messages');
+    const [activeTab, setActiveTab] = useState<'list' | 'messages' | 'board' | 'visits'>('messages');
     const [editingProject, setEditingProject] = useState<any>(null);
 
     useEffect(() => {
@@ -20,6 +21,8 @@ export default function AdminDashboard({ initialProjects, initialMessages, initi
     }, [updateState.success]);
 
     return (
+        <>
+        <LoadingScreen message="Accediendo al Pizarrón..." />
         <div className="min-h-screen bg-[#121212] text-white p-8 pt-24">
             <div className="max-w-5xl mx-auto">
 
@@ -46,8 +49,8 @@ export default function AdminDashboard({ initialProjects, initialMessages, initi
                     </button>
                     {/* Solo visible para el dueño real del sitio, nunca en modo demo */}
                     {role === 'admin' && (
-                        <button onClick={() => setActiveTab('notes')} className={`pb-4 px-4 font-mono text-sm whitespace-nowrap flex items-center gap-2 ${activeTab === 'notes' ? 'border-b-2 border-primary text-primary' : 'text-gray-400 hover:text-white'}`}>
-                            <StickyNote size={16} /> NOTAS ({initialNotes.length})
+                        <button onClick={() => setActiveTab('board')} className={`pb-4 px-4 font-mono text-sm whitespace-nowrap flex items-center gap-2 ${activeTab === 'board' ? 'border-b-2 border-primary text-primary' : 'text-gray-400 hover:text-white'}`}>
+                            <LayoutDashboard size={16} /> PIZARRÓN
                         </button>
                     )}
                     {role === 'admin' && (
@@ -143,73 +146,9 @@ export default function AdminDashboard({ initialProjects, initialMessages, initi
                     </div>
                 )}
 
-                {/* --- TAB: NOTAS PRIVADAS (solo dueño real, nunca demo) --- */}
-                {activeTab === 'notes' && role === 'admin' && (
-                    <div className="space-y-8">
-                        <form action={noteFormAction} className="bg-[#1a1a1a] border border-white/5 p-6 rounded-xl space-y-4">
-                            {noteState.message && (
-                                <div className={`p-3 rounded-lg border text-sm ${noteState.success ? 'bg-green-500/20 text-green-400 border-green-500/50' : 'bg-red-500/20 text-red-400 border-red-500/50'}`}>
-                                    {noteState.message}
-                                </div>
-                            )}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div className="md:col-span-2">
-                                    <label className="block text-xs font-mono text-gray-500 uppercase mb-2">Título</label>
-                                    <input name="title" required className="w-full bg-black/30 border border-white/10 rounded p-3 text-white focus:border-primary focus:outline-none" placeholder="Nota rápida..." />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-mono text-gray-500 uppercase mb-2">Fecha (opcional)</label>
-                                    <input name="note_date" type="date" className="w-full bg-black/30 border border-white/10 rounded p-3 text-white focus:border-primary focus:outline-none" />
-                                </div>
-                            </div>
-                            <div>
-                                <label className="block text-xs font-mono text-gray-500 uppercase mb-2">Contenido</label>
-                                <textarea name="content" rows={3} className="w-full bg-black/30 border border-white/10 rounded p-3 text-white focus:border-primary focus:outline-none" placeholder="Detalle..." />
-                            </div>
-                            <button
-                                type="submit"
-                                disabled={isNotePending}
-                                className="flex items-center gap-2 px-4 py-2 bg-primary/20 hover:bg-primary/30 text-primary rounded border border-primary/30 transition-colors disabled:opacity-50"
-                            >
-                                {isNotePending && <Loader2 size={16} className="animate-spin" />}
-                                {isNotePending ? "Guardando..." : "Agregar Nota"}
-                            </button>
-                        </form>
-
-                        <div className="space-y-3">
-                            {initialNotes.length === 0 ? (
-                                <div className="text-center py-16 bg-white/5 rounded-2xl border border-white/10 border-dashed">
-                                    <p className="text-gray-500">Sin notas todavía.</p>
-                                </div>
-                            ) : (
-                                initialNotes.map((note) => (
-                                    <div key={note.id} className="bg-[#1a1a1a] border border-white/5 p-5 rounded-xl flex justify-between items-start gap-4 hover:border-white/20 transition-colors">
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-2 mb-1">
-                                                <h3 className="font-bold text-white">{note.title}</h3>
-                                                {note.note_date && (
-                                                    <span className="text-xs text-gray-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">
-                                                        {new Date(note.note_date + "T00:00:00").toLocaleDateString()}
-                                                    </span>
-                                                )}
-                                            </div>
-                                            {note.content && (
-                                                <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-line">
-                                                    {note.content}
-                                                </p>
-                                            )}
-                                        </div>
-                                        <form action={deletePrivateNote}>
-                                            <input type="hidden" name="id" value={note.id} />
-                                            <button className="text-gray-600 hover:text-red-400 p-2 hover:bg-red-400/10 rounded-lg transition-colors" title="Eliminar nota">
-                                                <Trash2 size={18} />
-                                            </button>
-                                        </form>
-                                    </div>
-                                ))
-                            )}
-                        </div>
-                    </div>
+                {/* --- TAB: PIZARRÓN (solo dueño real, nunca demo) --- */}
+                {activeTab === 'board' && role === 'admin' && (
+                    <Board initialBoard={initialBoard} />
                 )}
 
                 {/* --- TAB: VISITAS (solo total + país, nunca demo) --- */}
@@ -317,5 +256,6 @@ export default function AdminDashboard({ initialProjects, initialMessages, initi
                 </div>
             )}
         </div>
+        </>
     );
 }

@@ -249,10 +249,15 @@ export async function sendContactMessage(prevState: ActionState, formData: FormD
     return { success: true, message: "Enviado correctamente." };
 }
 
-// --- NOTAS PRIVADAS (solo dueño del sitio, nunca modo demo) ---
-// Pensado como agenda/notas personal. Tabla: supabase/migrations/001_private_notes.sql
-// Futuro: será el destino de sync de una app móvil 100% privada (no en este repo),
-// que va a leer/escribir esta misma tabla directo contra Supabase.
+// --- PIZARRÓN PRIVADO (solo dueño del sitio, nunca modo demo) ---
+// Calendario (notas con fecha) + post-its + pizarra libre.
+// Tablas: supabase/migrations/001_private_notes.sql, 003_board.sql
+// Futuro: será el destino de sync de una app móvil 100% privada (no en este
+// repo), que va a leer/escribir estas mismas tablas directo contra Supabase.
+// Google Calendar: la vista de calendario es propia (no hay embed real de
+// Google todavía) — para sincronizar de verdad hace falta un Client ID de
+// OAuth de Google Cloud, o el link público de "Embed calendar"/iCal, que
+// solo el dueño de la cuenta de Google puede generar.
 
 export type PrivateNote = {
     id: number;
@@ -260,17 +265,38 @@ export type PrivateNote = {
     content: string;
     note_date: string | null;
     created_at: string;
+    kind: "note" | "postit";
+    color: string | null;
 };
 
-export async function getPrivateNotes(): Promise<PrivateNote[]> {
+export type BoardData = {
+    notes: PrivateNote[];
+    postits: PrivateNote[];
+    scratch: string;
+};
+
+export async function getBoardData(): Promise<BoardData> {
     const auth = await checkAuth();
-    if (auth.role !== 'admin') return [];
-    const { data } = await supabaseAdmin
+    if (auth.role !== 'admin') return { notes: [], postits: [], scratch: "" };
+
+    const { data: items } = await supabaseAdmin
         .from("private_notes")
         .select("*")
         .order("note_date", { ascending: true, nullsFirst: false })
         .order("created_at", { ascending: false });
-    return data || [];
+
+    const { data: scratchRow } = await supabaseAdmin
+        .from("board_scratch")
+        .select("content")
+        .eq("id", 1)
+        .maybeSingle();
+
+    const all = items || [];
+    return {
+        notes: all.filter((n) => n.kind === "note"),
+        postits: all.filter((n) => n.kind === "postit"),
+        scratch: scratchRow?.content || "",
+    };
 }
 
 export async function createPrivateNote(prevState: ActionState, formData: FormData): Promise<ActionState> {
@@ -286,7 +312,7 @@ export async function createPrivateNote(prevState: ActionState, formData: FormDa
 
     const { error } = await supabaseAdmin
         .from("private_notes")
-        .insert([{ title, content: content || "", note_date }]);
+        .insert([{ title, content: content || "", note_date, kind: "note" }]);
 
     if (error) return { success: false, message: "Error al guardar la nota." };
     revalidatePath("/admin");
@@ -299,6 +325,37 @@ export async function deletePrivateNote(formData: FormData) {
     const id = formData.get("id");
     await supabaseAdmin.from("private_notes").delete().eq("id", id);
     revalidatePath("/admin");
+}
+
+const POSTIT_COLORS = ["#e8c85a", "#e88a5a", "#8ac9e8", "#a8e88a", "#e88ac9"];
+
+export async function createPostit() {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return;
+    const color = POSTIT_COLORS[Math.floor(Math.random() * POSTIT_COLORS.length)];
+    await supabaseAdmin.from("private_notes").insert([{ title: "", content: "", kind: "postit", color }]);
+    revalidatePath("/admin");
+}
+
+export async function updatePostitContent(id: number, content: string) {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return;
+    await supabaseAdmin.from("private_notes").update({ content }).eq("id", id).eq("kind", "postit");
+    revalidatePath("/admin");
+}
+
+export async function deletePostit(formData: FormData) {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return;
+    const id = formData.get("id");
+    await supabaseAdmin.from("private_notes").delete().eq("id", id).eq("kind", "postit");
+    revalidatePath("/admin");
+}
+
+export async function updateScratch(content: string) {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return;
+    await supabaseAdmin.from("board_scratch").update({ content, updated_at: new Date().toISOString() }).eq("id", 1);
 }
 
 // --- VISITAS (solo total + país, sin IP ni geolocalización precisa) ---
