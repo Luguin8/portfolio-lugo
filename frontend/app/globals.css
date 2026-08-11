@@ -202,6 +202,57 @@ html {
 }
 
 /* ============================================================
+   GROUND FOG – low rolling gothic mist banks (Yharnam streets)
+   ============================================================ */
+@keyframes bb-ground-fog-a {
+  0%   { transform: translateX(-6%) translateY(0); }
+  50%  { transform: translateX(5%) translateY(-1.5%); }
+  100% { transform: translateX(-6%) translateY(0); }
+}
+
+@keyframes bb-ground-fog-b {
+  0%   { transform: translateX(8%) translateY(0); }
+  50%  { transform: translateX(-7%) translateY(1.5%); }
+  100% { transform: translateX(8%) translateY(0); }
+}
+
+.bb-ground-fog {
+  position: fixed;
+  left: -15%;
+  right: -15%;
+  bottom: -12%;
+  height: 60vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.bb-ground-fog::before,
+.bb-ground-fog::after {
+  content: '';
+  position: absolute;
+  inset: -25% -10%;
+  background-repeat: no-repeat;
+}
+
+.bb-ground-fog::before {
+  background:
+    radial-gradient(ellipse 55% 45% at 15% 88%, rgba(196, 188, 172, 0.15) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 55% 92%, rgba(180, 170, 152, 0.13) 0%, transparent 68%),
+    radial-gradient(ellipse 45% 35% at 88% 85%, rgba(206, 198, 180, 0.11) 0%, transparent 65%);
+  filter: blur(32px);
+  animation: bb-ground-fog-a 46s ease-in-out infinite;
+}
+
+.bb-ground-fog::after {
+  background:
+    radial-gradient(ellipse 50% 40% at 30% 96%, rgba(214, 202, 178, 0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 65% 45% at 75% 90%, rgba(184, 172, 150, 0.15) 0%, transparent 65%);
+  filter: blur(40px);
+  animation: bb-ground-fog-b 62s ease-in-out infinite;
+}
+
+/* ============================================================
    EMBER PARTICLES – Floating ash/dust motes
    ============================================================ */
 @keyframes bb-ember-rise {

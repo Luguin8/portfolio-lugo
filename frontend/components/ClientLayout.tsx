@@ -34,6 +34,9 @@ function LayoutContent({ children, fontVariables }: { children: ReactNode; fontV
                 <div className="bb-fog-mid" />
             </div>
 
+            {/* ── GROUND FOG (low rolling gothic mist) ── */}
+            <div className="bb-ground-fog" aria-hidden="true" />
+
             {/* ── EMBER PARTICLES ── */}
             <div className="bb-embers" aria-hidden="true">
                 {Array.from({ length: 10 }).map((_, i) => (
