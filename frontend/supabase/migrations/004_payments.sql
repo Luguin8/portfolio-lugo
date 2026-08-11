@@ -23,13 +23,13 @@ create index if not exists monthly_payments_due_day_idx on monthly_payments (due
 -- foreign-currency purchases) — verify and adjust via the edit UI too.
 insert into monthly_payments (name, payee, amount_ars, due_day, notes)
 select * from (values
-    ('Luz', 'Compañía eléctrica', 0, null, ''),
-    ('Agua', 'Compañía de agua', 0, null, ''),
-    ('Internet', 'Proveedor de internet', 0, null, ''),
-    ('YouTube Premium', 'Google', 0, null, ''),
-    ('Spotify', 'Spotify', 0, null, ''),
-    ('Claude Code', 'Anthropic', 0, null, ''),
-    ('PS Plus', 'Sony', 0, null, ''),
-    ('Fortnite Crew', 'Xbox Cloud', 1160, null, 'Estimado: 683 ARS base + impuesto PAIS (~70%). Verificar monto real.')
+    ('Luz', 'Compañía eléctrica', 0::numeric, null::int, ''),
+    ('Agua', 'Compañía de agua', 0::numeric, null::int, ''),
+    ('Internet', 'Proveedor de internet', 0::numeric, null::int, ''),
+    ('YouTube Premium', 'Google', 0::numeric, null::int, ''),
+    ('Spotify', 'Spotify', 0::numeric, null::int, ''),
+    ('Claude Code', 'Anthropic', 0::numeric, null::int, ''),
+    ('PS Plus', 'Sony', 0::numeric, null::int, ''),
+    ('Fortnite Crew', 'Xbox Cloud', 1160::numeric, null::int, 'Estimado: precio base + impuestos. Verificar monto real.')
 ) as seed(name, payee, amount_ars, due_day, notes)
 where not exists (select 1 from monthly_payments);
