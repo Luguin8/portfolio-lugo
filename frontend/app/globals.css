@@ -193,6 +193,8 @@ html {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
+  transform: translateY(calc(var(--scroll-parallax, 0px) * 0.06));
+  will-change: transform;
 }
 
 .bb-fog-layer::before {
@@ -250,6 +252,8 @@ html {
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
+  transform: translateY(calc(var(--scroll-parallax, 0px) * 0.14));
+  will-change: transform;
 }
 
 .bb-ground-fog::before,

@@ -6,6 +6,7 @@ import { initAudioContext } from "@/lib/sounds";
 import ScrollVial from "@/components/ui/ScrollVial";
 import VisitTracker from "@/components/VisitTracker";
 import ClickBurst from "@/components/ClickBurst";
+import ScrollParallax from "@/components/ScrollParallax";
 
 export default function ClientLayout({ children, fontVariables }: { children: ReactNode; fontVariables: string }) {
     // Initialize AudioContext on first user gesture (browser policy)
@@ -75,6 +76,7 @@ export default function ClientLayout({ children, fontVariables }: { children: Re
 
             <VisitTracker />
             <ClickBurst />
+            <ScrollParallax />
 
             {/* ── MAIN CONTENT ── */}
             <div className="relative z-10 min-h-screen">
