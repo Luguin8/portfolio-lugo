@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { initAudioContext } from "@/lib/sounds";
 import ScrollVial from "@/components/ui/ScrollVial";
 import VisitTracker from "@/components/VisitTracker";
+import ClickBurst from "@/components/ClickBurst";
 
 export default function ClientLayout({ children, fontVariables }: { children: ReactNode; fontVariables: string }) {
     // Initialize AudioContext on first user gesture (browser policy)
@@ -60,9 +61,9 @@ export default function ClientLayout({ children, fontVariables }: { children: Re
             {/* ── SCANLINES ── */}
             <div className="bb-scanlines" aria-hidden="true" />
 
-            {/* ── SUBTLE VIGNETTE ── */}
+            {/* ── SUBTLE VIGNETTE (breathing pulse) ── */}
             <div
-                className="fixed inset-0 pointer-events-none z-[3]"
+                className="fixed inset-0 pointer-events-none z-[3] bb-vignette-pulse"
                 style={{
                     background: "radial-gradient(ellipse 100% 100% at 50% 50%, transparent 38%, rgba(3,2,1,0.60) 100%)"
                 }}
@@ -73,6 +74,7 @@ export default function ClientLayout({ children, fontVariables }: { children: Re
             <ScrollVial />
 
             <VisitTracker />
+            <ClickBurst />
 
             {/* ── MAIN CONTENT ── */}
             <div className="relative z-10 min-h-screen">

@@ -35,7 +35,11 @@ export const metadata: Metadata = {
     description: "Portfolio profesional de Lugo Martin. Desarrollador Full Stack, Mobile, Data y Automatización.",
   },
   icons: {
-    icon: "/icon.png",
+    icon: [
+      { url: "/favicon-rune.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: "/icon.png",
   },
 };
 
