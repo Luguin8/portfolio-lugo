@@ -4,6 +4,7 @@ import { ReactNode, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { initAudioContext } from "@/lib/sounds";
 import ScrollVial from "@/components/ui/ScrollVial";
+import VisitTracker from "@/components/VisitTracker";
 
 export default function ClientLayout({ children, fontVariables }: { children: ReactNode; fontVariables: string }) {
     // Initialize AudioContext on first user gesture (browser policy)
@@ -70,6 +71,8 @@ export default function ClientLayout({ children, fontVariables }: { children: Re
 
             {/* ── SCROLL PROGRESS VIAL ── */}
             <ScrollVial />
+
+            <VisitTracker />
 
             {/* ── MAIN CONTENT ── */}
             <div className="relative z-10 min-h-screen">

@@ -2,7 +2,7 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 // --- CONFIGURACIÓN DE CLIENTES ---
@@ -299,4 +299,39 @@ export async function deletePrivateNote(formData: FormData) {
     const id = formData.get("id");
     await supabaseAdmin.from("private_notes").delete().eq("id", id);
     revalidatePath("/admin");
+}
+
+// --- VISITAS (solo total + país, sin IP ni geolocalización precisa) ---
+// Tabla: supabase/migrations/002_page_visits.sql
+
+export async function trackVisit() {
+    const headerList = await headers();
+    const country = headerList.get("x-vercel-ip-country") || null;
+    await supabaseAdmin.from("page_visits").insert([{ country }]);
+}
+
+export type VisitStats = {
+    total: number;
+    byCountry: { country: string; count: number }[];
+};
+
+export async function getVisitStats(): Promise<VisitStats> {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return { total: 0, byCountry: [] };
+
+    const { count } = await supabaseAdmin
+        .from("page_visits")
+        .select("*", { count: "exact", head: true });
+
+    const { data } = await supabaseAdmin.from("page_visits").select("country");
+    const counts: Record<string, number> = {};
+    (data || []).forEach((row) => {
+        const key = row.country || "Desconocido";
+        counts[key] = (counts[key] || 0) + 1;
+    });
+    const byCountry = Object.entries(counts)
+        .map(([country, count]) => ({ country, count }))
+        .sort((a, b) => b.count - a.count);
+
+    return { total: count || 0, byCountry };
 }

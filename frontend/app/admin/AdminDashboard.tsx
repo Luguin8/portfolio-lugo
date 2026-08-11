@@ -1,16 +1,16 @@
 "use client";
 
 import { useState, useActionState, useEffect } from "react";
-import { X, Loader2, MessageSquare, Trash2, LogOut, List, Monitor, Smartphone, Edit2, Gamepad2, StickyNote } from "lucide-react";
-import { updateProject, deleteMessage, deleteProject, logoutAction, createPrivateNote, deletePrivateNote, type PrivateNote } from "@/lib/actions";
+import { X, Loader2, MessageSquare, Trash2, LogOut, List, Monitor, Smartphone, Edit2, Gamepad2, StickyNote, BarChart3 } from "lucide-react";
+import { updateProject, deleteMessage, deleteProject, logoutAction, createPrivateNote, deletePrivateNote, type PrivateNote, type VisitStats } from "@/lib/actions";
 import Image from "next/image";
 
 const initialState = { success: false, message: "" };
 
-export default function AdminDashboard({ initialProjects, initialMessages, initialNotes, role }: { initialProjects: any[], initialMessages: any[], initialNotes: PrivateNote[], role: string | null }) {
+export default function AdminDashboard({ initialProjects, initialMessages, initialNotes, initialVisitStats, role }: { initialProjects: any[], initialMessages: any[], initialNotes: PrivateNote[], initialVisitStats: VisitStats, role: string | null }) {
     const [updateState, updateFormAction, isUpdatePending] = useActionState(updateProject, initialState);
     const [noteState, noteFormAction, isNotePending] = useActionState(createPrivateNote, initialState);
-    const [activeTab, setActiveTab] = useState<'list' | 'messages' | 'notes'>('messages');
+    const [activeTab, setActiveTab] = useState<'list' | 'messages' | 'notes' | 'visits'>('messages');
     const [editingProject, setEditingProject] = useState<any>(null);
 
     useEffect(() => {
@@ -48,6 +48,11 @@ export default function AdminDashboard({ initialProjects, initialMessages, initi
                     {role === 'admin' && (
                         <button onClick={() => setActiveTab('notes')} className={`pb-4 px-4 font-mono text-sm whitespace-nowrap flex items-center gap-2 ${activeTab === 'notes' ? 'border-b-2 border-primary text-primary' : 'text-gray-400 hover:text-white'}`}>
                             <StickyNote size={16} /> NOTAS ({initialNotes.length})
+                        </button>
+                    )}
+                    {role === 'admin' && (
+                        <button onClick={() => setActiveTab('visits')} className={`pb-4 px-4 font-mono text-sm whitespace-nowrap flex items-center gap-2 ${activeTab === 'visits' ? 'border-b-2 border-primary text-primary' : 'text-gray-400 hover:text-white'}`}>
+                            <BarChart3 size={16} /> VISITAS ({initialVisitStats.total})
                         </button>
                     )}
                 </div>
@@ -202,6 +207,31 @@ export default function AdminDashboard({ initialProjects, initialMessages, initi
                                         </form>
                                     </div>
                                 ))
+                            )}
+                        </div>
+                    </div>
+                )}
+
+                {/* --- TAB: VISITAS (solo total + país, nunca demo) --- */}
+                {activeTab === 'visits' && role === 'admin' && (
+                    <div className="space-y-6">
+                        <div className="bg-[#1a1a1a] border border-white/5 p-8 rounded-xl text-center">
+                            <p className="text-xs font-mono text-gray-500 uppercase mb-2">Visitas Totales</p>
+                            <p className="text-5xl font-bold text-primary">{initialVisitStats.total}</p>
+                        </div>
+                        <div className="bg-[#1a1a1a] border border-white/5 rounded-xl overflow-hidden">
+                            <p className="text-xs font-mono text-gray-500 uppercase p-4 border-b border-white/5">Por País</p>
+                            {initialVisitStats.byCountry.length === 0 ? (
+                                <p className="text-gray-600 text-sm p-6">Sin datos todavía.</p>
+                            ) : (
+                                <div className="divide-y divide-white/5">
+                                    {initialVisitStats.byCountry.map((row) => (
+                                        <div key={row.country} className="flex items-center justify-between px-4 py-3">
+                                            <span className="text-gray-300 text-sm">{row.country}</span>
+                                            <span className="text-primary font-mono text-sm">{row.count}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             )}
                         </div>
                     </div>
