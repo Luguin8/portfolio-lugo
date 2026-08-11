@@ -392,3 +392,65 @@ export async function getVisitStats(): Promise<VisitStats> {
 
     return { total: count || 0, byCountry };
 }
+
+// --- PAGOS MENSUALES (solo dueño real, nunca modo demo) ---
+// Tabla: supabase/migrations/004_payments.sql
+
+export type MonthlyPayment = {
+    id: number;
+    name: string;
+    payee: string;
+    amount_ars: number;
+    due_day: number | null;
+    notes: string;
+    created_at: string;
+};
+
+export async function getPayments(): Promise<MonthlyPayment[]> {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return [];
+    const { data } = await supabaseAdmin
+        .from("monthly_payments")
+        .select("*")
+        .order("due_day", { ascending: true, nullsFirst: false });
+    return data || [];
+}
+
+export async function updatePayment(prevState: ActionState, formData: FormData): Promise<ActionState> {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return { success: false, message: "No autorizado." };
+
+    const id = formData.get("id") as string;
+    const name = formData.get("name") as string;
+    const payee = formData.get("payee") as string;
+    const amount_ars = parseFloat(formData.get("amount_ars") as string) || 0;
+    const dueDayRaw = formData.get("due_day") as string;
+    const due_day = dueDayRaw ? parseInt(dueDayRaw, 10) : null;
+    const notes = formData.get("notes") as string;
+
+    if (!name) return { success: false, message: "El nombre es obligatorio." };
+
+    const { error } = await supabaseAdmin
+        .from("monthly_payments")
+        .update({ name, payee, amount_ars, due_day, notes })
+        .eq("id", id);
+
+    if (error) return { success: false, message: "Error al guardar." };
+    revalidatePath("/admin");
+    return { success: true, message: "Guardado." };
+}
+
+export async function createPayment() {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return;
+    await supabaseAdmin.from("monthly_payments").insert([{ name: "Nuevo pago", payee: "", amount_ars: 0 }]);
+    revalidatePath("/admin");
+}
+
+export async function deletePayment(formData: FormData) {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return;
+    const id = formData.get("id");
+    await supabaseAdmin.from("monthly_payments").delete().eq("id", id);
+    revalidatePath("/admin");
+}

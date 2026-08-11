@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { Plus, Trash2, X, ExternalLink } from "lucide-react";
+import { useState, useRef } from "react";
+import { Plus, X, ExternalLink, Trash2 } from "lucide-react";
 import {
     createPrivateNote,
     deletePrivateNote,
@@ -68,7 +68,6 @@ export default function Board({ initialBoard }: { initialBoard: BoardData }) {
         formData.set("note_date", dateKey);
         const result = await createPrivateNote({ success: false, message: "" }, formData);
         if (result.success) {
-            // Optimistic-ish: refetch isn't wired here, so just append locally.
             setNotes((prev) => [
                 ...prev,
                 { id: Date.now(), title: quickTitle.trim(), content: "", note_date: dateKey, created_at: new Date().toISOString(), kind: "note", color: null },
@@ -87,7 +86,6 @@ export default function Board({ initialBoard }: { initialBoard: BoardData }) {
 
     async function handleAddPostit() {
         await createPostit();
-        // No local id/color known until reload; simplest safe path is a soft refresh.
         window.location.reload();
     }
 
@@ -111,22 +109,22 @@ export default function Board({ initialBoard }: { initialBoard: BoardData }) {
     }
 
     return (
-        <div className="space-y-8">
-            {/* ── CALENDARIO (2 semanas) ── */}
-            <div className="bg-[#1a1a1a] border border-white/5 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-4">
-                    <p className="text-xs font-mono text-gray-500 uppercase">Semana actual + próxima</p>
+        <div className="h-full flex flex-col gap-3 p-4 pt-16">
+            {/* ── CALENDARIO (2 semanas) — compacto, altura fija ── */}
+            <div className="shrink-0 bg-[#1a1a1a] border border-white/5 rounded-xl p-3">
+                <div className="flex items-center justify-between mb-2">
+                    <p className="text-[10px] font-mono text-gray-500 uppercase">Semana actual + próxima</p>
                     <a
                         href="https://calendar.google.com/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-primary transition-colors"
-                        title="La sincronización real con Google Calendar necesita credenciales OAuth tuyas — por ahora este calendario es propio."
+                        className="flex items-center gap-1.5 text-[10px] text-gray-500 hover:text-primary transition-colors"
+                        title="Sincronización real con Google Calendar pendiente (necesita credenciales OAuth o link de embed público)"
                     >
-                        <ExternalLink size={12} /> Google Calendar
+                        <ExternalLink size={11} /> Google Calendar
                     </a>
                 </div>
-                <div className="grid grid-cols-7 gap-2">
+                <div className="grid grid-cols-7 gap-1.5">
                     {days.map((d, i) => {
                         const key = toDateKey(d);
                         const isToday = key === today;
@@ -135,21 +133,21 @@ export default function Board({ initialBoard }: { initialBoard: BoardData }) {
                         return (
                             <div
                                 key={key}
-                                className={`rounded-lg p-2 min-h-[110px] flex flex-col ${isToday ? "bg-primary/10 border border-primary/40" : "bg-black/30 border border-white/5"} ${isNextWeek ? "opacity-80" : ""}`}
+                                className={`rounded-lg p-1.5 h-[86px] flex flex-col ${isToday ? "bg-primary/10 border border-primary/40" : "bg-black/30 border border-white/5"} ${isNextWeek ? "opacity-80" : ""}`}
                             >
-                                <div className="flex items-center justify-between mb-1.5">
-                                    <span className="text-[10px] font-mono text-gray-500 uppercase">{DAY_LABELS[i % 7]}</span>
-                                    <span className={`text-xs font-bold ${isToday ? "text-primary" : "text-gray-400"}`}>{d.getDate()}</span>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-[9px] font-mono text-gray-500 uppercase">{DAY_LABELS[i % 7]}</span>
+                                    <span className={`text-[11px] font-bold ${isToday ? "text-primary" : "text-gray-400"}`}>{d.getDate()}</span>
                                 </div>
-                                <div className="flex-1 space-y-1">
+                                <div className="flex-1 space-y-0.5 overflow-y-auto">
                                     {dayNotes.map((n) => (
-                                        <div key={n.id} className="group flex items-start justify-between gap-1 bg-white/5 rounded px-1.5 py-1">
-                                            <span className="text-[11px] text-gray-300 leading-tight break-words">{n.title}</span>
+                                        <div key={n.id} className="group flex items-start justify-between gap-1 bg-white/5 rounded px-1 py-0.5">
+                                            <span className="text-[9px] text-gray-300 leading-tight break-words">{n.title}</span>
                                             <button
                                                 onClick={() => handleDeleteNote(n.id)}
                                                 className="opacity-0 group-hover:opacity-100 text-gray-600 hover:text-red-400 shrink-0"
                                             >
-                                                <X size={10} />
+                                                <X size={8} />
                                             </button>
                                         </div>
                                     ))}
@@ -162,14 +160,14 @@ export default function Board({ initialBoard }: { initialBoard: BoardData }) {
                                         onKeyDown={(e) => { if (e.key === "Enter") handleQuickAdd(key); if (e.key === "Escape") setAddingDay(null); }}
                                         onBlur={() => handleQuickAdd(key)}
                                         placeholder="Nota..."
-                                        className="mt-1 w-full bg-black/40 border border-white/10 rounded text-[11px] px-1.5 py-1 text-white focus:outline-none focus:border-primary"
+                                        className="mt-0.5 w-full bg-black/40 border border-white/10 rounded text-[9px] px-1 py-0.5 text-white focus:outline-none focus:border-primary"
                                     />
                                 ) : (
                                     <button
                                         onClick={() => { setAddingDay(key); setQuickTitle(""); }}
-                                        className="mt-1 text-gray-600 hover:text-primary flex items-center justify-center py-0.5"
+                                        className="text-gray-600 hover:text-primary flex items-center justify-center py-0"
                                     >
-                                        <Plus size={12} />
+                                        <Plus size={10} />
                                     </button>
                                 )}
                             </div>
@@ -178,56 +176,59 @@ export default function Board({ initialBoard }: { initialBoard: BoardData }) {
                 </div>
             </div>
 
-            {/* ── POST-ITS ── */}
-            <div className="bg-[#1a1a1a] border border-white/5 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-4">
-                    <p className="text-xs font-mono text-gray-500 uppercase">Post-its</p>
-                    <button
-                        onClick={handleAddPostit}
-                        className="flex items-center gap-1.5 text-xs px-3 py-1.5 bg-primary/20 hover:bg-primary/30 text-primary rounded border border-primary/30 transition-colors"
-                    >
-                        <Plus size={14} /> Agregar
-                    </button>
-                </div>
-                {postits.length === 0 ? (
-                    <p className="text-gray-600 text-sm py-6 text-center">Sin post-its todavía.</p>
-                ) : (
-                    <div className="flex flex-wrap gap-3">
-                        {postits.map((p) => (
-                            <div
-                                key={p.id}
-                                className="w-40 h-40 p-3 rounded shadow-lg flex flex-col relative group"
-                                style={{ background: p.color || "#e8c85a", transform: `rotate(${(p.id % 5) - 2}deg)` }}
-                            >
-                                <button
-                                    onClick={() => handleDeletePostit(p.id)}
-                                    className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 text-black/40 hover:text-black/80"
-                                >
-                                    <Trash2 size={13} />
-                                </button>
-                                <textarea
-                                    defaultValue={p.content}
-                                    onBlur={(e) => handlePostitBlur(p.id, e.target.value)}
-                                    placeholder="Escribí algo..."
-                                    className="flex-1 w-full bg-transparent resize-none focus:outline-none text-black/80 text-sm placeholder:text-black/40"
-                                    style={{ fontFamily: "var(--font-body)" }}
-                                />
-                            </div>
-                        ))}
+            {/* ── FILA INFERIOR: post-its (izquierda) + pizarra libre (derecha) ── */}
+            <div className="flex-1 min-h-0 flex gap-3">
+                {/* Post-its column */}
+                <div className="w-64 shrink-0 bg-[#1a1a1a] border border-white/5 rounded-xl p-3 flex flex-col min-h-0">
+                    <div className="flex items-center justify-between mb-2 shrink-0">
+                        <p className="text-[10px] font-mono text-gray-500 uppercase">Post-its</p>
+                        <button
+                            onClick={handleAddPostit}
+                            className="flex items-center gap-1 text-[10px] px-2 py-1 bg-primary/20 hover:bg-primary/30 text-primary rounded border border-primary/30 transition-colors"
+                        >
+                            <Plus size={11} /> Nuevo
+                        </button>
                     </div>
-                )}
-            </div>
+                    <div className="flex-1 min-h-0 overflow-y-auto space-y-2 pr-1">
+                        {postits.length === 0 ? (
+                            <p className="text-gray-600 text-xs py-4 text-center">Sin post-its.</p>
+                        ) : (
+                            postits.map((p) => (
+                                <div
+                                    key={p.id}
+                                    className="w-full h-28 p-2.5 rounded shadow-lg flex flex-col relative group shrink-0"
+                                    style={{ background: p.color || "#e8c85a", transform: `rotate(${(p.id % 5) - 2}deg)` }}
+                                >
+                                    <button
+                                        onClick={() => handleDeletePostit(p.id)}
+                                        className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 text-black/40 hover:text-black/80"
+                                    >
+                                        <Trash2 size={12} />
+                                    </button>
+                                    <textarea
+                                        defaultValue={p.content}
+                                        onBlur={(e) => handlePostitBlur(p.id, e.target.value)}
+                                        placeholder="Escribí algo..."
+                                        className="flex-1 w-full bg-transparent resize-none focus:outline-none text-black/80 text-xs placeholder:text-black/40"
+                                        style={{ fontFamily: "var(--font-body)" }}
+                                    />
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
 
-            {/* ── PIZARRA LIBRE (sin renglones) ── */}
-            <div className="bg-[#1a1a1a] border border-white/5 rounded-xl p-5">
-                <p className="text-xs font-mono text-gray-500 uppercase mb-4">Pizarra libre</p>
-                <textarea
-                    value={scratch}
-                    onChange={(e) => handleScratchChange(e.target.value)}
-                    placeholder="Anotá lo que quieras, sin estructura..."
-                    className="w-full min-h-[280px] bg-black/30 border border-white/10 rounded-lg p-5 text-white text-base leading-relaxed resize-y focus:outline-none focus:border-primary/50"
-                    style={{ fontFamily: "var(--font-body)" }}
-                />
+                {/* Pizarra libre — sin renglones */}
+                <div className="flex-1 min-w-0 bg-[#1a1a1a] border border-white/5 rounded-xl p-3 flex flex-col min-h-0">
+                    <p className="text-[10px] font-mono text-gray-500 uppercase mb-2 shrink-0">Pizarra libre</p>
+                    <textarea
+                        value={scratch}
+                        onChange={(e) => handleScratchChange(e.target.value)}
+                        placeholder="Anotá lo que quieras, sin estructura..."
+                        className="flex-1 w-full bg-black/30 border border-white/10 rounded-lg p-4 text-white text-base leading-relaxed resize-none focus:outline-none focus:border-primary/50"
+                        style={{ fontFamily: "var(--font-body)" }}
+                    />
+                </div>
             </div>
         </div>
     );
