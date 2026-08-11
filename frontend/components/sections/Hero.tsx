@@ -3,16 +3,12 @@
 import { motion } from "framer-motion";
 import { FileText } from "lucide-react";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
-import { useDevMode } from "@/components/providers/DevModeProvider";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { playNavigate, playSelect } from "@/lib/sounds";
 import Magnetic from "@/components/ui/Magnetic";
 import CountUp from "@/components/ui/CountUp";
 
 export default function Hero() {
-    const { isDevMode } = useDevMode();
-
     return (
         <section
             id="hero"
@@ -106,18 +102,8 @@ export default function Hero() {
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
-                    className={cn("relative mx-auto flex flex-col items-center justify-center gap-6", isDevMode && "outline outline-1 outline-dashed outline-yellow-400/30")}
+                    className="relative mx-auto flex flex-col items-center justify-center gap-6"
                 >
-                    {/* Dev mode label */}
-                    {isDevMode && (
-                        <div
-                            className="absolute -bottom-8 left-0 right-0 w-max mx-auto text-[10px] px-2 py-1 border"
-                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", borderColor: "var(--bb-border)", background: "var(--bb-panel)", letterSpacing: "0.12em" }}
-                        >
-                            Hero.tsx · ProfileFrame
-                        </div>
-                    )}
-
                     {/* Hunter Status Panel */}
                     <div className="w-64 md:w-80 bb-corner-box relative z-20" style={{ background: "var(--bb-panel)", border: "1px solid var(--bb-border)" }}>
                         <span className="bb-corner-tr" />

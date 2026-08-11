@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lock, LogIn, Shield, Eye } from "lucide-react";
-import { useDevMode } from "@/components/providers/DevModeProvider";
+import { Lock, LogIn, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { loginAction, enableDemoMode } from "@/lib/actions";
 import {
@@ -13,8 +12,6 @@ import {
     playSelect,
     playOpen,
     playClose,
-    playInsightGain,
-    playInsightLoss,
     playError,
 } from "@/lib/sounds";
 
@@ -27,7 +24,6 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
-    const { isDevMode, toggleDevMode } = useDevMode();
     const [isScrolled, setIsScrolled] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [loginMessage, setLoginMessage] = useState("");
@@ -38,15 +34,6 @@ export default function Navbar() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-
-    function handleInsightToggle() {
-        if (isDevMode) {
-            playInsightLoss();
-        } else {
-            playInsightGain();
-        }
-        toggleDevMode();
-    }
 
     function openLoginModal() {
         playOpen();
@@ -153,58 +140,6 @@ export default function Navbar() {
 
                     {/* ACTIONS */}
                     <div className="flex items-center gap-4">
-
-                        {/* ── INSIGHT STAT ROW BUTTON ── */}
-                        <button
-                            onClick={handleInsightToggle}
-                            onMouseEnter={() => playNavigate()}
-                            className="group flex items-center gap-2 px-3 py-1.5 border transition-all duration-300"
-                            style={{
-                                fontFamily: "var(--font-title)",
-                                borderColor: isDevMode ? "var(--bb-gold)" : "var(--bb-border)",
-                                background: isDevMode ? "rgba(201,168,76,0.08)" : "transparent",
-                                boxShadow: isDevMode ? "0 0 14px rgba(201,168,76,0.18), inset 0 0 8px rgba(201,168,76,0.06)" : "none",
-                            }}
-                            title={isDevMode ? "Desactivar Insight" : "Activar Insight"}
-                        >
-                            {/* Eye icon */}
-                            <Eye
-                                size={13}
-                                className="transition-all duration-300"
-                                style={{
-                                    color: isDevMode ? "var(--bb-gold)" : "var(--bb-muted)",
-                                    filter: isDevMode ? "drop-shadow(0 0 4px rgba(201,168,76,0.60))" : "none",
-                                }}
-                            />
-                            {/* INSIGHT label */}
-                            <span
-                                className="text-[0.62rem] tracking-widest transition-colors duration-300 hidden sm:inline"
-                                style={{
-                                    color: isDevMode ? "var(--bb-gold)" : "var(--bb-muted)",
-                                    letterSpacing: "0.22em",
-                                }}
-                            >
-                                INSIGHT
-                            </span>
-                            {/* Separator dot */}
-                            <span
-                                className="transition-colors duration-300 text-[0.62rem] hidden sm:inline"
-                                style={{ color: isDevMode ? "var(--bb-gold)" : "var(--bb-border)" }}
-                            >
-                                ·
-                            </span>
-                            {/* Numeric value */}
-                            <span
-                                className="text-[0.62rem] font-semibold tabular-nums transition-all duration-300"
-                                style={{
-                                    color: isDevMode ? "var(--bb-gold-bright)" : "var(--bb-muted)",
-                                    textShadow: isDevMode ? "0 0 8px rgba(232,200,122,0.70)" : "none",
-                                    letterSpacing: "0.05em",
-                                }}
-                            >
-                                {isDevMode ? "1" : "0"}
-                            </span>
-                        </button>
 
                         {/* Lock */}
                         <button

@@ -4,8 +4,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Github, ExternalLink, Download } from "lucide-react";
 import Tilt from "react-parallax-tilt";
-import { useDevMode } from "@/components/providers/DevModeProvider";
-import { cn } from "@/lib/utils";
 import { playNavigate, playOpen } from "@/lib/sounds";
 
 export interface Project {
@@ -26,7 +24,6 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, onClick }: ProjectCardProps) {
-    const { isDevMode } = useDevMode();
     const isMobileLayout = project.project_type === 'mobile';
     const mainImage = project.images[0];
 
@@ -44,10 +41,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
             glareBorderRadius="0px"
         >
             <motion.div
-                className={cn(
-                    "relative group flex flex-col cursor-pointer h-full bb-corner-box",
-                    isDevMode && "outline outline-dashed outline-1 outline-yellow-400/30"
-                )}
+                className="relative group flex flex-col cursor-pointer h-full bb-corner-box"
             style={{
                 background: "var(--bb-panel)",
                 border: "1px solid var(--bb-border)",
@@ -64,21 +58,6 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
             <span className="bb-corner-tr" />
             <span className="bb-corner-bl" />
 
-            {/* Dev mode badge */}
-            {isDevMode && (
-                <div
-                    className="absolute inset-0 -z-10 flex items-center justify-center pointer-events-none"
-                    style={{ background: "rgba(5,4,3,0.5)" }}
-                >
-                    <div
-                        className="text-[10px] border px-2"
-                        style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", borderColor: "var(--bb-border)", letterSpacing: "0.1em" }}
-                    >
-                        ProjectCard · id={project.id}
-                    </div>
-                </div>
-            )}
-
             {/* Expand hint (top right) */}
             <div
                 className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1.5 border"
@@ -90,7 +69,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
             </div>
 
             {/* CONTENT */}
-            <div className={cn("p-5 flex-1 transition-opacity duration-300", isDevMode && "group-hover:opacity-20")}>
+            <div className="p-5 flex-1 transition-opacity duration-300">
                 {!isMobileLayout ? (
                     /* WEB / DESKTOP layout */
                     <div className="flex flex-col h-full">

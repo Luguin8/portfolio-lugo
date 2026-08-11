@@ -153,27 +153,6 @@ export function playClose(): void {
 }
 
 /**
- * INSIGHT: ON – secuencia ascensional mística (3 notas).
- * "Has ganado Insight."
- */
-export function playInsightGain(): void {
-    tone({ freq: 360, duration: 0.18, type: "sine", vol: 0.35, attack: 0.012 });
-    tone({ freq: 540, duration: 0.18, type: "sine", vol: 0.32, delay: 0.14, attack: 0.010 });
-    tone({ freq: 810, duration: 0.30, type: "sine", vol: 0.28, delay: 0.28, attack: 0.010, freqEnd: 780 });
-    noise(0.25, 0.06, 0.28);
-}
-
-/**
- * INSIGHT: OFF – secuencia descendente.
- * "Has perdido Insight."
- */
-export function playInsightLoss(): void {
-    tone({ freq: 700, duration: 0.14, type: "sine", vol: 0.30, freqEnd: 560 });
-    tone({ freq: 490, duration: 0.14, type: "sine", vol: 0.26, delay: 0.12, freqEnd: 380 });
-    tone({ freq: 320, duration: 0.25, type: "triangle", vol: 0.22, delay: 0.22, freqEnd: 200 });
-}
-
-/**
  * Error / fallo – disonancia baja.
  */
 export function playError(): void {
