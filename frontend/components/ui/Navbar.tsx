@@ -22,6 +22,7 @@ const NAV_LINKS = [
     { href: "#hero", label: "Inicio" },
     { href: "#skills", label: "Arsenal" },
     { href: "#projects", label: "Obras" },
+    { href: "#process", label: "Proceso" },
     { href: "#contact", label: "Contacto" },
 ];
 

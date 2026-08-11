@@ -51,14 +51,15 @@ export default function Hero() {
                         <div className="bb-separator mt-4 mb-4" style={{ maxWidth: "320px" }} />
 
                         <h2 className="text-xl md:text-2xl font-normal font-body italic text-bb-muted">
-                            Full Stack · Mobile · Data · Hardware
+                            Llevo tu idea de negocio a producción, de punta a punta
                         </h2>
                     </div>
 
                     {/* Description */}
                     <p className="text-lg leading-relaxed max-w-md mx-auto lg:mx-0 font-body text-bb-muted">
-                        Desarrollo web, mobile, scripts de datos y automatización.
-                        Arquitectura Monorepo y sistemas modulares listos para producción.
+                        Trabajo directo con founders y equipos técnicos: interfaces web y mobile,
+                        backends escalables y automatizaciones que ahorran horas de trabajo manual.
+                        Sin intermediarios, con comunicación directa y entregas medibles.
                         <br />
                         <span className="text-[0.72rem] tracking-[0.12em] not-italic mt-1 block font-title text-bb-gold">
                             Vue · Nuxt · React · Next.js · NestJS · GraphQL · Turborepo · Python · Docker

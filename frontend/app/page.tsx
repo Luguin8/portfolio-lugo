@@ -3,6 +3,7 @@ import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
 import ProjectsGrid from "@/components/sections/ProjectsGrid";
 import SkillsGrid from "@/components/sections/SkillsGrid";
+import Process from "@/components/sections/Process";
 import Extras from "@/components/sections/Extras";
 import Contact from "@/components/sections/Contact";
 
@@ -13,6 +14,7 @@ export default function Home() {
       <Hero />
       <SkillsGrid />
       <ProjectsGrid />
+      <Process />
       <Extras />
       <Contact />
     </main>

@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { motion } from "framer-motion";
 import { Send, Mail, MapPin, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 import { sendContactMessage } from "@/lib/actions";
 import { playNavigate, playSelect, playSubmit, playError } from "@/lib/sounds";
 
@@ -53,6 +54,28 @@ export default function Contact() {
                                     className="text-base transition-colors duration-200 font-body text-bb-white hover:text-bb-gold"
                                 >
                                     lugoamartin@gmail.com
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* WhatsApp row */}
+                        <div className="flex items-center gap-5">
+                            <div className="w-11 h-11 flex items-center justify-center shrink-0 border border-bb-border text-bb-gold">
+                                <FaWhatsapp size={18} />
+                            </div>
+                            <div>
+                                <p className="text-[0.6rem] tracking-[0.22em] uppercase mb-0.5 font-title text-bb-muted">
+                                    WhatsApp
+                                </p>
+                                <a
+                                    href="https://wa.me/5493794385978"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-base transition-colors duration-200 font-body text-bb-white hover:text-bb-gold"
+                                    onMouseEnter={() => playNavigate()}
+                                    onClick={() => playSelect()}
+                                >
+                                    Escribime directo
                                 </a>
                             </div>
                         </div>
