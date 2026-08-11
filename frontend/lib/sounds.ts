@@ -182,3 +182,59 @@ export function playHoverLight(): void {
 export function playGalleryNav(): void {
     tone({ freq: 780, duration: 0.06, type: "triangle", vol: 0.28, freqEnd: 650 });
 }
+
+// ── Ambient drone (opt-in, looping) ───────────────────────────
+// Low, slow-shifting wind/drone bed. Off by default; toggled from the navbar.
+let _ambientNodes: { oscillators: OscillatorNode[]; masterGain: GainNode } | null = null;
+
+export function startAmbient(): void {
+    const c = ctx();
+    if (!c || _ambientNodes) return;
+
+    const masterGain = c.createGain();
+    masterGain.gain.setValueAtTime(0, c.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.06, c.currentTime + 2.5);
+    masterGain.connect(c.destination);
+
+    const filter = c.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.value = 500;
+    filter.connect(masterGain);
+
+    const freqs = [55, 82.5, 110]; // low drone stack
+    const oscillators = freqs.map((freq, i) => {
+        const osc = c.createOscillator();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+
+        // Slow LFO detune for an unsettled, breathing quality
+        const lfo = c.createOscillator();
+        lfo.frequency.value = 0.05 + i * 0.02;
+        const lfoGain = c.createGain();
+        lfoGain.gain.value = 3 + i;
+        lfo.connect(lfoGain);
+        lfoGain.connect(osc.frequency);
+        lfo.start();
+
+        osc.connect(filter);
+        osc.start();
+        return osc;
+    });
+
+    _ambientNodes = { oscillators, masterGain };
+}
+
+export function stopAmbient(): void {
+    if (!_ambientNodes || !_ctx) return;
+    const { oscillators, masterGain } = _ambientNodes;
+    const c = _ctx;
+    masterGain.gain.linearRampToValueAtTime(0, c.currentTime + 1.2);
+    setTimeout(() => {
+        oscillators.forEach((osc) => osc.stop());
+    }, 1300);
+    _ambientNodes = null;
+}
+
+export function isAmbientPlaying(): boolean {
+    return _ambientNodes !== null;
+}

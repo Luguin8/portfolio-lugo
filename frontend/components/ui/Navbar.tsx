@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lock, LogIn, Shield } from "lucide-react";
+import { Lock, LogIn, Shield, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { loginAction, enableDemoMode } from "@/lib/actions";
 import {
@@ -13,6 +13,8 @@ import {
     playOpen,
     playClose,
     playError,
+    startAmbient,
+    stopAmbient,
 } from "@/lib/sounds";
 
 const NAV_LINKS = [
@@ -27,7 +29,17 @@ export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [loginMessage, setLoginMessage] = useState("");
+    const [isAmbientOn, setIsAmbientOn] = useState(false);
     const router = useRouter();
+
+    function toggleAmbient() {
+        if (isAmbientOn) {
+            stopAmbient();
+        } else {
+            startAmbient();
+        }
+        setIsAmbientOn(!isAmbientOn);
+    }
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -140,6 +152,17 @@ export default function Navbar() {
 
                     {/* ACTIONS */}
                     <div className="flex items-center gap-4">
+
+                        {/* Ambient sound toggle */}
+                        <button
+                            onClick={toggleAmbient}
+                            onMouseEnter={() => playNavigate()}
+                            className="p-2 transition-colors duration-200"
+                            style={{ color: isAmbientOn ? "var(--bb-gold)" : "var(--bb-muted)" }}
+                            title={isAmbientOn ? "Silenciar ambiente" : "Activar ambiente sonoro"}
+                        >
+                            {isAmbientOn ? <Volume2 size={15} /> : <VolumeX size={15} />}
+                        </button>
 
                         {/* Lock */}
                         <button
