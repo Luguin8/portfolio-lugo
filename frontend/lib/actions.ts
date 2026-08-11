@@ -248,3 +248,55 @@ export async function sendContactMessage(prevState: ActionState, formData: FormD
     if (error) return { success: false, message: "Error al enviar." };
     return { success: true, message: "Enviado correctamente." };
 }
+
+// --- NOTAS PRIVADAS (solo dueño del sitio, nunca modo demo) ---
+// Pensado como agenda/notas personal. Tabla: supabase/migrations/001_private_notes.sql
+// Futuro: será el destino de sync de una app móvil 100% privada (no en este repo),
+// que va a leer/escribir esta misma tabla directo contra Supabase.
+
+export type PrivateNote = {
+    id: number;
+    title: string;
+    content: string;
+    note_date: string | null;
+    created_at: string;
+};
+
+export async function getPrivateNotes(): Promise<PrivateNote[]> {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return [];
+    const { data } = await supabaseAdmin
+        .from("private_notes")
+        .select("*")
+        .order("note_date", { ascending: true, nullsFirst: false })
+        .order("created_at", { ascending: false });
+    return data || [];
+}
+
+export async function createPrivateNote(prevState: ActionState, formData: FormData): Promise<ActionState> {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return { success: false, message: "No autorizado." };
+
+    const title = formData.get("title") as string;
+    const content = formData.get("content") as string;
+    const noteDateRaw = formData.get("note_date") as string;
+    const note_date = noteDateRaw ? noteDateRaw : null;
+
+    if (!title) return { success: false, message: "El título es obligatorio." };
+
+    const { error } = await supabaseAdmin
+        .from("private_notes")
+        .insert([{ title, content: content || "", note_date }]);
+
+    if (error) return { success: false, message: "Error al guardar la nota." };
+    revalidatePath("/admin");
+    return { success: true, message: "Nota guardada." };
+}
+
+export async function deletePrivateNote(formData: FormData) {
+    const auth = await checkAuth();
+    if (auth.role !== 'admin') return;
+    const id = formData.get("id");
+    await supabaseAdmin.from("private_notes").delete().eq("id", id);
+    revalidatePath("/admin");
+}
