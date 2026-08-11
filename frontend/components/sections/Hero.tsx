@@ -7,6 +7,7 @@ import Image from "next/image";
 import { playNavigate, playSelect } from "@/lib/sounds";
 import Magnetic from "@/components/ui/Magnetic";
 import CountUp from "@/components/ui/CountUp";
+import OrnateFrame from "@/components/ui/OrnateFrame";
 
 export default function Hero() {
     return (
@@ -146,6 +147,7 @@ export default function Hero() {
                     >
                         <span className="bb-corner-tr" />
                         <span className="bb-corner-bl" />
+                        <OrnateFrame />
 
                         {/* Outer atmospheric ring – pulsing glow */}
                         <div

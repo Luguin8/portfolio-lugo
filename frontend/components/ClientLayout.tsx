@@ -7,6 +7,7 @@ import ScrollVial from "@/components/ui/ScrollVial";
 import VisitTracker from "@/components/VisitTracker";
 import ClickBurst from "@/components/ClickBurst";
 import ScrollParallax from "@/components/ScrollParallax";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function ClientLayout({ children, fontVariables }: { children: ReactNode; fontVariables: string }) {
     // Initialize AudioContext on first user gesture (browser policy)
@@ -41,6 +42,8 @@ export default function ClientLayout({ children, fontVariables }: { children: Re
             className={cn("antialiased min-h-screen relative", fontVariables)}
             style={{ background: "var(--bb-bg)", color: "var(--bb-white)", fontFamily: "var(--font-body)" }}
         >
+            <LoadingScreen />
+
             {/* ── FOG LAYER (pure CSS) ── */}
             <div className="bb-fog-layer" aria-hidden="true">
                 <div className="bb-fog-mid" />
