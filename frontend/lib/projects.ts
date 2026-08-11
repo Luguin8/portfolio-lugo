@@ -1,4 +1,5 @@
 import type { Project } from "@/components/ui/ProjectCard";
+import { slugify } from "./slugify";
 
 // IMAGE PATHS: all point to a dark placeholder until real screenshots are added.
 // To replace: create /public/projects/<slug>/ and add cover.jpg + gallery images.
@@ -152,3 +153,11 @@ export const PROJECTS: Project[] = [
         repo_link: "https://github.com/Luguin8/AppCC_Android",
     },
 ];
+
+export function getProjectSlug(project: Project): string {
+    return slugify(project.title);
+}
+
+export function getProjectBySlug(slug: string): Project | undefined {
+    return PROJECTS.find((p) => slugify(p.title) === slug);
+}

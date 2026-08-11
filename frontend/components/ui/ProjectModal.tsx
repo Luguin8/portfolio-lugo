@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Github, ExternalLink, Smartphone, Monitor, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Github, ExternalLink, Smartphone, Monitor, X, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Project } from "./ProjectCard";
+import { getProjectSlug } from "@/lib/projects";
 import { playOpen, playClose, playGalleryNav, playNavigate, playSelect } from "@/lib/sounds";
 
 interface ProjectModalProps {
@@ -235,6 +237,15 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                                     Ver Código
                                 </a>
                             )}
+                            <Link
+                                href={`/proyectos/${getProjectSlug(project)}`}
+                                className="bb-btn-secondary w-full"
+                                onMouseEnter={() => playNavigate()}
+                                onClick={() => playSelect()}
+                            >
+                                <BookOpen size={14} />
+                                Ver Caso Completo
+                            </Link>
                         </div>
 
                         {/* Bottom status line */}
