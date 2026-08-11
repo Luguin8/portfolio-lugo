@@ -134,8 +134,16 @@ export default function Hero() {
                         </div>
                     </div>
 
-                    {/* Photo frame with BB corner accents */}
-                    <div className="bb-corner-box relative group">
+                    {/* Photo frame with BB corner accents — links to Instagram */}
+                    <a
+                        href="https://www.instagram.com/lugomartn"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bb-corner-box relative group block"
+                        title="@lugomartn en Instagram"
+                        onMouseEnter={() => playNavigate()}
+                        onClick={() => playSelect()}
+                    >
                         <span className="bb-corner-tr" />
                         <span className="bb-corner-bl" />
 
@@ -175,11 +183,14 @@ export default function Hero() {
                                 backdropFilter: "blur(4px)"
                             }}
                         >
-                            <span className="text-xs tracking-[0.2em] uppercase font-title text-bb-gold">
+                            <span className="text-xs tracking-[0.2em] uppercase font-title text-bb-gold group-hover:hidden">
                                 Full Stack Dev
                             </span>
+                            <span className="text-xs tracking-[0.2em] uppercase font-title text-bb-gold hidden group-hover:inline">
+                                @lugomartn
+                            </span>
                         </div>
-                    </div>
+                    </a>
                 </motion.div>
 
             </div>

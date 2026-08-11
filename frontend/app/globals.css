@@ -86,6 +86,21 @@ html {
   scrollbar-width: thin;
 }
 
+/* ── Candle flicker (nav link hover) ────────────────────── */
+@keyframes bb-flicker {
+  0%, 100% { opacity: 1; }
+  8%  { opacity: 0.85; }
+  16% { opacity: 1; }
+  24% { opacity: 0.7; }
+  32% { opacity: 1; }
+  55% { opacity: 0.9; }
+  68% { opacity: 1; }
+}
+
+.bb-nav-flicker:hover {
+  animation: bb-flicker 1.4s ease-in-out infinite;
+}
+
 /* ── Selection ───────────────────────────────────────────── */
 ::selection {
   background: rgba(212, 174, 82, 0.28);

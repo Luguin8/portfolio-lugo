@@ -112,7 +112,7 @@ export default function Navbar() {
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className="relative group text-sm tracking-widest transition-all duration-200"
+                                className="relative group text-sm tracking-widest transition-all duration-200 bb-nav-flicker"
                                 style={{
                                     fontFamily: "var(--font-title)",
                                     color: "var(--bb-muted)",
