@@ -86,6 +86,17 @@ html {
   scrollbar-width: thin;
 }
 
+/* ── Fog puff on section crossing ───────────────────────── */
+@keyframes bb-fog-puff {
+  0% { filter: brightness(1); }
+  30% { filter: brightness(1.7); }
+  100% { filter: brightness(1); }
+}
+
+.bb-fog-puff {
+  animation: bb-fog-puff 0.9s ease-out;
+}
+
 /* ── Vignette breathing pulse ────────────────────────────── */
 @keyframes bb-vignette-pulse {
   0%, 100% { opacity: 1; }
