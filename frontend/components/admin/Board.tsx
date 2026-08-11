@@ -11,6 +11,7 @@ import {
     updateScratch,
     type PrivateNote,
     type BoardData,
+    type MonthlyPayment,
 } from "@/lib/actions";
 
 function toDateKey(d: Date): string {
@@ -40,7 +41,20 @@ function getTwoWeeks(): Date[] {
 
 const DAY_LABELS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 
-export default function Board({ initialBoard }: { initialBoard: BoardData }) {
+// TODO (future): integrate football-data.org API (free tier) to pull Boca Juniors
+// fixture dates and inject them as read-only calendar events here. Endpoint:
+//   GET https://api.football-data.org/v4/teams/5630/matches?status=SCHEDULED
+//   Header: X-Auth-Token: <token from football-data.org free account>
+// Boca Juniors team ID on football-data.org = 5630 (Superliga Argentina)
+// Fetch weekly via a Vercel cron (/api/cron/boca-fixtures) and cache in a
+// new `calendar_events` table { date date, label text, kind 'match'|'payment' }.
+//
+// TODO (future): Gmail → payment amount sync via Google Apps Script.
+// Script polls Gmail for invoice emails (each provider regex-matched by From: address),
+// extracts amount with a per-provider regex, POSTs to /api/update-payment?secret=TOKEN.
+// No AI/LLM needed — pure string matching on fixed invoice formats.
+// Save each provider's From address + regex + payment id in a config object in Apps Script.
+export default function Board({ initialBoard, payments = [] }: { initialBoard: BoardData; payments?: MonthlyPayment[] }) {
     const [notes, setNotes] = useState(initialBoard.notes);
     const [postits, setPostits] = useState(initialBoard.postits);
     const [scratch, setScratch] = useState(initialBoard.scratch);
@@ -130,6 +144,7 @@ export default function Board({ initialBoard }: { initialBoard: BoardData }) {
                         const isToday = key === today;
                         const isNextWeek = i >= 7;
                         const dayNotes = notesByDay[key] || [];
+                        const dayPayments = payments.filter(p => p.due_day === d.getDate());
                         return (
                             <div
                                 key={key}
@@ -140,6 +155,11 @@ export default function Board({ initialBoard }: { initialBoard: BoardData }) {
                                     <span className={`text-[11px] font-bold ${isToday ? "text-primary" : "text-gray-400"}`}>{d.getDate()}</span>
                                 </div>
                                 <div className="flex-1 space-y-0.5 overflow-y-auto">
+                                    {dayPayments.map((p) => (
+                                        <div key={`pay-${p.id}`} title={`Vence: ${p.name}${p.payee ? ` → ${p.payee}` : ""}`} className="flex items-center gap-0.5 bg-amber-500/15 rounded px-1 py-0.5">
+                                            <span className="text-[8px] text-amber-400 leading-tight truncate">$ {p.name}</span>
+                                        </div>
+                                    ))}
                                     {dayNotes.map((n) => (
                                         <div key={n.id} className="group flex items-start justify-between gap-1 bg-white/5 rounded px-1 py-0.5">
                                             <span className="text-[9px] text-gray-300 leading-tight break-words">{n.title}</span>
