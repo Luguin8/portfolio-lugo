@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/admin/',
     },
-    sitemap: 'https://lugomartin.com/sitemap.xml',
+    sitemap: 'https://martinlugo.com/sitemap.xml',
   };
 }

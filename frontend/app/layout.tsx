@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lugo Martin | Full Stack Architect",
     description: "Portfolio profesional de Lugo Martin. Desarrollador Full Stack, Mobile, Data y Automatización.",
-    url: "https://lugomartin.com",
+    url: "https://martinlugo.com",
     siteName: "Lugo Martin Portfolio",
     locale: "es_AR",
     type: "website",
@@ -49,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     "@type": "Person",
     name: "Lugo Martin",
     jobTitle: "Full Stack Developer",
-    url: "https://lugomartin.com",
+    url: "https://martinlugo.com",
     sameAs: [
       "https://github.com/Luguin8",
       "https://linkedin.com/in/lugoamartin"
