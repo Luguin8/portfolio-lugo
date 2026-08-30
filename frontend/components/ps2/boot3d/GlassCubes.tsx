@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { TIME_SCALE } from './BootScene';
 
 export default function GlassCubes() {
     const close = useRef<THREE.Mesh>(null);
@@ -10,19 +11,19 @@ export default function GlassCubes() {
     const far = useRef<THREE.Mesh>(null);
 
     useFrame(({ clock }) => {
-        const t = clock.getElapsedTime();
+        const t = clock.getElapsedTime() * TIME_SCALE;
         if (close.current) {
-            close.current.rotation.z = 1.9 - t / 6;
-            close.current.rotation.y = 2.6 - t / 5;
+            close.current.rotation.z = 110 - t / 6;
+            close.current.rotation.y = 150 - t / 5;
         }
         if (med.current) {
-            med.current.rotation.z = -0.5 + t / 6;
-            med.current.rotation.y = -1 + t / 6;
+            med.current.rotation.z = -30 + t / 6;
+            med.current.rotation.y = -60 + t / 6;
         }
         if (far.current) {
-            far.current.rotation.x = 1.4 - t / 6;
-            far.current.rotation.z = 0.9 - t / 6;
-            far.current.rotation.y = 0.7 - t / 6;
+            far.current.rotation.x = 80 - t / 6;
+            far.current.rotation.z = 50 - t / 6;
+            far.current.rotation.y = 40 - t / 6;
         }
     });
 

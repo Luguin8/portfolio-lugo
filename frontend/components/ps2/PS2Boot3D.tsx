@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 
 const BootScene = dynamic(() => import('./boot3d/BootScene'), { ssr: false });
 
-const DURATION_MS = 2200;
+const DURATION_MS = 2250; // 9s original ÷ TIME_SCALE (4) from BootScene.tsx
 
 export default function PS2Boot3D({ onDone }: { onDone: () => void }) {
     useEffect(() => {

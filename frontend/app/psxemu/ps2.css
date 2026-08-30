@@ -1202,7 +1202,7 @@ body, html {
     letter-spacing: 0.15em;
     text-align: center;
     -webkit-text-stroke: 1px #000;
-    animation: ps2-boot3d-text-fade 2.2s ease-in-out both;
+    animation: ps2-boot3d-text-fade 2.25s ease-in-out both;
 }
 
 @keyframes ps2-boot3d-text-fade {

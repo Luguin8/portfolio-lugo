@@ -3,27 +3,29 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Cloud } from '@react-three/drei';
-import { EffectComposer, Vignette, Bloom, Scanline } from '@react-three/postprocessing';
-import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 import Towers from './Towers';
 import GlassCubes from './GlassCubes';
 import Atom from './Atom';
 
-// Accelerated version of the camera fly-through: same shape, ~4x the speed
-// so the whole cinematic clears in a couple seconds instead of ~9s.
+// Global playback speed multiplier applied uniformly to every animation's
+// clock input — like playing the ~9s original clip at 4x, rather than
+// hand-tuning each animation separately (which is what broke it last time).
+export const TIME_SCALE = 4;
+
+// Same shape as the reference site's CameraZoom, just fed a scaled clock.
 function CameraZoom() {
-    const startZ = 90;
-    const speedRef = useRef(34);
-    const rotSpeedRef = useRef(0.2);
+    const cameraStartPosition = 120;
+    const speedRef = useRef(4);
+    const rotSpeedRef = useRef(0.05);
 
     useFrame(({ clock, camera }) => {
-        const t = clock.getElapsedTime();
-        camera.position.z = startZ - t * speedRef.current;
+        const t = clock.getElapsedTime() * TIME_SCALE;
+        camera.position.z = cameraStartPosition - t * speedRef.current;
         camera.rotation.z = -t * rotSpeedRef.current;
-        if (t > 1.6) {
-            speedRef.current += 1.6;
-            rotSpeedRef.current += 0.012;
+        if (t > 7) {
+            speedRef.current += 0.4;
+            rotSpeedRef.current += 0.003;
         }
     });
     return null;
@@ -33,18 +35,6 @@ function Fog() {
     const { scene } = useThree();
     scene.fog = new THREE.FogExp2('black', 0.01);
     return null;
-}
-
-function Effects({ narrow }: { narrow: boolean }) {
-    return (
-        <EffectComposer>
-            <Scanline density={2.0} opacity={0.5} blendFunction={BlendFunction.MULTIPLY} />
-            <Vignette offset={0.5} darkness={0.7} blendFunction={BlendFunction.NORMAL} />
-            {!narrow && (
-                <Bloom radius={0.5} kernelSize={2} intensity={0.2} luminanceThreshold={0.2} luminanceSmoothing={0.5} />
-            )}
-        </EffectComposer>
-    );
 }
 
 export default function BootScene() {
@@ -67,7 +57,6 @@ export default function BootScene() {
             <Cloud position={[0, 0, 0]} speed={0} opacity={0.9} scale={[16, 16, 26]} color={new THREE.Color(0x000000)} segments={7} seed={1} />
             <GlassCubes />
             <Atom />
-            <Effects narrow={narrow} />
         </Canvas>
     );
 }

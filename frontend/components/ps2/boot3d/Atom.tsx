@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Trail } from '@react-three/drei';
 import * as THREE from 'three';
+import { TIME_SCALE } from './BootScene';
 
 interface ElectronProps {
     speed: number;
@@ -22,7 +23,7 @@ function Electron({ speed, zAxis, xAxis, yAxis, color, variation, opposite }: El
     const y = yAxis + 10;
 
     useFrame((state) => {
-        const t = state.clock.getElapsedTime() * speed - variation;
+        const t = state.clock.getElapsedTime() * TIME_SCALE * speed - variation;
         if (!ref.current) return;
         ref.current.position.set(
             Math.sin(t) * x * opposite,
