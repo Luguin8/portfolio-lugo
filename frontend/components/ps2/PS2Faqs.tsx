@@ -24,6 +24,7 @@ export default function PS2Faqs() {
     const [index, setIndex] = useState(0);
     const router = useRouter();
     const total = PS2_FAQS.length;
+    const active = PS2_FAQS[index];
 
     useEffect(() => {
         const initAudio = () => {
@@ -63,6 +64,12 @@ export default function PS2Faqs() {
 
     return (
         <div className="faq-screen">
+            <div className="faq-active-panel">
+                <div className="faq-detail-q">{active.q}</div>
+                <div className="faq-triangle" />
+                <div className="faq-detail-a">{active.a}</div>
+            </div>
+
             <div id="faq-grid">
                 {PS2_FAQS.map((faq, i) => (
                     <div
@@ -70,10 +77,7 @@ export default function PS2Faqs() {
                         className={`faq-item-wrap${i === index ? ' active' : ''}`}
                         onMouseEnter={() => move(i)}
                     >
-                        <div className="faq-detail-q">{faq.q}</div>
-                        <div className="faq-triangle" />
                         <MemoryCardFaces />
-                        <div className="faq-detail-a">{faq.a}</div>
                     </div>
                 ))}
             </div>

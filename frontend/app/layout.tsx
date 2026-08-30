@@ -19,6 +19,7 @@ const ebGaramond = EB_Garamond({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://lugomartin.com"),
   title: "Lugo Martin | Full Stack Architect",
   description: "Portfolio profesional de Lugo Martin. Desarrollador Full Stack, Mobile, Data y Automatización.",
   openGraph: {
@@ -28,11 +29,20 @@ export const metadata: Metadata = {
     siteName: "Lugo Martin Portfolio",
     locale: "es_AR",
     type: "website",
+    images: [
+      {
+        url: "/profile.png",
+        width: 800,
+        height: 800,
+        alt: "Lugo Martin — Full Stack Developer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Lugo Martin | Full Stack Architect",
     description: "Portfolio profesional de Lugo Martin. Desarrollador Full Stack, Mobile, Data y Automatización.",
+    images: ["/profile.png"],
   },
   icons: {
     icon: [
