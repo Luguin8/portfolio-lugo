@@ -269,13 +269,6 @@ body, html {
     margin-left: var(--hex-margin-x);
     margin-top: var(--hex-margin-y);
     transform-style: preserve-3d;
-    rotate: y 0deg;
-    animation: hex-spin 26s linear infinite;
-}
-
-@keyframes hex-spin {
-    from { rotate: y 0deg; }
-    to { rotate: y 360deg; }
 }
 
 .hex .side { height: var(--hex-length); width: var(--hex-width); }

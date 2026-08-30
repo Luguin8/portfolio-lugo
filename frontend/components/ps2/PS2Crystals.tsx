@@ -44,7 +44,6 @@ export default function PS2Crystals() {
                     key={h}
                     ref={(el) => { hexRefs.current[i] = el; }}
                     className={`shape hex s${h}`}
-                    style={{ animationDelay: `${-i * 2.4}s` }}
                 >
                     <div className="face side s-1" />
                     <div className="face side s-2" />
