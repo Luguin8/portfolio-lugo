@@ -824,3 +824,180 @@ body, html {
     font-size: 1.4rem;
     letter-spacing: 1px;
 }
+
+/* ===== FAQs screen — floating memory cards ===== */
+.faq-screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8vh 4vw;
+    animation: ps2-power-on 0.55s ease-out both;
+}
+
+#faq-grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1400px;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 70px 30px;
+}
+
+.faq-item-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 280px;
+    position: relative;
+    perspective: 800px;
+    cursor: pointer;
+}
+
+@keyframes hover-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+}
+
+.faq-detail-q {
+    color: var(--ps2-yellow);
+    font-family: 'Inter', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-shadow: var(--ps2-stroke-shadow), 4px 4px 3px #000, 0 0 8px rgba(221, 221, 85, 0.6);
+    text-align: center;
+    height: 70px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    animation: hover-float 1.8s ease-in-out infinite;
+}
+
+.faq-triangle {
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 16px solid var(--ps2-yellow);
+    filter: drop-shadow(2px 2px 0 #000) drop-shadow(-2px -2px 0 #000) drop-shadow(2px -2px 0 #000) drop-shadow(-2px 2px 0 #000);
+    animation: hover-float 1.8s ease-in-out infinite;
+    opacity: 0;
+    transition: opacity 0.3s;
+    margin-bottom: 12px;
+}
+
+.faq-item-wrap.active .faq-detail-q,
+.faq-item-wrap.active .faq-triangle,
+.faq-item-wrap.active .faq-detail-a {
+    opacity: 1;
+}
+
+.faq-mem-card {
+    width: 150px;
+    height: 220px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: scale(0.6) rotateY(-20deg) rotateX(10deg);
+    transition: transform 0.3s;
+    margin: -30px 0;
+}
+
+.faq-item-wrap.active .faq-mem-card {
+    animation: float-spin 6s infinite linear;
+}
+
+@keyframes float-spin {
+    0% { transform: scale(0.6) rotateY(0) rotateX(10deg) translateY(0); }
+    50% { transform: scale(0.6) rotateY(180deg) rotateX(10deg) translateY(-18px); }
+    100% { transform: scale(0.6) rotateY(360deg) rotateX(10deg) translateY(0); }
+}
+
+.faq-mem-card .face {
+    position: absolute;
+    box-sizing: border-box;
+    background:
+        linear-gradient(155deg, rgba(255,255,255,0.10), transparent 35%),
+        linear-gradient(200deg, #2a3350, #10131f 70%);
+    border: 1px solid rgba(150, 170, 220, 0.35);
+    box-shadow: inset 0 0 14px rgba(0,0,0,0.75);
+    filter: brightness(0.5);
+    transition: filter 0.3s;
+}
+
+.faq-item-wrap.active .faq-mem-card .face {
+    filter: brightness(1.1);
+}
+
+.faq-mem-card .front,
+.faq-mem-card .back {
+    width: 150px;
+    height: 220px;
+}
+.faq-mem-card .front::after,
+.faq-mem-card .back::after {
+    content: "";
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    top: 26px;
+    height: 34px;
+    border-radius: 3px;
+    background: linear-gradient(155deg, rgba(120,170,255,0.4), rgba(40,60,110,0.5));
+    border: 1px solid rgba(150, 200, 255, 0.4);
+}
+.faq-mem-card .front { transform: translateZ(18px); }
+.faq-mem-card .back { transform: rotateY(180deg) translateZ(18px); }
+
+.faq-mem-card .left,
+.faq-mem-card .right {
+    width: 36px;
+    height: 220px;
+    left: 57px;
+    top: 0;
+}
+.faq-mem-card .left { transform: rotateY(-90deg) translateZ(75px); }
+.faq-mem-card .right { transform: rotateY(90deg) translateZ(75px); }
+
+.faq-mem-card .top,
+.faq-mem-card .bottom {
+    width: 150px;
+    height: 36px;
+    left: 0;
+    top: 92px;
+}
+.faq-mem-card .top { transform: rotateX(90deg) translateZ(110px); }
+.faq-mem-card .bottom { transform: rotateX(-90deg) translateZ(110px); }
+
+.faq-detail-a {
+    font-family: 'Inter', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--ps2-cyan);
+    text-shadow: var(--ps2-stroke-shadow), 3px 3px 2px #000, 0 0 8px rgba(40, 200, 255, 0.6);
+    line-height: 1.5;
+    text-align: center;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    height: 100px;
+}
+
+#faq-footer {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    padding: 0 100px;
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+#faq-footer .select-prompt {
+    left: 50%;
+    transform: translateX(-50%);
+}

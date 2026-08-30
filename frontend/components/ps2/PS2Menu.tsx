@@ -38,7 +38,7 @@ export default function PS2Menu() {
     const handleConfirm = useCallback(() => {
         playPS2Confirm();
         const selectedOption = MENU_OPTIONS[selectedIndex];
-        if (selectedOption.id === 'sobre-mi' || selectedOption.id === 'proyectos') {
+        if (selectedOption.id === 'sobre-mi' || selectedOption.id === 'proyectos' || selectedOption.id === 'faqs') {
             router.push(selectedOption.path);
         } else {
             console.log(`Navigating to: ${selectedOption.path}`);
