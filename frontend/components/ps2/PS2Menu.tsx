@@ -74,18 +74,19 @@ export default function PS2Menu() {
                 ))}
             </div>
             
-            <div className="select-prompt">
-                <div className="real-key-enter"><div className="key-surface">ENTER</div></div>
-                <span>Seleccionar</span>
-            </div>
-
-            <div className="ps2-footer">
-                <div className="footer-prompt">
-                    <div className="keyboard-arrows">
-                        <div className="real-key-square"><div className="key-surface-square">&#9650;</div></div>
-                        <div className="real-key-square"><div className="key-surface-square">&#9660;</div></div>
+            <div className="browser-footer">
+                <div className="browser-footer-center">
+                    <div className="browser-footer-group">
+                        <div className="real-key-enter"><div className="key-surface">ENTER</div></div>
+                        <span className="browser-prompt-text">Seleccionar</span>
                     </div>
-                    <span>Navegar</span>
+                    <div className="browser-footer-group">
+                        <div className="keyboard-arrows">
+                            <div className="real-key-square"><div className="key-surface-square">&#9650;</div></div>
+                            <div className="real-key-square"><div className="key-surface-square">&#9660;</div></div>
+                        </div>
+                        <span className="browser-prompt-text">Navegar</span>
+                    </div>
                 </div>
             </div>
         </>
