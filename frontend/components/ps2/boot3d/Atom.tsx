@@ -45,10 +45,10 @@ function Electron({ speed, zAxis, xAxis, yAxis, color, variation, opposite }: El
 export default function Atom() {
     return (
         <group>
-            <Electron speed={1.6} zAxis={114} xAxis={10} yAxis={15} color="#40e2a0" variation={Math.random() * 1.9} opposite={1} />
-            <Electron speed={2.4} zAxis={94} xAxis={9} yAxis={16} color="#ff6666" variation={Math.random() * -10} opposite={-1} />
-            <Electron speed={2.4} zAxis={60} xAxis={8} yAxis={18} color="#7cb2e8" variation={Math.random() * 3} opposite={-1} />
-            <Electron speed={2.4} zAxis={80} xAxis={8} yAxis={12} color="#ff69f8" variation={-Math.random()} opposite={1} />
+            <Electron speed={0.6} zAxis={114} xAxis={10} yAxis={15} color="#40e2a0" variation={Math.random() * 1.9} opposite={1} />
+            <Electron speed={1} zAxis={94} xAxis={9} yAxis={16} color="#ff6666" variation={Math.random() * -10} opposite={-1} />
+            <Electron speed={1} zAxis={60} xAxis={8} yAxis={18} color="#7cb2e8" variation={Math.random() * 3} opposite={-1} />
+            <Electron speed={1} zAxis={80} xAxis={8} yAxis={12} color="#ff69f8" variation={-Math.random()} opposite={1} />
         </group>
     );
 }

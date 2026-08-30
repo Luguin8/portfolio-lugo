@@ -12,17 +12,17 @@ export default function GlassCubes() {
     useFrame(({ clock }) => {
         const t = clock.getElapsedTime();
         if (close.current) {
-            close.current.rotation.z = 1.9 - t / 3;
-            close.current.rotation.y = 2.6 - t / 2.5;
+            close.current.rotation.z = 1.9 - t / 6;
+            close.current.rotation.y = 2.6 - t / 5;
         }
         if (med.current) {
-            med.current.rotation.z = -0.5 + t / 3;
-            med.current.rotation.y = -1 + t / 3;
+            med.current.rotation.z = -0.5 + t / 6;
+            med.current.rotation.y = -1 + t / 6;
         }
         if (far.current) {
-            far.current.rotation.x = 1.4 - t / 3;
-            far.current.rotation.z = 0.9 - t / 3;
-            far.current.rotation.y = 0.7 - t / 3;
+            far.current.rotation.x = 1.4 - t / 6;
+            far.current.rotation.z = 0.9 - t / 6;
+            far.current.rotation.y = 0.7 - t / 6;
         }
     });
 
