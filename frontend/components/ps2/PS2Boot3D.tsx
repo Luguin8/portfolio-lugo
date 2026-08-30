@@ -15,7 +15,7 @@ export default function PS2Boot3D({ onDone }: { onDone: () => void }) {
 
     return (
         <div className="ps2-boot3d">
-            <div className="ps2-boot3d-text">Martin Lugo Entertainment</div>
+            <div className="ps2-boot3d-text">Sony Computer Entertainment</div>
             <BootScene />
         </div>
     );
