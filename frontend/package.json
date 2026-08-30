@@ -9,8 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@react-three/fiber": "^9.7.0",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.89.0",
+    "@types/three": "^0.185.4",
     "clsx": "^2.1.1",
     "framer-motion": "^12.24.7",
     "lucide-react": "^0.562.0",
@@ -19,7 +21,8 @@
     "react-dom": "19.2.3",
     "react-icons": "^5.5.0",
     "react-parallax-tilt": "^1.7.324",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
