@@ -136,10 +136,18 @@ export default function PS2Browser() {
                         <div className="bd-text-cyan-sm">{active.type} · {active.stack}</div>
                         <div id="bd-desc">{active.desc}</div>
                         <div className="bd-actions">
-                            <div className={`bd-action ${detailFocus === 0 ? 'bd-detail-active' : 'bd-detail-inactive'}${!active.link ? ' bd-disabled' : ''}`}>
+                            <div
+                                className={`bd-action ${detailFocus === 0 ? 'bd-detail-active' : 'bd-detail-inactive'}${!active.link ? ' bd-disabled' : ''}`}
+                                onMouseEnter={() => { playPS2Hover(); setDetailFocus(0); }}
+                                onClick={() => active.link && launch()}
+                            >
                                 {active.link ? 'Launch Title' : 'Sin enlace público'}
                             </div>
-                            <div className={`bd-action ${detailFocus === 1 ? 'bd-detail-active' : 'bd-detail-inactive'}`}>
+                            <div
+                                className={`bd-action ${detailFocus === 1 ? 'bd-detail-active' : 'bd-detail-inactive'}`}
+                                onMouseEnter={() => { playPS2Hover(); setDetailFocus(1); }}
+                                onClick={closeDetail}
+                            >
                                 Back
                             </div>
                         </div>
@@ -158,10 +166,17 @@ export default function PS2Browser() {
                         <span className="browser-prompt-text">{detailOpen ? 'Cerrar' : 'Atrás'}</span>
                     </div>
                     <div className="browser-footer-group">
-                        <div className="keyboard-arrows" style={{ flexDirection: 'row' }}>
-                            <div className="real-key-square"><div className="key-surface-square">&#9664;</div></div>
-                            <div className="real-key-square"><div className="key-surface-square">&#9654;</div></div>
-                        </div>
+                        {detailOpen ? (
+                            <div className="keyboard-arrows">
+                                <div className="real-key-square"><div className="key-surface-square">&#9650;</div></div>
+                                <div className="real-key-square"><div className="key-surface-square">&#9660;</div></div>
+                            </div>
+                        ) : (
+                            <div className="keyboard-arrows" style={{ flexDirection: 'row' }}>
+                                <div className="real-key-square"><div className="key-surface-square">&#9664;</div></div>
+                                <div className="real-key-square"><div className="key-surface-square">&#9654;</div></div>
+                            </div>
+                        )}
                         <span className="browser-prompt-text">Navegar</span>
                     </div>
                 </div>

@@ -36,9 +36,9 @@ export default function PS2Menu() {
         setSelectedIndex(index);
     }, []);
 
-    const handleConfirm = useCallback(() => {
+    const handleConfirm = useCallback((index: number = selectedIndex) => {
         playPS2Confirm();
-        const selectedOption = MENU_OPTIONS[selectedIndex];
+        const selectedOption = MENU_OPTIONS[index];
         router.push(selectedOption.path);
     }, [selectedIndex, router]);
 
@@ -68,7 +68,7 @@ export default function PS2Menu() {
                         key={option.id}
                         className={`ps2-item ${selectedIndex === index ? 'active' : ''}`}
                         onMouseEnter={() => handleSelect(index)}
-                        onClick={() => handleConfirm()}
+                        onClick={() => handleConfirm(index)}
                     >
                         {option.label}
                     </div>
