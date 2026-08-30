@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { PS2_PROJECTS } from '@/lib/ps2Projects';
 import { initPS2Audio, playPS2Hover, playPS2Confirm } from '@/lib/ps2Sounds';
 
-const COLUMNS = 5;
+const COLUMNS = 6;
 
 export default function PS2Browser() {
     const [loading, setLoading] = useState(true);
@@ -116,7 +116,7 @@ export default function PS2Browser() {
                                 onClick={() => { move(i); openDetail(); }}
                             >
                                 <div className="browser-item-poly" style={{ animationDelay: `${(i % 6) * 0.4}s` }} />
-                                <Image className="browser-item" src={p.image} alt={p.title} width={130} height={130} unoptimized />
+                                <Image className="browser-item" src={p.image} alt={p.title} width={172} height={172} unoptimized />
                             </div>
                         ))}
                     </div>
@@ -157,13 +157,13 @@ export default function PS2Browser() {
                         <div className="real-key-enter"><div className="key-surface">BACKSPACE</div></div>
                         <span className="browser-prompt-text">{detailOpen ? 'Cerrar' : 'Atrás'}</span>
                     </div>
-                </div>
-                <div className="browser-footer-right">
-                    <div className="keyboard-arrows" style={{ flexDirection: 'row' }}>
-                        <div className="real-key-square"><div className="key-surface-square">&#9664;</div></div>
-                        <div className="real-key-square"><div className="key-surface-square">&#9654;</div></div>
+                    <div className="browser-footer-group">
+                        <div className="keyboard-arrows" style={{ flexDirection: 'row' }}>
+                            <div className="real-key-square"><div className="key-surface-square">&#9664;</div></div>
+                            <div className="real-key-square"><div className="key-surface-square">&#9654;</div></div>
+                        </div>
+                        <span className="browser-prompt-text">Navegar</span>
                     </div>
-                    <span className="browser-prompt-text">Navegar</span>
                 </div>
             </div>
         </div>

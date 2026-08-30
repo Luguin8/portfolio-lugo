@@ -82,19 +82,18 @@ export default function PS2Faqs() {
                 ))}
             </div>
 
-            <div id="faq-footer">
-                <div className="select-prompt" id="faq-btn-back" onClick={goBack}>
-                    <div className="real-key-enter"><div className="key-surface">BACKSPACE</div></div>
-                    <span>Volver</span>
-                </div>
-
-                <div className="ps2-footer">
-                    <div className="footer-prompt">
+            <div className="browser-footer">
+                <div className="browser-footer-center">
+                    <div className="browser-footer-group" id="faq-btn-back" onClick={goBack}>
+                        <div className="real-key-enter"><div className="key-surface">BACKSPACE</div></div>
+                        <span className="browser-prompt-text">Volver</span>
+                    </div>
+                    <div className="browser-footer-group">
                         <div className="keyboard-arrows" style={{ flexDirection: 'row' }}>
                             <div className="real-key-square"><div className="key-surface-square">&#9664;</div></div>
                             <div className="real-key-square"><div className="key-surface-square">&#9654;</div></div>
                         </div>
-                        <span>Navegar</span>
+                        <span className="browser-prompt-text">Navegar</span>
                     </div>
                 </div>
             </div>

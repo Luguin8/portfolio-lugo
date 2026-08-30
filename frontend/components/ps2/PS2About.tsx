@@ -86,18 +86,19 @@ export default function PS2About() {
                 ))}
             </div>
 
-            <div className="select-prompt">
-                <div className="real-key-enter"><div className="key-surface">BACKSPACE</div></div>
-                <span>Volver</span>
-            </div>
-
-            <div className="ps2-footer">
-                <div className="footer-prompt">
-                    <div className="keyboard-arrows" style={{ flexDirection: 'row' }}>
-                        <div className="real-key-square"><div className="key-surface-square">&#9664;</div></div>
-                        <div className="real-key-square"><div className="key-surface-square">&#9654;</div></div>
+            <div className="browser-footer">
+                <div className="browser-footer-center">
+                    <div className="browser-footer-group">
+                        <div className="real-key-enter"><div className="key-surface">BACKSPACE</div></div>
+                        <span className="browser-prompt-text">Volver</span>
                     </div>
-                    <span>Explorar</span>
+                    <div className="browser-footer-group">
+                        <div className="keyboard-arrows" style={{ flexDirection: 'row' }}>
+                            <div className="real-key-square"><div className="key-surface-square">&#9664;</div></div>
+                            <div className="real-key-square"><div className="key-surface-square">&#9654;</div></div>
+                        </div>
+                        <span className="browser-prompt-text">Explorar</span>
+                    </div>
                 </div>
             </div>
         </>

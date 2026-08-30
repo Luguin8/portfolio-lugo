@@ -44,7 +44,7 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 60px;
+    gap: 200px;
     overflow: hidden;
     user-select: none;
     transform-style: preserve-3d;
@@ -488,9 +488,29 @@ body, html {
     opacity: 1;
 }
 
+/* Tiny power LED, bottom-left of the main menu — links back to the main portfolio */
+.ps2-power-led {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ff2020;
+    box-shadow: 0 0 4px 1px rgba(255, 32, 32, 0.9), 0 0 8px 2px rgba(255, 32, 32, 0.4);
+    z-index: 200;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.ps2-power-led:hover {
+    transform: scale(1.4);
+    box-shadow: 0 0 6px 2px rgba(255, 60, 60, 1), 0 0 14px 4px rgba(255, 60, 60, 0.6);
+}
+
 .ps2-about-topics {
     position: absolute;
-    bottom: 80px;
+    bottom: 150px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -568,18 +588,18 @@ body, html {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 0 5vw;
+    align-items: flex-start;
+    padding: 20px 5vw 0;
 }
 
 .browser-grid {
     display: grid;
-    grid-template-columns: repeat(5, 210px);
+    grid-template-columns: repeat(6, 270px);
     justify-items: center;
-    gap: 70px 50px;
+    gap: 80px 50px;
     justify-content: center;
     width: 100%;
-    max-width: 1450px;
+    max-width: 2000px;
 }
 
 .browser-item-wrap {
@@ -594,7 +614,7 @@ body, html {
 /* Faceted polygon frame behind each card — stands in for real cover art */
 .browser-item-poly {
     position: absolute;
-    inset: -18px;
+    inset: -24px;
     z-index: 0;
     clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
     background: linear-gradient(155deg, rgba(60, 110, 220, 0.35), rgba(20, 30, 60, 0.55) 55%, rgba(0, 200, 255, 0.25));
@@ -650,8 +670,8 @@ body, html {
 }
 
 .browser-item {
-    width: 130px;
-    height: 130px;
+    width: 172px;
+    height: 172px;
     object-fit: contain;
     transform: perspective(300px) rotateX(-30deg);
     filter: brightness(0.7);
@@ -671,10 +691,10 @@ body, html {
     background: rgba(0, 0, 80, 0.95);
     z-index: 20;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 5vh 10vw;
+    gap: 4vw;
+    padding: 4vh 5vw;
     animation: fade-in 0.3s ease-out both;
 }
 
@@ -688,11 +708,10 @@ body, html {
     display: flex;
     justify-content: center;
     perspective: 800px;
-    margin-bottom: 5vh;
 }
 
 #bd-card {
-    width: 260px;
+    width: 380px;
     position: relative;
     transform-style: preserve-3d;
     animation: spin-center 6s linear infinite;
@@ -711,48 +730,54 @@ body, html {
 }
 
 .bd-info {
-    flex: 0 0 auto;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    max-width: 900px;
+    align-items: flex-start;
+    text-align: left;
+    max-width: 1050px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(150, 200, 255, 0.25);
+    border-radius: 4px;
+    padding: 36px 42px;
 }
 
 .bd-title-yellow {
     color: var(--ps2-yellow);
     text-shadow: var(--ps2-stroke-shadow), 3px 3px 2px #000, 0 0 8px rgba(221, 221, 85, 0.6);
-    font-size: 2.6rem;
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin-bottom: 14px;
 }
 
 .bd-text-cyan {
-    color: #dcdcdc;
+    color: #f0f0f0;
     text-shadow: var(--ps2-stroke-shadow), 0 0 8px rgba(0,0,0,0.6);
-    font-size: 1.35rem;
+    font-size: 1.6rem;
+    font-weight: 500;
     line-height: 1.4;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
 }
 
 .bd-text-cyan-sm {
     color: var(--ps2-cyan);
     text-shadow: var(--ps2-stroke-shadow), 0 0 8px rgba(0,0,0,0.6);
-    font-size: 1.05rem;
+    font-size: 1.2rem;
+    font-weight: 600;
     letter-spacing: 1px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 #bd-desc {
-    color: rgb(190, 190, 190);
-    text-shadow: 2px 2px 0 #000;
-    font-size: 0.95rem;
+    color: rgb(215, 215, 215);
+    text-shadow: 1px 1px 0 #000;
+    font-size: 1.15rem;
     text-align: left;
     white-space: pre-line;
     line-height: 1.6;
-    max-height: 22vh;
+    max-height: 40vh;
     overflow-y: auto;
-    margin-bottom: 25px;
+    margin-bottom: 28px;
     padding-right: 10px;
 }
 
@@ -760,7 +785,7 @@ body, html {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .bd-action {
@@ -803,7 +828,7 @@ body, html {
     transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 140px;
 }
 
 .browser-footer-group {
@@ -851,8 +876,8 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 900px;
-    min-height: 190px;
+    max-width: 1100px;
+    min-height: 210px;
     text-align: center;
 }
 
@@ -860,7 +885,7 @@ body, html {
     color: var(--ps2-yellow);
     font-family: 'Inter', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-weight: 600;
-    font-size: 1.6rem;
+    font-size: 2.1rem;
     text-shadow: var(--ps2-stroke-shadow), 4px 4px 3px #000, 0 0 8px rgba(221, 221, 85, 0.6);
     text-align: center;
 }
@@ -868,17 +893,17 @@ body, html {
 .faq-triangle {
     width: 0;
     height: 0;
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-top: 16px solid var(--ps2-yellow);
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 20px solid var(--ps2-yellow);
     filter: drop-shadow(2px 2px 0 #000) drop-shadow(-2px -2px 0 #000) drop-shadow(2px -2px 0 #000) drop-shadow(-2px 2px 0 #000);
-    margin: 12px 0;
+    margin: 14px 0;
 }
 
 .faq-detail-a {
     font-family: 'Inter', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-weight: 500;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     color: var(--ps2-cyan);
     text-shadow: var(--ps2-stroke-shadow), 3px 3px 2px #000, 0 0 8px rgba(40, 200, 255, 0.6);
     line-height: 1.5;
@@ -889,10 +914,10 @@ body, html {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    max-width: 1300px;
+    max-width: 1650px;
     align-items: center;
     justify-content: center;
-    gap: 30px 50px;
+    gap: 40px 60px;
 }
 
 .faq-item-wrap {
@@ -905,8 +930,8 @@ body, html {
 }
 
 .faq-mem-card {
-    width: 110px;
-    height: 160px;
+    width: 150px;
+    height: 220px;
     position: relative;
     transform-style: preserve-3d;
     transform: scale(0.95) rotateY(-20deg) rotateX(10deg);
@@ -943,43 +968,43 @@ body, html {
 
 .faq-mem-card .front,
 .faq-mem-card .back {
-    width: 110px;
-    height: 160px;
+    width: 150px;
+    height: 220px;
 }
 .faq-mem-card .front::after,
 .faq-mem-card .back::after {
     content: "";
     position: absolute;
-    left: 14px;
-    right: 14px;
-    top: 18px;
-    height: 26px;
+    left: 19px;
+    right: 19px;
+    top: 25px;
+    height: 36px;
     border-radius: 3px;
     background: linear-gradient(155deg, rgba(120,170,255,0.4), rgba(40,60,110,0.5));
     border: 1px solid rgba(150, 200, 255, 0.4);
 }
-.faq-mem-card .front { transform: translateZ(13px); }
-.faq-mem-card .back { transform: rotateY(180deg) translateZ(13px); }
+.faq-mem-card .front { transform: translateZ(18px); }
+.faq-mem-card .back { transform: rotateY(180deg) translateZ(18px); }
 
 .faq-mem-card .left,
 .faq-mem-card .right {
-    width: 26px;
-    height: 160px;
-    left: 42px;
+    width: 36px;
+    height: 220px;
+    left: 57px;
     top: 0;
 }
-.faq-mem-card .left { transform: rotateY(-90deg) translateZ(55px); }
-.faq-mem-card .right { transform: rotateY(90deg) translateZ(55px); }
+.faq-mem-card .left { transform: rotateY(-90deg) translateZ(75px); }
+.faq-mem-card .right { transform: rotateY(90deg) translateZ(75px); }
 
 .faq-mem-card .top,
 .faq-mem-card .bottom {
-    width: 110px;
-    height: 26px;
+    width: 150px;
+    height: 36px;
     left: 0;
-    top: 67px;
+    top: 92px;
 }
-.faq-mem-card .top { transform: rotateX(90deg) translateZ(80px); }
-.faq-mem-card .bottom { transform: rotateX(-90deg) translateZ(80px); }
+.faq-mem-card .top { transform: rotateX(90deg) translateZ(110px); }
+.faq-mem-card .bottom { transform: rotateX(-90deg) translateZ(110px); }
 
 #faq-footer {
     position: absolute;

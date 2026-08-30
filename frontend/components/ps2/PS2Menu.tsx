@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { initPS2Audio, playPS2Hover, playPS2Confirm } from '@/lib/ps2Sounds';
 
 const MENU_OPTIONS = [
@@ -89,6 +90,13 @@ export default function PS2Menu() {
                     </div>
                 </div>
             </div>
+
+            <Link
+                href="/"
+                className="ps2-power-led"
+                aria-label="Volver al portfolio principal"
+                title="Volver al portfolio principal"
+            />
         </>
     );
 }
