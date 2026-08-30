@@ -87,7 +87,7 @@ export default function PS2About() {
             </div>
 
             <div className="select-prompt">
-                <div className="real-key-enter"><div className="key-surface">ENTER</div></div>
+                <div className="real-key-enter"><div className="key-surface">BACKSPACE</div></div>
                 <span>Volver</span>
             </div>
 

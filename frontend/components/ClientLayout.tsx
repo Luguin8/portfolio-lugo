@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { initAudioContext } from "@/lib/sounds";
 import ScrollVial from "@/components/ui/ScrollVial";
@@ -12,6 +13,9 @@ import FogWipe from "@/components/FogWipe";
 import PageTransition from "@/components/PageTransition";
 
 export default function ClientLayout({ children, fontVariables }: { children: ReactNode; fontVariables: string }) {
+    const pathname = usePathname();
+    const isPsx = pathname?.startsWith("/psxemu");
+
     // Initialize AudioContext on first user gesture (browser policy)
     useEffect(() => {
         const init = () => {
@@ -77,7 +81,7 @@ export default function ClientLayout({ children, fontVariables }: { children: Re
             />
 
             {/* ── SCROLL PROGRESS VIAL ── */}
-            <ScrollVial />
+            {!isPsx && <ScrollVial />}
 
             <VisitTracker />
             <ClickBurst />

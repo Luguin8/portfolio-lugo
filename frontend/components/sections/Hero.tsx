@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FileText } from "lucide-react";
+import { FileText, Gamepad2 } from "lucide-react";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import Image from "next/image";
+import Link from "next/link";
 import { playNavigate, playSelect } from "@/lib/sounds";
 import Magnetic from "@/components/ui/Magnetic";
-import CountUp from "@/components/ui/CountUp";
 import OrnateFrame from "@/components/ui/OrnateFrame";
 
 export default function Hero() {
@@ -105,35 +105,23 @@ export default function Hero() {
                     transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
                     className="relative mx-auto flex flex-col items-center justify-center gap-6"
                 >
-                    {/* Hunter Status Panel */}
-                    <div className="w-64 md:w-80 bb-corner-box relative z-20" style={{ background: "var(--bb-panel)", border: "1px solid var(--bb-border)" }}>
+                    {/* Retro experience button — links to the PS2-style /psxemu portfolio */}
+                    <Link
+                        href="/psxemu"
+                        className="group w-64 md:w-80 bb-corner-box relative z-20 block"
+                        style={{ background: "var(--bb-panel)", border: "1px solid var(--bb-border)" }}
+                        onMouseEnter={() => playNavigate()}
+                        onClick={() => playSelect()}
+                    >
                         <span className="bb-corner-tr" />
                         <span className="bb-corner-bl" />
-                        <div className="px-5 pt-4 pb-3">
-                            <p className="text-[0.55rem] tracking-[0.3em] uppercase mb-3 font-title text-bb-muted text-center">
-                                ✦ &nbsp; Estado del Cazador &nbsp; ✦
-                            </p>
-                            <div className="bb-separator mb-3" />
-                            <div className="grid grid-cols-3">
-                                {[
-                                    { value: 5, suffix: "+", label: "Años Exp." },
-                                    { value: 16, suffix: "", label: "Proyectos" },
-                                    { value: 3, suffix: "", label: "Plataformas" },
-                                ].map((stat, i) => (
-                                    <div
-                                        key={stat.label}
-                                        className="text-center py-2 px-1"
-                                        style={{ borderLeft: i > 0 ? "1px solid var(--bb-border)" : "none" }}
-                                    >
-                                        <p className="text-2xl leading-none font-title text-bb-gold bb-glow-text">
-                                            <CountUp value={stat.value} suffix={stat.suffix} />
-                                        </p>
-                                        <p className="text-[0.5rem] tracking-widest uppercase font-title text-bb-muted mt-1.5">{stat.label}</p>
-                                    </div>
-                                ))}
-                            </div>
+                        <div className="px-5 py-4 flex items-center justify-center gap-3">
+                            <Gamepad2 size={16} className="text-bb-gold shrink-0" />
+                            <span className="text-[0.6rem] tracking-[0.25em] uppercase font-title text-bb-gold group-hover:text-bb-white transition-colors duration-200">
+                                Experiencia Retro
+                            </span>
                         </div>
-                    </div>
+                    </Link>
 
                     {/* Photo frame with BB corner accents — links to Instagram */}
                     <a
