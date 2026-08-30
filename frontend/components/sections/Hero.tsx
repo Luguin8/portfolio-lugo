@@ -115,10 +115,15 @@ export default function Hero() {
                     >
                         <span className="bb-corner-tr" />
                         <span className="bb-corner-bl" />
-                        <div className="px-5 py-4 flex items-center justify-center gap-3">
-                            <Gamepad2 size={16} className="text-bb-gold shrink-0" />
-                            <span className="text-[0.6rem] tracking-[0.25em] uppercase font-title text-bb-gold group-hover:text-bb-white transition-colors duration-200">
-                                Experiencia Retro
+                        <div className="px-5 py-4 flex flex-col items-center justify-center gap-1">
+                            <div className="flex items-center gap-3">
+                                <Gamepad2 size={16} className="text-bb-gold shrink-0" />
+                                <span className="text-[0.6rem] tracking-[0.25em] uppercase font-title text-bb-gold group-hover:text-bb-white transition-colors duration-200">
+                                    Experiencia Retro
+                                </span>
+                            </div>
+                            <span className="text-[0.5rem] tracking-[0.1em] font-body italic text-bb-muted">
+                                (se recomienda ver en PC de escritorio)
                             </span>
                         </div>
                     </Link>

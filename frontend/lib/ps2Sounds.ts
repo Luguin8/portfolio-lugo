@@ -1,5 +1,9 @@
 "use client";
 
+// Sounds are disabled for now — every player below early-returns.
+// Flip this to re-enable without touching call sites elsewhere.
+const SOUND_ENABLED = false;
+
 let audioCtx: AudioContext | null = null;
 
 export const initPS2Audio = () => {
@@ -12,7 +16,7 @@ export const initPS2Audio = () => {
 };
 
 export const playPS2Hover = () => {
-    if (!audioCtx) return;
+    if (!SOUND_ENABLED || !audioCtx) return;
     const osc = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
     
@@ -32,7 +36,7 @@ export const playPS2Hover = () => {
 };
 
 export const playPS2Confirm = () => {
-    if (!audioCtx) return;
+    if (!SOUND_ENABLED || !audioCtx) return;
     const osc = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
     
@@ -53,7 +57,7 @@ export const playPS2Confirm = () => {
 
 // Ambient hum (optional, to be called once)
 export const playPS2Ambient = () => {
-    if (!audioCtx) return () => {};
+    if (!SOUND_ENABLED || !audioCtx) return () => {};
     
     const osc1 = audioCtx.createOscillator();
     const osc2 = audioCtx.createOscillator();

@@ -5,6 +5,7 @@
     --ps2-cyan: rgb(40, 200, 255);
     --ps2-yellow: #dddd55;
     --ps2-gray: rgb(130, 130, 130);
+    --blur-amt: 1.35px;
     --ps2-stroke-shadow:
         2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
         2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000;
@@ -1166,4 +1167,74 @@ body, html {
 #contact-footer .select-prompt {
     left: 50%;
     transform: translateX(-50%);
+}
+
+/* ===== Boot cinematic (Three.js) — accelerated, auto-playing, no click needed ===== */
+.ps2-boot3d {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 999999;
+    overflow: hidden;
+}
+
+.ps2-boot3d canvas {
+    display: block;
+}
+
+@keyframes ps2-boot3d-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.ps2-boot3d-text {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    color: #fff;
+    font-family: 'Inter', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: 0.15em;
+    text-align: center;
+    -webkit-text-stroke: 1px #000;
+    animation: ps2-boot3d-text-fade 2.2s ease-in-out both;
+}
+
+@keyframes ps2-boot3d-text-fade {
+    0%, 100% { opacity: 0; }
+    10%, 55% { opacity: 1; }
+    75% { opacity: 0; }
+}
+
+/* Low-res CRT text look, matching the reference site */
+.ps2-item,
+.ps2-title-yellow,
+.ps2-text-cyan,
+.browser-header span,
+#browser-item-title,
+#browser-loading,
+.bd-title-yellow,
+.bd-text-cyan,
+.bd-text-cyan-sm,
+#bd-desc,
+.bd-action,
+.faq-detail-q,
+.faq-detail-a,
+.footer-prompt span,
+.select-prompt span,
+.browser-prompt-text,
+.contact-title,
+.social-icon,
+.contact-input,
+.contact-submit-btn,
+.key-surface,
+.key-surface-square {
+    filter: blur(var(--blur-amt));
+    transform: translateZ(0);
+    will-change: filter, transform;
 }

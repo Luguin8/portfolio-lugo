@@ -48,7 +48,7 @@ export default function ClientLayout({ children, fontVariables }: { children: Re
             className={cn("antialiased min-h-screen relative", fontVariables)}
             style={{ background: "var(--bb-bg)", color: "var(--bb-white)", fontFamily: "var(--font-body)" }}
         >
-            <LoadingScreen />
+            {!isPsx && <LoadingScreen />}
 
             {/* ── FOG LAYER (pure CSS) ── */}
             <div className="bb-fog-layer" aria-hidden="true">
@@ -87,7 +87,7 @@ export default function ClientLayout({ children, fontVariables }: { children: Re
             <ClickBurst />
             <ScrollParallax />
             <FogWipe />
-            <PageTransition />
+            {!isPsx && <PageTransition />}
 
             {/* ── MAIN CONTENT ── */}
             <div className="relative z-10 min-h-screen">
