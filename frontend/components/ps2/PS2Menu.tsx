@@ -8,7 +8,7 @@ const MENU_OPTIONS = [
     { id: 'sobre-mi', label: 'Sobre Mi', path: '/psxemu/about' },
     { id: 'proyectos', label: 'Proyectos', path: '/psxemu/memory' },
     { id: 'faqs', label: 'FAQs', path: '/psxemu/faqs' },
-    { id: 'contact', label: 'Contact', path: '/psxemu/contact' }
+    { id: 'contact', label: 'Contacto', path: '/psxemu/contact' }
 ];
 
 export default function PS2Menu() {
@@ -38,11 +38,7 @@ export default function PS2Menu() {
     const handleConfirm = useCallback(() => {
         playPS2Confirm();
         const selectedOption = MENU_OPTIONS[selectedIndex];
-        if (selectedOption.id === 'sobre-mi' || selectedOption.id === 'proyectos' || selectedOption.id === 'faqs') {
-            router.push(selectedOption.path);
-        } else {
-            console.log(`Navigating to: ${selectedOption.path}`);
-        }
+        router.push(selectedOption.path);
     }, [selectedIndex, router]);
 
     useEffect(() => {
