@@ -34,10 +34,10 @@ export default function Process() {
     return (
         <section
             id="process"
-            className="py-28 px-6 relative"
+            className="py-20 px-6 relative"
             style={{ borderTop: "1px solid var(--bb-border)", borderBottom: "1px solid var(--bb-border)" }}
         >
-            <div className="max-w-7xl mx-auto mb-14">
+            <div className="max-w-7xl mx-auto mb-10">
                 <p className="text-xs tracking-[0.3em] uppercase mb-3 font-title text-bb-gold">
                     <Compass size={12} className="inline mr-2" />
                     RUTA DEL CAZADOR

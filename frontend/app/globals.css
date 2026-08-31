@@ -134,9 +134,9 @@ html {
   outline-offset: 2px;
 }
 
-/* ── Scroll offset: compensate for fixed navbar (~64px) ── */
+/* ── Scroll offset: just enough to clear fixed navbar ── */
 section[id] {
-  scroll-margin-top: 72px;
+  scroll-margin-top: 36px;
 }
 
 /* ============================================================
@@ -645,7 +645,7 @@ section[id] {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.4rem 0.35rem;
+  padding: 0.25rem 0.35rem;
   border-bottom: 1px solid var(--bb-border-dim);
   transition: background 0.15s, padding-left 0.15s;
 }

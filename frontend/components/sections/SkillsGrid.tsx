@@ -8,7 +8,7 @@ import {
 import {
     SiNextdotjs, SiFastapi, SiSupabase, SiTypescript, SiTailwindcss,
     SiPostgresql, SiArduino, SiExpo, SiGodotengine, SiSqlite,
-    SiVercel, SiBootstrap, SiLinux, SiGoogleanalytics, SiGoogletagmanager, SiOpenai,
+    SiVercel, SiBootstrap, SiLinux, SiGoogleanalytics, SiGoogletagmanager,
     SiVite, SiRust, SiTauri
 } from "react-icons/si";
 import { BarChart2, Network, Globe, Database, Wrench, Cpu, Brain, Hammer, Headphones } from "lucide-react";
@@ -61,7 +61,7 @@ const SKILL_CATEGORIES = [
             { name: "Google Tag Manager (GTM)", icon: <SiGoogletagmanager /> },
             { name: "Google Analytics 4 (GA4)", icon: <SiGoogleanalytics /> },
             { name: "AppSheet (No-Code)", icon: <FaTools /> },
-            { name: "OpenAI / AI Dev", icon: <SiOpenai /> },
+            { name: "OpenAI / AI Dev", icon: <Brain size={12} /> },
         ],
     },
     {
@@ -90,7 +90,7 @@ export default function SkillsGrid() {
             style={{ borderTop: "1px solid var(--bb-border)", borderBottom: "1px solid var(--bb-border)" }}
         >
             {/* Section header */}
-            <div className="max-w-7xl mx-auto mb-14">
+            <div className="max-w-7xl mx-auto mb-8">
                 <p className="text-xs tracking-[0.3em] uppercase mb-3 font-title text-bb-gold">
                     <Cpu size={12} className="inline mr-2" />
                     ESTADÍSTICAS DEL CAZADOR

@@ -73,7 +73,7 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
             style={{ borderTop: "1px solid var(--bb-border)", borderBottom: "1px solid var(--bb-border)" }}
         >
             {/* Section header */}
-            <div className="max-w-7xl mx-auto mb-12 flex justify-between items-end">
+            <div className="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row md:justify-between md:items-end gap-6">
                 <div>
                     <p
                         className="text-xs tracking-[0.3em] uppercase mb-3"
@@ -98,8 +98,8 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
                 </div>
 
                 {/* Navigation arrows & Filters */}
-                <div className="flex flex-col items-end gap-4">
-                    <div className="flex flex-wrap justify-end gap-2">
+                <div className="flex flex-col items-start md:items-end gap-4">
+                    <div className="flex flex-wrap gap-2">
                         {['all', 'web', 'mobile', 'desktop'].map((type) => (
                             <button
                                 key={type}
