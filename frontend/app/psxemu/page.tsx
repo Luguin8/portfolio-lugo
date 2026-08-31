@@ -4,7 +4,11 @@ import React, { useEffect, useState } from 'react';
 import PS2Environment from '@/components/ps2/PS2Environment';
 import PS2Menu from '@/components/ps2/PS2Menu';
 import PS2Boot3D from '@/components/ps2/PS2Boot3D';
+import PS2MobileMenu from '@/components/ps2/mobile/PS2MobileMenu';
+import PS2MobileBoot from '@/components/ps2/mobile/PS2MobileBoot';
+import { useIsMobile } from '@/lib/useIsMobile';
 import './ps2.css';
+import './ps2-mobile.css';
 
 const BOOT_SESSION_KEY = 'psxemu-booted';
 
@@ -19,6 +23,7 @@ export default function PSXEmuPage() {
     // value inside an effect (not the useState initializer) keeps the first
     // client render identical to the server's.
     const [booted, setBooted] = useState<boolean | null>(null);
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         setBooted(sessionStorage.getItem(BOOT_SESSION_KEY) === '1');
@@ -37,12 +42,18 @@ export default function PSXEmuPage() {
         setBooted(true);
     };
 
-    if (booted === null) {
+    if (booted === null || isMobile === null) {
         return <div className="ps2-boot3d" />;
     }
 
     if (!booted) {
-        return <PS2Boot3D onDone={handleBootDone} />;
+        return isMobile
+            ? <PS2MobileBoot onDone={handleBootDone} />
+            : <PS2Boot3D onDone={handleBootDone} />;
+    }
+
+    if (isMobile) {
+        return <PS2MobileMenu />;
     }
 
     return (
