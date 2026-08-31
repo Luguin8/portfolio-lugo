@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Github, ExternalLink, Download } from "lucide-react";
+import { Github, ExternalLink, Download, Archive } from "lucide-react";
 import Tilt from "react-parallax-tilt";
 import { playNavigate, playOpen } from "@/lib/sounds";
 
@@ -15,7 +15,7 @@ export interface Project {
     demo_link?: string;
     repo_link?: string;
     download_link?: string;
-    project_type: 'web' | 'mobile' | 'desktop' | 'game' | string;
+    project_type: 'web' | 'mobile' | 'desktop' | 'game' | 'archived' | string;
 }
 
 interface ProjectCardProps {
@@ -70,7 +70,42 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
 
             {/* CONTENT */}
             <div className="p-5 flex-1 transition-opacity duration-300">
-                {!isMobileLayout ? (
+                {project.project_type === 'archived' ? (
+                    /* ARCHIVED / GRAVEYARD card */
+                    <div className="flex flex-col items-center justify-center h-full py-8 px-4 text-center min-h-[340px]">
+                        <div
+                            className="relative w-20 h-20 mb-5 flex items-center justify-center"
+                            style={{ border: "1px solid var(--bb-border-dim)", color: "var(--bb-border)", background: "rgba(0,0,0,0.35)" }}
+                        >
+                            <Archive size={30} />
+                        </div>
+                        <p
+                            className="text-[0.52rem] tracking-[0.35em] uppercase mb-2 font-title"
+                            style={{ color: "var(--bb-muted)", opacity: 0.5 }}
+                        >
+                            PROTOTIPOS · ARCHIVADOS
+                        </p>
+                        <h3
+                            className="text-xl mb-4 font-title tracking-[0.04em] transition-colors duration-200 group-hover:text-[var(--bb-gold)]"
+                            style={{ color: "var(--bb-muted)" }}
+                        >
+                            {project.title}
+                        </h3>
+                        <div className="bb-separator mb-4" style={{ maxWidth: "80px" }} />
+                        <div className="space-y-1.5 mb-6">
+                            {['Comida Callejera', 'Burger House', 'AppCC'].map(name => (
+                                <p key={name} className="text-xs font-body" style={{ color: "var(--bb-muted)", opacity: 0.45 }}>
+                                    {name}
+                                </p>
+                            ))}
+                        </div>
+                        <div className="flex flex-wrap gap-1.5 justify-center mt-auto">
+                            {project.tags.slice(0, 4).map(tag => (
+                                <span key={tag} className="bb-tag" style={{ opacity: 0.4 }}>{tag}</span>
+                            ))}
+                        </div>
+                    </div>
+                ) : !isMobileLayout ? (
                     /* WEB / DESKTOP layout */
                     <div className="flex flex-col h-full">
                         {/* Image */}
@@ -84,6 +119,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
                                 fill
                                 className="object-cover group-hover:scale-[1.04] transition-transform duration-700"
                             />
+                            {project.images.length > 1 && (
                             <div
                                 className="absolute bottom-2 right-2 text-[10px] px-2 py-0.5 border"
                                 style={{
@@ -96,6 +132,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
                             >
                                 +{project.images.length - 1} IMGS
                             </div>
+                            )}
                             
                             {/* Hover Actions over Image */}
                             {(project.demo_link || project.download_link || project.repo_link) && (
@@ -149,6 +186,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
                             style={{ border: "1px solid var(--bb-border)", background: "#000" }}
                         >
                             <Image src={mainImage} alt={project.title} fill className="object-cover" />
+                            {project.images.length > 1 && (
                             <div
                                 className="absolute bottom-0 left-0 right-0 p-2 text-center text-[10px]"
                                 style={{
@@ -158,8 +196,9 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
                                     letterSpacing: "0.1em",
                                 }}
                             >
-                                +{project.images.length}
+                                +{project.images.length - 1}
                             </div>
+                            )}
                         </div>
 
                         <div className="flex flex-col flex-1 justify-between py-1">

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, Briefcase, Languages, BookOpen, Wrench, MessageSquare } from "lucide-react";
+import { GraduationCap, Briefcase, Languages, BookOpen, Wrench, MessageSquare, Globe } from "lucide-react";
 
 const EDUCATION = [
     {
@@ -331,13 +331,13 @@ export default function Extras() {
                                 </div>
                             </div>
 
-                            {/* MessageSquare extra */}
+                            {/* Remote availability callout */}
                             <div
                                 className="p-4 mt-2"
                                 style={{ border: "1px solid var(--bb-border-dim)", background: "rgba(201,168,76,0.04)" }}
                             >
                                 <div className="flex items-start gap-3">
-                                    <MessageSquare size={14} className="mt-0.5 shrink-0" style={{ color: "var(--bb-gold)" }} />
+                                    <Globe size={14} className="mt-0.5 shrink-0" style={{ color: "var(--bb-gold)" }} />
                                     <p
                                         className="text-xs leading-relaxed"
                                         style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--bb-muted)" }}

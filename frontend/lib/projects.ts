@@ -246,6 +246,22 @@ export const PROJECTS: Project[] = [
     },
 ];
 
+const ARCHIVED_IDS = new Set([14, 15, 16]);
+
+export const ARCHIVED_CARD: Project = {
+    id: 99,
+    title: 'Prototipos Archivados',
+    description: `Tres prototipos que no llegaron a producción pero dejaron aprendizajes reales.\n\n✦ Comida Callejera — Mapa interactivo de puestos de comida con reseñas y auth dual de usuarios/dueños. (React Native · Firebase · react-native-maps)\n\n✦ Burger House — Sistema full-stack de punto de venta con catálogo, carrito y panel admin con upload de imágenes. (Node.js · Express · SQLite · JWT)\n\n✦ AppCC — App privada para parejas con mensajería reflexiva (mín. 150 chars), alertas hápticas y playlist de Spotify compartida. (Flutter · Dart)`,
+    project_type: 'archived',
+    tags: ['React Native', 'Flutter', 'Node.js', 'Firebase', 'Dart', 'Express'],
+    images: [],
+};
+
+export const PORTFOLIO_PROJECTS: Project[] = [
+    ...PROJECTS.filter((p) => !ARCHIVED_IDS.has(p.id)),
+    ARCHIVED_CARD,
+];
+
 export function getProjectSlug(project: Project): string {
     return slugify(project.title);
 }

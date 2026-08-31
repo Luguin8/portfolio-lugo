@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Github, ExternalLink, Smartphone, Monitor, X, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
+import { Github, ExternalLink, Download, Smartphone, Monitor, Archive, X, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Project } from "./ProjectCard";
 import { getProjectSlug } from "@/lib/projects";
@@ -25,6 +25,16 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         playOpen();
         return () => { document.body.style.overflow = "unset"; };
     }, []);
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') { playClose(); onClose(); }
+            if (e.key === 'ArrowRight') setCurrentImgIndex(prev => (prev === project.images.length - 1 ? 0 : prev + 1));
+            if (e.key === 'ArrowLeft') setCurrentImgIndex(prev => (prev === 0 ? project.images.length - 1 : prev - 1));
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [project.images.length, onClose]);
 
     const nextImage = (e?: React.MouseEvent) => {
         e?.stopPropagation();
@@ -85,74 +95,112 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     <X size={18} />
                 </button>
 
-                {/* ── LEFT: GALLERY ── */}
+                {/* ── LEFT: GALLERY or ARCHIVED DISPLAY ── */}
                 <div
                     className="flex-1 relative flex items-center justify-center overflow-hidden group/gallery"
                     style={{ background: "#000", borderRight: "1px solid var(--bb-border)" }}
                 >
-                    <div className="relative w-full h-full p-4 md:p-8 flex items-center justify-center">
-                        <div className="relative w-full h-full max-h-[80vh]">
-                            <Image
-                                key={currentImgIndex}
-                                src={project.images[currentImgIndex]}
-                                alt={`Screenshot ${currentImgIndex + 1}`}
-                                fill
-                                className="object-contain"
-                                priority
-                            />
+                    {project.project_type === 'archived' ? (
+                        /* Archived — static display with 3 project summaries */
+                        <div className="flex flex-col items-center justify-center h-full text-center gap-8 p-10">
+                            <div
+                                className="w-24 h-24 flex items-center justify-center"
+                                style={{ border: "1px solid var(--bb-border-dim)", color: "var(--bb-border)" }}
+                            >
+                                <Archive size={40} />
+                            </div>
+                            <div className="w-full max-w-xs">
+                                <p
+                                    className="text-[0.55rem] tracking-[0.3em] uppercase mb-6 font-title"
+                                    style={{ color: "var(--bb-muted)", opacity: 0.5 }}
+                                >
+                                    PROTOTIPOS NO FINALIZADOS
+                                </p>
+                                <div className="space-y-3">
+                                    {[
+                                        { name: 'Comida Callejera', stack: 'React Native · Firebase · Maps' },
+                                        { name: 'Burger House', stack: 'Node.js · Express · SQLite' },
+                                        { name: 'AppCC', stack: 'Flutter · Dart · SharedPrefs' },
+                                    ].map(p => (
+                                        <div
+                                            key={p.name}
+                                            className="p-3 text-left"
+                                            style={{ border: "1px solid var(--bb-border-dim)" }}
+                                        >
+                                            <p className="text-sm font-title mb-1" style={{ color: "var(--bb-muted)" }}>{p.name}</p>
+                                            <p className="text-xs font-body" style={{ color: "var(--bb-muted)", opacity: 0.45 }}>{p.stack}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    {/* Gallery nav */}
-                    {project.images.length > 1 && (
+                    ) : (
                         <>
-                            <button
-                                onClick={prevImage}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 transition-all opacity-0 group-hover/gallery:opacity-100 border"
-                                style={{ background: "rgba(5,4,3,0.80)", borderColor: "var(--bb-border)", color: "var(--bb-muted)" }}
-                                onMouseEnter={(e) => {
-                                    (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)";
-                                    (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-gold)";
-                                }}
-                                onMouseLeave={(e) => {
-                                    (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)";
-                                    (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-border)";
-                                }}
-                            >
-                                <ChevronLeft size={20} />
-                            </button>
-                            <button
-                                onClick={nextImage}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 transition-all opacity-0 group-hover/gallery:opacity-100 border"
-                                style={{ background: "rgba(5,4,3,0.80)", borderColor: "var(--bb-border)", color: "var(--bb-muted)" }}
-                                onMouseEnter={(e) => {
-                                    (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)";
-                                    (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-gold)";
-                                }}
-                                onMouseLeave={(e) => {
-                                    (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)";
-                                    (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-border)";
-                                }}
-                            >
-                                <ChevronRight size={20} />
-                            </button>
+                        <div className="relative w-full h-full p-4 md:p-8 flex items-center justify-center">
+                            <div className="relative w-full h-full max-h-[80vh]">
+                                <Image
+                                    key={currentImgIndex}
+                                    src={project.images[currentImgIndex]}
+                                    alt={`Screenshot ${currentImgIndex + 1}`}
+                                    fill
+                                    className="object-contain"
+                                    priority
+                                />
+                            </div>
+                        </div>
+
+                        {/* Gallery nav */}
+                        {project.images.length > 1 && (
+                            <>
+                                <button
+                                    onClick={prevImage}
+                                    className="absolute left-4 top-1/2 -translate-y-1/2 p-3 transition-all opacity-0 group-hover/gallery:opacity-100 border"
+                                    style={{ background: "rgba(5,4,3,0.80)", borderColor: "var(--bb-border)", color: "var(--bb-muted)" }}
+                                    onMouseEnter={(e) => {
+                                        (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)";
+                                        (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-gold)";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)";
+                                        (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-border)";
+                                    }}
+                                >
+                                    <ChevronLeft size={20} />
+                                </button>
+                                <button
+                                    onClick={nextImage}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 p-3 transition-all opacity-0 group-hover/gallery:opacity-100 border"
+                                    style={{ background: "rgba(5,4,3,0.80)", borderColor: "var(--bb-border)", color: "var(--bb-muted)" }}
+                                    onMouseEnter={(e) => {
+                                        (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)";
+                                        (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-gold)";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)";
+                                        (e.currentTarget as HTMLElement).style.borderColor = "var(--bb-border)";
+                                    }}
+                                >
+                                    <ChevronRight size={20} />
+                                </button>
+                            </>
+                        )}
+
+                        {/* Pagination dashes */}
+                        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3">
+                            {project.images.map((_, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => setCurrentImgIndex(idx)}
+                                    className="text-lg leading-none transition-colors duration-200"
+                                    style={{ color: idx === currentImgIndex ? "var(--bb-gold)" : "var(--bb-border)" }}
+                                    title={`Image ${idx + 1}`}
+                                >
+                                    —
+                                </button>
+                            ))}
+                        </div>
                         </>
                     )}
-
-                    {/* Pagination dashes */}
-                    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3">
-                        {project.images.map((_, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => setCurrentImgIndex(idx)}
-                                className="text-lg leading-none transition-colors duration-200"
-                                style={{ color: idx === currentImgIndex ? "var(--bb-gold)" : "var(--bb-border)" }}
-                                title={`Image ${idx + 1}`}
-                            >
-                                —
-                            </button>
-                        ))}
-                    </div>
                 </div>
 
                 {/* ── RIGHT: INFO PANEL (Bloodborne lore panel) ── */}
@@ -224,6 +272,20 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                                     Ver Demo Live
                                 </a>
                             )}
+                            {project.download_link && (
+                                <a
+                                    href={project.download_link}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="bb-btn w-full"
+                                    onMouseEnter={() => playNavigate()}
+                                    onClick={() => playSelect()}
+                                    download
+                                >
+                                    <Download size={14} />
+                                    Descargar App
+                                </a>
+                            )}
                             {project.repo_link && (
                                 <a
                                     href={project.repo_link}
@@ -237,6 +299,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                                     Ver Código
                                 </a>
                             )}
+                            {project.project_type !== 'archived' && (
                             <Link
                                 href={`/proyectos/${getProjectSlug(project)}`}
                                 className="bb-btn-secondary w-full"
@@ -246,6 +309,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                                 <BookOpen size={14} />
                                 Ver Caso Completo
                             </Link>
+                            )}
                         </div>
 
                         {/* Bottom status line */}
