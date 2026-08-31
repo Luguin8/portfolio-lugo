@@ -21,10 +21,11 @@ const ebGaramond = EB_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL("https://lugomartin.com"),
   title: "Lugo Martin | Full Stack Architect",
-  description: "Portfolio profesional de Lugo Martin. Desarrollador Full Stack, Mobile, Data y Automatización.",
+  description: "Lugo Martin — Full Stack Developer (Next.js, React, TypeScript, NestJS, React Native, Python, Supabase). Proyectos SaaS, apps móviles, automatización y más.",
+  keywords: ["Full Stack Developer", "Next.js", "React", "TypeScript", "NestJS", "React Native", "Python", "Supabase", "PostgreSQL", "Lugo Martin", "desarrollador web Argentina"],
   openGraph: {
     title: "Lugo Martin | Full Stack Architect",
-    description: "Portfolio profesional de Lugo Martin. Desarrollador Full Stack, Mobile, Data y Automatización.",
+    description: "Lugo Martin — Full Stack Developer (Next.js, React, TypeScript, NestJS, React Native, Python, Supabase). Proyectos SaaS, apps móviles, automatización y más.",
     url: "https://lugomartin.com",
     siteName: "Lugo Martin Portfolio",
     locale: "es_AR",
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Lugo Martin | Full Stack Architect",
-    description: "Portfolio profesional de Lugo Martin. Desarrollador Full Stack, Mobile, Data y Automatización.",
+    description: "Lugo Martin — Full Stack Developer (Next.js, React, TypeScript, NestJS, React Native, Python, Supabase). Proyectos SaaS, apps móviles, automatización y más.",
     images: ["/profile.png"],
   },
   icons: {

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lugomartin.com/sitemap.xml
