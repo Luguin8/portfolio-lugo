@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard, { Project } from "@/components/ui/ProjectCard";
 import ProjectModal from "@/components/ui/ProjectModal";
@@ -34,6 +34,23 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
         setCurrentIndex(0);
         setIsManual(true);
     };
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (selectedProject) return;
+            if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+            e.preventDefault();
+            playNavigate();
+            setIsManual(true);
+            if (e.key === 'ArrowLeft') {
+                setCurrentIndex(prev => (prev === 0 ? filteredProjects.length - 1 : prev - 1));
+            } else {
+                setCurrentIndex(prev => (prev === filteredProjects.length - 1 ? 0 : prev + 1));
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [selectedProject, filteredProjects.length]);
 
     if (projects.length === 0) {
         return (

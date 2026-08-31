@@ -28,9 +28,12 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') { playClose(); onClose(); }
-            if (e.key === 'ArrowRight') setCurrentImgIndex(prev => (prev === project.images.length - 1 ? 0 : prev + 1));
-            if (e.key === 'ArrowLeft') setCurrentImgIndex(prev => (prev === 0 ? project.images.length - 1 : prev - 1));
+            if (e.key === 'Escape') { playClose(); onClose(); return; }
+            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (e.key === 'ArrowRight') setCurrentImgIndex(prev => (prev === project.images.length - 1 ? 0 : prev + 1));
+                if (e.key === 'ArrowLeft') setCurrentImgIndex(prev => (prev === 0 ? project.images.length - 1 : prev - 1));
+            }
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
