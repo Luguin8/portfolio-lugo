@@ -31,6 +31,36 @@ export default function ClientLayout({ children, fontVariables }: { children: Re
         };
     }, []);
 
+    // ↑↓ arrow keys navigate between sections (only on main portfolio, not PS2)
+    useEffect(() => {
+        if (isPsx) return;
+        const SECTION_IDS = ['hero', 'skills', 'projects', 'process', 'extras', 'contact'];
+
+        const getCurrentSectionIndex = () => {
+            const scrollY = window.scrollY + 100;
+            for (let i = SECTION_IDS.length - 1; i >= 0; i--) {
+                const el = document.getElementById(SECTION_IDS[i]);
+                if (el && el.offsetTop <= scrollY) return i;
+            }
+            return 0;
+        };
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            const tag = (e.target as HTMLElement).tagName;
+            if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+            if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+            e.preventDefault();
+            const currentIdx = getCurrentSectionIndex();
+            const targetIdx = e.key === 'ArrowDown'
+                ? Math.min(currentIdx + 1, SECTION_IDS.length - 1)
+                : Math.max(currentIdx - 1, 0);
+            document.getElementById(SECTION_IDS[targetIdx])?.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isPsx]);
+
     // Easter egg for whoever opens devtools
     useEffect(() => {
         console.log(
