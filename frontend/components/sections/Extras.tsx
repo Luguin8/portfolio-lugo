@@ -51,8 +51,7 @@ export default function Extras() {
     return (
         <section
             id="extras"
-            className="py-28 px-6 relative"
-            style={{ borderTop: "1px solid var(--bb-border)", borderBottom: "1px solid var(--bb-border)" }}
+            className="py-24 px-6 relative bb-section-edge"
         >
             <div className="max-w-7xl mx-auto">
 
@@ -153,7 +152,7 @@ export default function Extras() {
                                     style={{ background: "var(--bb-panel)", border: "1px solid var(--bb-border)" }}
                                 >
                                     <span className="bb-corner-bl" />
-                                    <div className="flex justify-between items-start gap-2 mb-1">
+                                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-2 mb-1">
                                         <p
                                             className="text-sm leading-snug"
                                             style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.04em" }}

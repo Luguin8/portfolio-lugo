@@ -136,7 +136,29 @@ html {
 
 /* ── Scroll offset: compensate for fixed navbar (~64px) ── */
 section[id] {
-  scroll-margin-top: 72px;
+  scroll-margin-top: 64px;
+}
+
+/* ── Soft section edge: a faded hairline instead of a hard rule so
+   sections flow into each other and read as one continuous page ── */
+.bb-section-edge {
+  position: relative;
+}
+
+.bb-section-edge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(to right,
+      transparent 0%,
+      var(--bb-border-dim) 30%,
+      rgba(148, 116, 54, 0.28) 50%,
+      var(--bb-border-dim) 70%,
+      transparent 100%);
+  pointer-events: none;
 }
 
 /* ============================================================

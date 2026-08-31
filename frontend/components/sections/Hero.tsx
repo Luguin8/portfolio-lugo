@@ -189,11 +189,6 @@ export default function Hero() {
                 </motion.div>
 
             </div>
-
-            {/* Bottom separator */}
-            <div className="absolute bottom-0 left-0 right-0">
-                <div className="bb-separator" />
-            </div>
         </section>
     );
 }

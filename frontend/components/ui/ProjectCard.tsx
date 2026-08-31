@@ -178,8 +178,8 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
                         </div>
                     </div>
                 ) : (
-                    /* MOBILE layout */
-                    <div className="flex gap-5 h-full">
+                    /* MOBILE-APP layout (stacks on small screens) */
+                    <div className="flex flex-col sm:flex-row gap-5 h-full items-center sm:items-stretch">
                         {/* Phone mockup */}
                         <div
                             className="relative w-32 shrink-0 aspect-[9/19] overflow-hidden"

@@ -31,30 +31,19 @@ export default function ClientLayout({ children, fontVariables }: { children: Re
         };
     }, []);
 
-    // ↑↓ arrow keys navigate between sections (only on main portfolio, not PS2)
+    // ↑↓ arrow keys: scroll the page normally (like the mouse wheel), a bit
+    // faster than the browser default so long sections don't feel sticky.
     useEffect(() => {
         if (isPsx) return;
-        const SECTION_IDS = ['hero', 'skills', 'projects', 'process', 'extras', 'contact'];
-
-        const getCurrentSectionIndex = () => {
-            const scrollY = window.scrollY + 100;
-            for (let i = SECTION_IDS.length - 1; i >= 0; i--) {
-                const el = document.getElementById(SECTION_IDS[i]);
-                if (el && el.offsetTop <= scrollY) return i;
-            }
-            return 0;
-        };
 
         const handleKeyDown = (e: KeyboardEvent) => {
             const tag = (e.target as HTMLElement).tagName;
             if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+            if ((e.target as HTMLElement).isContentEditable) return;
             if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
             e.preventDefault();
-            const currentIdx = getCurrentSectionIndex();
-            const targetIdx = e.key === 'ArrowDown'
-                ? Math.min(currentIdx + 1, SECTION_IDS.length - 1)
-                : Math.max(currentIdx - 1, 0);
-            document.getElementById(SECTION_IDS[targetIdx])?.scrollIntoView({ behavior: 'smooth' });
+            const delta = e.key === 'ArrowDown' ? 90 : -90;
+            window.scrollBy({ top: delta, behavior: 'auto' });
         };
 
         window.addEventListener('keydown', handleKeyDown);

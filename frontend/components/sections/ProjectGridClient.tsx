@@ -56,8 +56,7 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
         return (
             <section
                 id="projects"
-                className="py-28 px-6 flex justify-center"
-                style={{ borderTop: "1px solid var(--bb-border)" }}
+                className="py-24 px-6 flex justify-center bb-section-edge"
             >
                 <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--bb-muted)" }}>
                     No hay obras registradas aún.
@@ -69,11 +68,11 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
     return (
         <section
             id="projects"
-            className="py-28 px-6 relative overflow-hidden"
-            style={{ borderTop: "1px solid var(--bb-border)", borderBottom: "1px solid var(--bb-border)" }}
+            className="py-24 px-6 relative bb-section-edge"
+            style={{ overflowX: "clip" }}
         >
             {/* Section header */}
-            <div className="max-w-7xl mx-auto mb-12 flex justify-between items-end">
+            <div className="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row md:justify-between md:items-end gap-8">
                 <div>
                     <p
                         className="text-xs tracking-[0.3em] uppercase mb-3"
@@ -98,8 +97,8 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
                 </div>
 
                 {/* Navigation arrows & Filters */}
-                <div className="flex flex-col items-end gap-4">
-                    <div className="flex flex-wrap justify-end gap-2">
+                <div className="flex flex-col md:items-end gap-4">
+                    <div className="flex flex-wrap gap-2 md:justify-end">
                         {['all', 'web', 'mobile', 'desktop'].map((type) => (
                             <button
                                 key={type}
@@ -116,7 +115,8 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
                             </button>
                         ))}
                     </div>
-                    <div className="flex gap-2">
+                    {/* Prev/next only matter for the desktop carousel */}
+                    <div className="hidden md:flex gap-2">
                         <button
                             onClick={() => { playSelect(); handleManualControl('prev'); }}
                             className="p-3 border transition-all duration-200 border-bb-border text-bb-muted hover:border-bb-gold hover:text-bb-gold bg-transparent"
@@ -135,12 +135,32 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
                 </div>
             </div>
 
-            {/* Grid / Carousel */}
-            <div className="relative w-full">
+            {/* ── MOBILE: simple vertical list (no carousel) ── */}
+            <div className="md:hidden flex flex-col gap-6">
+                {filteredProjects.length === 0 ? (
+                    <p className="text-center italic font-body text-bb-muted py-10">
+                        No hay proyectos en esta categoría.
+                    </p>
+                ) : (
+                    filteredProjects.map((project, idx) => (
+                        <ProjectCard
+                            key={`${project.id}-m-${idx}`}
+                            project={project}
+                            onClick={() => setSelectedProject(project)}
+                        />
+                    ))
+                )}
+            </div>
+
+            {/* ── DESKTOP: Grid / Carousel ── */}
+            <div className="relative w-full hidden md:block">
                 {!isManual ? (
-                    <div className="flex overflow-hidden mask-gradient-sides">
+                    <div
+                        className="flex mask-gradient-sides py-8"
+                        style={{ overflowX: "clip", overflowY: "visible" }}
+                    >
                         <motion.div
-                            className="flex gap-6 px-4"
+                            className="flex gap-6 px-4 items-stretch"
                             animate={{ x: ["0%", "-33.33%"] }}
                             transition={{ duration: 50, ease: "linear", repeat: Infinity }}
                         >

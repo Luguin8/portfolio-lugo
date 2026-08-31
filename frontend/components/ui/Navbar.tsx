@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lock, LogIn, Shield, Volume2, VolumeX } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Lock, LogIn, Shield, Volume2, VolumeX, Menu, X } from "lucide-react";
 import { loginAction, enableDemoMode } from "@/lib/actions";
 import {
     playNavigate,
@@ -30,6 +29,7 @@ export default function Navbar() {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [loginMessage, setLoginMessage] = useState("");
     const [isAmbientOn, setIsAmbientOn] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
     const router = useRouter();
 
     function toggleAmbient() {
@@ -46,6 +46,12 @@ export default function Navbar() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    // Lock body scroll while the mobile menu is open
+    useEffect(() => {
+        document.body.style.overflow = mobileOpen ? "hidden" : "";
+        return () => { document.body.style.overflow = ""; };
+    }, [mobileOpen]);
 
     function openLoginModal() {
         playOpen();
@@ -76,16 +82,19 @@ export default function Navbar() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className={cn("fixed top-0 left-0 right-0 z-[50] transition-all duration-500", isScrolled ? "border-b" : "border-b border-transparent")}
-                style={isScrolled ? {
-                    background: "rgba(5, 4, 3, 0.96)",
-                    borderBottomColor: "var(--bb-border)",
-                    backdropFilter: "blur(12px)",
-                    paddingTop: "0.5rem",
-                    paddingBottom: "0.5rem",
-                } : {
+                className="fixed top-0 left-0 right-0 z-[50] transition-all duration-500"
+                style={{
                     paddingTop: "1rem",
                     paddingBottom: "1rem",
+                    ...(isScrolled
+                        ? {
+                            // Subtle backdrop that reads as depth, not a divider rule.
+                            background: "rgba(5, 4, 3, 0.92)",
+                            backdropFilter: "blur(10px)",
+                            WebkitBackdropFilter: "blur(10px)",
+                            boxShadow: "0 14px 34px -18px rgba(0, 0, 0, 0.9)",
+                        }
+                        : {}),
                 }}
             >
                 <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
@@ -93,7 +102,7 @@ export default function Navbar() {
                     {/* LOGO */}
                     <Link
                         href="/"
-                        className="group flex items-center gap-3"
+                        className="group flex items-center gap-2 sm:gap-3 shrink-0"
                         style={{ textDecoration: "none" }}
                         onMouseEnter={() => playNavigate()}
                         onClick={() => playSelect()}
@@ -105,13 +114,13 @@ export default function Navbar() {
                             ✦
                         </span>
                         <span
-                            className="text-base font-semibold tracking-widest transition-colors duration-300 group-hover:text-white"
-                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.25em" }}
+                            className="text-sm sm:text-base font-semibold whitespace-nowrap transition-colors duration-300 group-hover:text-white"
+                            style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.18em" }}
                         >
                             LUGO MARTIN
                         </span>
                         <span
-                            className="text-base leading-none transition-colors duration-300"
+                            className="hidden sm:inline text-base leading-none transition-colors duration-300"
                             style={{ color: "var(--bb-gold)", fontFamily: "var(--font-title)" }}
                         >
                             ✦
@@ -151,24 +160,24 @@ export default function Navbar() {
                     </div>
 
                     {/* ACTIONS */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 sm:gap-4">
 
-                        {/* Ambient sound toggle */}
+                        {/* Ambient sound toggle (desktop; on mobile it lives in the menu) */}
                         <button
                             onClick={toggleAmbient}
                             onMouseEnter={() => playNavigate()}
-                            className="p-2 transition-colors duration-200"
+                            className="hidden md:block p-2 transition-colors duration-200"
                             style={{ color: isAmbientOn ? "var(--bb-gold)" : "var(--bb-muted)" }}
                             title={isAmbientOn ? "Silenciar ambiente" : "Activar ambiente sonoro"}
                         >
                             {isAmbientOn ? <Volume2 size={15} /> : <VolumeX size={15} />}
                         </button>
 
-                        {/* Lock */}
+                        {/* Lock (desktop; on mobile it lives in the menu) */}
                         <button
                             onClick={openLoginModal}
                             onMouseEnter={() => playNavigate()}
-                            className="p-2 transition-colors duration-200"
+                            className="hidden md:block p-2 transition-colors duration-200"
                             style={{ color: "var(--bb-muted)" }}
                             onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-muted)"; }}
                             onFocus={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--bb-gold)"; }}
@@ -176,9 +185,98 @@ export default function Navbar() {
                         >
                             <Lock size={15} />
                         </button>
+
+                        {/* Hamburger (mobile only) */}
+                        <button
+                            onClick={() => { playOpen(); setMobileOpen(true); }}
+                            className="md:hidden p-2 transition-colors duration-200"
+                            style={{ color: "var(--bb-gold)" }}
+                            aria-label="Abrir menú"
+                        >
+                            <Menu size={20} />
+                        </button>
                     </div>
                 </div>
             </motion.nav>
+
+            {/* ── MOBILE MENU ── */}
+            <AnimatePresence>
+                {mobileOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.22 }}
+                        className="fixed inset-0 z-[70] md:hidden flex flex-col"
+                        style={{ background: "rgba(4, 3, 2, 0.985)", backdropFilter: "blur(6px)" }}
+                    >
+                        <div className="flex items-center justify-between px-6" style={{ paddingTop: "1rem", paddingBottom: "1rem" }}>
+                            <span
+                                className="text-base font-semibold tracking-widest"
+                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-gold)", letterSpacing: "0.25em" }}
+                            >
+                                ✦ &nbsp;LUGO MARTIN
+                            </span>
+                            <button
+                                onClick={() => { playClose(); setMobileOpen(false); }}
+                                className="p-2"
+                                style={{ color: "var(--bb-gold)" }}
+                                aria-label="Cerrar menú"
+                            >
+                                <X size={22} />
+                            </button>
+                        </div>
+
+                        <div className="bb-separator mx-6" />
+
+                        <nav className="flex-1 flex flex-col justify-center gap-2 px-8">
+                            {NAV_LINKS.map((link, i) => (
+                                <motion.div
+                                    key={link.href}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.06 + i * 0.05, duration: 0.3 }}
+                                >
+                                    <Link
+                                        href={link.href}
+                                        onClick={() => { playSelect(); setMobileOpen(false); }}
+                                        className="block py-4 text-2xl tracking-[0.14em] uppercase"
+                                        style={{
+                                            fontFamily: "var(--font-title)",
+                                            color: "var(--bb-white)",
+                                            textDecoration: "none",
+                                            borderBottom: "1px solid var(--bb-border-dim)",
+                                        }}
+                                    >
+                                        <span style={{ color: "var(--bb-gold)", marginRight: "0.6rem", fontSize: "0.7em" }}>
+                                            {String(i + 1).padStart(2, "0")}
+                                        </span>
+                                        {link.label}
+                                    </Link>
+                                </motion.div>
+                            ))}
+                        </nav>
+
+                        <div className="px-8 pb-10 flex items-center gap-6">
+                            <button
+                                onClick={() => { toggleAmbient(); }}
+                                className="flex items-center gap-2 text-xs tracking-widest uppercase"
+                                style={{ fontFamily: "var(--font-title)", color: isAmbientOn ? "var(--bb-gold)" : "var(--bb-muted)" }}
+                            >
+                                {isAmbientOn ? <Volume2 size={14} /> : <VolumeX size={14} />}
+                                {isAmbientOn ? "Ambiente ON" : "Ambiente OFF"}
+                            </button>
+                            <button
+                                onClick={() => { setMobileOpen(false); openLoginModal(); }}
+                                className="flex items-center gap-2 text-xs tracking-widest uppercase"
+                                style={{ fontFamily: "var(--font-title)", color: "var(--bb-muted)" }}
+                            >
+                                <Lock size={13} /> Acceso
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* ── LOGIN MODAL ── */}
             <AnimatePresence>
