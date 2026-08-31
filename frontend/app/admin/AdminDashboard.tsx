@@ -84,8 +84,13 @@ export default function AdminDashboard({
                                                 </span>
                                             </div>
                                             <div className="text-xs text-primary mb-3 font-mono">{msg.email}</div>
+                                            {msg.subject && (
+                                                <p className="text-[0.65rem] font-mono text-gray-500 uppercase tracking-widest mb-2">
+                                                    Asunto: {msg.subject}
+                                                </p>
+                                            )}
                                             <p className="text-gray-300 bg-black/30 p-4 rounded-lg text-sm leading-relaxed border border-white/5">
-                                                {msg.message}
+                                                {msg.content}
                                             </p>
                                         </div>
                                         <form action={deleteMessage}>
