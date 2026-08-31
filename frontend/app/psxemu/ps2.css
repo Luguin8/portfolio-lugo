@@ -476,19 +476,19 @@ body, html {
     position: absolute;
     top: 18px;
     left: 18px;
-    width: 6px;
-    height: 6px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: #ff2020;
-    box-shadow: 0 0 4px 1px rgba(255, 32, 32, 0.9), 0 0 8px 2px rgba(255, 32, 32, 0.4);
+    background: radial-gradient(circle at 38% 35%, #ff6060, #ff2020 55%, #c00 100%);
+    box-shadow: 0 0 8px 3px rgba(255, 32, 32, 0.9), 0 0 20px 6px rgba(255, 32, 32, 0.45);
     z-index: 200;
     cursor: pointer;
     transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .ps2-power-led:hover {
-    transform: scale(1.4);
-    box-shadow: 0 0 6px 2px rgba(255, 60, 60, 1), 0 0 14px 4px rgba(255, 60, 60, 0.6);
+    transform: scale(1.2);
+    box-shadow: 0 0 12px 5px rgba(255, 60, 60, 1), 0 0 30px 10px rgba(255, 60, 60, 0.6);
 }
 
 .ps2-about-topics {
@@ -594,17 +594,9 @@ body, html {
     cursor: pointer;
 }
 
-/* Faceted polygon frame behind each card — stands in for real cover art */
+/* Polygon frame hidden — icons are self-contained */
 .browser-item-poly {
-    position: absolute;
-    inset: -24px;
-    z-index: 0;
-    clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-    background: linear-gradient(155deg, rgba(60, 110, 220, 0.35), rgba(20, 30, 60, 0.55) 55%, rgba(0, 200, 255, 0.25));
-    border: 1px solid rgba(150, 200, 255, 0.35);
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.15);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-    animation: poly-breathe 6s ease-in-out infinite;
+    display: none;
 }
 
 .browser-item-wrap.active .browser-item-poly {

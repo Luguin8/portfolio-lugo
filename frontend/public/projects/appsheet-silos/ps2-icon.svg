@@ -1,34 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 172" width="172" height="172">
-  <defs>
-    <pattern id="sc" x="0" y="0" width="1" height="4" patternUnits="userSpaceOnUse">
-      <rect x="0" y="3" width="172" height="1" fill="rgba(0,0,0,0.08)"/>
-    </pattern>
-  </defs>
-  <rect width="172" height="172" fill="#020a1c"/>
-  
-  <!-- silo shadow -->
-  <ellipse cx="86" cy="142" rx="40" ry="8" fill="rgba(0,0,0,0.3)"/>
-  <!-- cylinder body -->
-  <rect x="50" y="56" width="72" height="82" fill="#d4ac0d"/>
-  <!-- cylinder top ellipse -->
-  <ellipse cx="86" cy="56" rx="36" ry="10" fill="#f1c40f"/>
-  <!-- dome/cap on top -->
-  <ellipse cx="86" cy="42" rx="36" ry="10" fill="#f1c40f" opacity="0.7"/>
-  <rect x="50" y="32" width="72" height="24" fill="#9a7d0a" opacity="0.5"/>
-  <ellipse cx="86" cy="32" rx="36" ry="10" fill="#f1c40f" opacity="0.9"/>
-  <!-- cone cap -->
-  <polygon points="86,14 50,32 122,32" fill="#d4ac0d"/>
-  <line x1="86" y1="14" x2="50" y2="32" stroke="#f1c40f" stroke-width="1" opacity="0.5"/>
-  <line x1="86" y1="14" x2="122" y2="32" stroke="#f1c40f" stroke-width="1" opacity="0.5"/>
-  <!-- horizontal band lines on cylinder body -->
-  <line x1="50" y1="76" x2="122" y2="76" stroke="#6b5600" stroke-width="1.5" opacity="0.6"/>
-  <line x1="50" y1="96" x2="122" y2="96" stroke="#6b5600" stroke-width="1.5" opacity="0.6"/>
-  <line x1="50" y1="116" x2="122" y2="116" stroke="#6b5600" stroke-width="1.5" opacity="0.6"/>
-  <!-- bottom ellipse -->
-  <ellipse cx="86" cy="138" rx="36" ry="10" fill="#6b5600"/>
-  <!-- KG label -->
-  <text x="86" y="112" text-anchor="middle" font-family="monospace" font-size="18" font-weight="bold" fill="#6b5600" opacity="0.7">500K</text>
-  <text x="86" y="125" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b5600" letter-spacing="2" opacity="0.6">KG</text>
-  <rect width="172" height="172" fill="url(#sc)" opacity="0.5"/>
-  <rect x="1" y="1" width="170" height="170" fill="none" stroke="#d4ac0d" stroke-width="1" opacity="0.3"/>
+  <g transform="translate(86,86) scale(1.15) translate(-86,-86)">
+    <ellipse cx="86" cy="144" rx="38" ry="8" fill="rgba(0,0,0,0.28)"/>
+    <rect x="50" y="52" width="72" height="88" fill="#d4ac0d"/>
+    <ellipse cx="86" cy="52" rx="36" ry="10" fill="#f1c40f"/>
+    <rect x="50" y="28" width="72" height="28" fill="#9a7d0a" opacity="0.5"/>
+    <ellipse cx="86" cy="28" rx="36" ry="10" fill="#f1c40f" opacity="0.9"/>
+    <polygon points="86,10 50,28 122,28" fill="#d4ac0d"/>
+    <line x1="86" y1="10" x2="50" y2="28" stroke="#f1c40f" stroke-width="1" opacity="0.5"/>
+    <line x1="86" y1="10" x2="122" y2="28" stroke="#f1c40f" stroke-width="1" opacity="0.5"/>
+    <line x1="50" y1="74" x2="122" y2="74" stroke="#6b5600" stroke-width="1.5" opacity="0.55"/>
+    <line x1="50" y1="96" x2="122" y2="96" stroke="#6b5600" stroke-width="1.5" opacity="0.55"/>
+    <line x1="50" y1="118" x2="122" y2="118" stroke="#6b5600" stroke-width="1.5" opacity="0.55"/>
+    <ellipse cx="86" cy="140" rx="36" ry="10" fill="#6b5600"/>
+    <text x="86" y="110" text-anchor="middle" font-family="monospace" font-size="18" font-weight="bold" fill="#6b5600" opacity="0.65">500K</text>
+    <text x="86" y="124" text-anchor="middle" font-family="monospace" font-size="9" fill="#6b5600" letter-spacing="2" opacity="0.55">KG</text>
+  </g>
 </svg>

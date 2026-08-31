@@ -1,24 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 172" width="172" height="172">
-  <defs>
-    <pattern id="sc" x="0" y="0" width="1" height="4" patternUnits="userSpaceOnUse">
-      <rect x="0" y="3" width="172" height="1" fill="rgba(0,0,0,0.08)"/>
-    </pattern>
-  </defs>
-  <rect width="172" height="172" fill="#020a1c"/>
-  <rect x="52" y="38" width="62" height="82" fill="#2e4053" rx="2"/>
-  <polygon points="114,38 134,28 134,110 114,120" fill="#1a2a3a"/>
-  <polygon points="52,38 114,38 134,28 72,28" fill="#405068"/><rect x="44" y="46" width="62" height="82" fill="#3d5166" rx="2"/>
-  <polygon points="106,46 126,36 126,118 106,128" fill="#243244"/>
-  <polygon points="44,46 106,46 126,36 64,36" fill="#4e6278"/><rect x="36" y="54" width="62" height="82" fill="#7f8c8d" rx="2"/>
-  <polygon points="98,54 118,44 118,126 98,136" fill="#566573"/>
-  <polygon points="36,54 98,54 118,44 56,44" fill="#95a5a6"/><polygon points="98,54 98,68 112,54" fill="#95a5a6" opacity="0.4"/>
-  <polygon points="98,54 98,68 112,54" fill="white" opacity="0.12"/>
-  <line x1="98" y1="54" x2="98" y2="68" stroke="rgba(0,0,0,0.3)" stroke-width="1"/>
-  <line x1="98" y1="54" x2="112" y2="54" stroke="rgba(0,0,0,0.3)" stroke-width="1"/><text x="51" y="74" font-family="monospace" font-size="8" font-weight="bold" fill="rgba(255,255,255,0.55)" letter-spacing="1">PDF</text>
-  <line x1="40" y1="84" x2="90" y2="84" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="40" y1="93" x2="90" y2="93" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="40" y1="102" x2="82" y2="102" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="40" y1="111" x2="76" y2="111" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" stroke-linecap="round"/>
-  <rect width="172" height="172" fill="url(#sc)" opacity="0.5"/>
-  <rect x="1" y="1" width="170" height="170" fill="none" stroke="#7f8c8d" stroke-width="1" opacity="0.3"/>
+  <g transform="translate(86,86) scale(1.15) translate(-86,-86)">
+    <rect x="52" y="34" width="62" height="86" fill="#2e4053" rx="2"/>
+    <polygon points="114,34 136,23 136,109 114,120" fill="#1a2a3a"/>
+    <polygon points="52,34 114,34 136,23 74,23" fill="#405068"/><rect x="44" y="42" width="62" height="86" fill="#3d5166" rx="2"/>
+    <polygon points="106,42 128,31 128,117 106,128" fill="#243244"/>
+    <polygon points="44,42 106,42 128,31 66,31" fill="#4e6278"/><rect x="36" y="50" width="62" height="86" fill="#7f8c8d" rx="2"/>
+    <polygon points="98,50 120,39 120,125 98,136" fill="#566573"/>
+    <polygon points="36,50 98,50 120,39 58,39" fill="#95a5a6"/><polygon points="98,50 98,66 120,50" fill="rgba(255,255,255,0.16)"/>
+    <line x1="98" y1="50" x2="98" y2="66" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+    <line x1="98" y1="50" x2="120" y2="50" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+    <text x="50" y="72" font-family="monospace" font-size="8" font-weight="bold" fill="rgba(255,255,255,0.5)" letter-spacing="1">PDF</text>
+    <line x1="40" y1="82" x2="90" y2="82" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="40" y1="92" x2="90" y2="92" stroke="rgba(255,255,255,0.28)" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="40" y1="102" x2="84" y2="102" stroke="rgba(255,255,255,0.24)" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="40" y1="112" x2="76" y2="112" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
 </svg>

@@ -1,23 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 172" width="172" height="172">
-  <defs>
-    <pattern id="sc" x="0" y="0" width="1" height="4" patternUnits="userSpaceOnUse">
-      <rect x="0" y="3" width="172" height="1" fill="rgba(0,0,0,0.08)"/>
-    </pattern>
-  </defs>
-  <rect width="172" height="172" fill="#020a1c"/>
-  
-  <ellipse cx="86" cy="100" rx="46" ry="11" fill="#0d3d20"/>
-  <path d="M40,100 L40,116 A46,11 0 0,0 132,116 L132,100" fill="#0a2e18"/>
-  <ellipse cx="86" cy="116" rx="46" ry="11" fill="#071f10"/>
-  
-  <ellipse cx="86" cy="76" rx="46" ry="11" fill="#1d7045"/>
-  <path d="M40,76 L40,92 A46,11 0 0,0 132,92 L132,76" fill="#17593a"/>
-  <ellipse cx="86" cy="92" rx="46" ry="11" fill="#0d3d20"/>
-  
-  <ellipse cx="86" cy="52" rx="46" ry="11" fill="#3ec87e"/>
-  <path d="M40,52 L40,68 A46,11 0 0,0 132,68 L132,52" fill="#2aad64"/>
-  <ellipse cx="86" cy="68" rx="46" ry="11" fill="#1d7045"/>
-  <text x="86" y="58" text-anchor="middle" font-family="monospace" font-size="22" font-weight="bold" fill="rgba(0,60,20,0.7)">$</text>
-  <rect width="172" height="172" fill="url(#sc)" opacity="0.5"/>
-  <rect x="1" y="1" width="170" height="170" fill="none" stroke="#3ec87e" stroke-width="1" opacity="0.3"/>
+  <g transform="translate(86,86) scale(1.15) translate(-86,-86)">
+    <ellipse cx="86" cy="110" rx="46" ry="11" fill="#0d3d20"/>
+    <path d="M40,110 L40,126 A46,11 0 0,0 132,126 L132,110" fill="#061f10"/>
+    <ellipse cx="86" cy="126" rx="46" ry="11" fill="#061f10" opacity="0.7"/>
+    <ellipse cx="86" cy="86" rx="46" ry="11" fill="#1d7045"/>
+    <path d="M40,86 L40,102 A46,11 0 0,0 132,102 L132,86" fill="#0d3d20"/>
+    <ellipse cx="86" cy="102" rx="46" ry="11" fill="#0d3d20" opacity="0.7"/>
+    <ellipse cx="86" cy="60" rx="46" ry="11" fill="#3ec87e"/>
+    <path d="M40,60 L40,76 A46,11 0 0,0 132,76 L132,60" fill="#1d7045"/>
+    <ellipse cx="86" cy="76" rx="46" ry="11" fill="#1d7045" opacity="0.7"/>
+    <text x="86" y="66" text-anchor="middle" font-family="monospace" font-size="24" font-weight="bold" fill="rgba(0,50,18,0.72)">$</text>
+  </g>
 </svg>
