@@ -1,4 +1,5 @@
 import { PROJECTS } from './projects';
+import { slugify } from './slugify';
 
 export interface PS2ProjectCard {
     id: number;
@@ -31,6 +32,6 @@ export const PS2_PROJECTS: PS2ProjectCard[] = PROJECTS.map((p) => ({
     type: TYPE_LABEL[p.project_type] || p.project_type,
     stack: p.tags.slice(0, 3).join(' · '),
     desc: p.description,
-    image: p.images[0],
+    image: `/projects/${slugify(p.title)}/ps2-icon.svg`,
     link: p.demo_link || p.repo_link || p.download_link,
 }));

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 172" width="172" height="172">
+  <defs>
+    <pattern id="sc" x="0" y="0" width="1" height="4" patternUnits="userSpaceOnUse">
+      <rect x="0" y="3" width="172" height="1" fill="rgba(0,0,0,0.08)"/>
+    </pattern>
+  </defs>
+  <rect width="172" height="172" fill="#020a1c"/>
+  
+  <!-- shackle -->
+  <path d="M62,82 L62,54 A24,24 0 0,1 110,54 L110,82" fill="none" stroke="#8b2018" stroke-width="14" stroke-linecap="round"/>
+  <path d="M62,82 L62,54 A24,24 0 0,1 110,54 L110,82" fill="none" stroke="#c0392b" stroke-width="10" stroke-linecap="round"/>
+  <!-- lock body right side -->
+  <path d="M120,80 L134,70 L134,138 L120,148" fill="#5c0f0a"/>
+  <!-- lock body top -->
+  <path d="M52,80 L66,70 L134,70 L120,80" fill="#8b2018"/>
+  <!-- lock body front -->
+  <rect x="52" y="80" width="68" height="68" rx="4" fill="#c0392b"/>
+  <!-- keyhole -->
+  <circle cx="86" cy="108" r="12" fill="#5c0f0a"/>
+  <rect x="82" y="108" width="8" height="22" rx="2" fill="#5c0f0a"/>
+  <!-- keyhole highlight -->
+  <circle cx="86" cy="108" r="8" fill="rgba(0,0,0,0.6)"/>
+  <rect x="83" y="108" width="6" height="16" rx="2" fill="rgba(0,0,0,0.6)"/>
+  <!-- DNI / ACCESS badge -->
+  <rect x="56" y="84" width="60" height="14" rx="2" fill="#5c0f0a" opacity="0.6"/>
+  <text x="86" y="94" text-anchor="middle" font-family="monospace" font-size="8" font-weight="bold" fill="#e74c3c" letter-spacing="2">ACCESS</text>
+  <rect width="172" height="172" fill="url(#sc)" opacity="0.5"/>
+  <rect x="1" y="1" width="170" height="170" fill="none" stroke="#c0392b" stroke-width="1" opacity="0.3"/>
+</svg>

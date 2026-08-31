@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 172" width="172" height="172">
+  <defs>
+    <pattern id="sc" x="0" y="0" width="1" height="4" patternUnits="userSpaceOnUse">
+      <rect x="0" y="3" width="172" height="1" fill="rgba(0,0,0,0.08)"/>
+    </pattern>
+  </defs>
+  <rect width="172" height="172" fill="#020a1c"/>
+  
+  <!-- phone shadow -->
+  <ellipse cx="86" cy="148" rx="36" ry="7" fill="rgba(0,0,0,0.3)"/>
+  <!-- right depth -->
+  <path d="M110,28 L126,18 L126,148 L110,138" fill="#0f3a54"/>
+  <!-- top depth -->
+  <path d="M62,28 L78,18 L126,18 L110,28" fill="#1a5578"/>
+  <!-- phone body front -->
+  <rect x="62" y="28" width="48" height="110" rx="8" fill="#2471a3"/>
+  <!-- screen bezel -->
+  <rect x="68" y="40" width="36" height="82" rx="4" fill="#0f3a54"/>
+  <!-- screen content: map-ish -->
+  <rect x="68" y="40" width="36" height="82" rx="4" fill="rgba(20,60,120,0.8)"/>
+  <!-- map grid lines on screen -->
+  <line x1="68" y1="60" x2="104" y2="60" stroke="#5dade2" stroke-width="0.8" opacity="0.4"/>
+  <line x1="68" y1="80" x2="104" y2="80" stroke="#5dade2" stroke-width="0.8" opacity="0.4"/>
+  <line x1="68" y1="100" x2="104" y2="100" stroke="#5dade2" stroke-width="0.8" opacity="0.4"/>
+  <line x1="80" y1="40" x2="80" y2="122" stroke="#5dade2" stroke-width="0.8" opacity="0.4"/>
+  <line x1="92" y1="40" x2="92" y2="122" stroke="#5dade2" stroke-width="0.8" opacity="0.4"/>
+  <!-- GPS pin on screen -->
+  <circle cx="86" cy="76" r="7" fill="#2471a3" stroke="#5dade2" stroke-width="1.5"/>
+  <circle cx="86" cy="76" r="3" fill="#5dade2"/>
+  <line x1="86" y1="83" x2="86" y2="90" stroke="#5dade2" stroke-width="2" stroke-linecap="round"/>
+  <!-- weather icon (small, top of screen) -->
+  <circle cx="80" cy="50" r="4" fill="rgba(255,220,60,0.8)"/>
+  <!-- home button -->
+  <circle cx="86" cy="130" r="7" fill="#1a5578" stroke="#5dade2" stroke-width="1.2"/>
+  <!-- notch -->
+  <rect x="80" y="30" width="12" height="6" rx="3" fill="#0f3a54"/>
+  <rect width="172" height="172" fill="url(#sc)" opacity="0.5"/>
+  <rect x="1" y="1" width="170" height="170" fill="none" stroke="#2471a3" stroke-width="1" opacity="0.3"/>
+</svg>
