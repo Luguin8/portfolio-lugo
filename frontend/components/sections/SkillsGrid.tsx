@@ -86,7 +86,7 @@ export default function SkillsGrid() {
     return (
         <section
             id="skills"
-            className="py-24 px-6 relative bb-section-edge"
+            className="pt-8 pb-20 px-6 relative bb-section-edge"
         >
             {/* Section header */}
             <div className="max-w-7xl mx-auto mb-10">

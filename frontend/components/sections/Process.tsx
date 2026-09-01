@@ -34,9 +34,9 @@ export default function Process() {
     return (
         <section
             id="process"
-            className="py-24 px-6 relative bb-section-edge"
+            className="pt-8 pb-20 px-6 relative bb-section-edge"
         >
-            <div className="max-w-7xl mx-auto mb-14">
+            <div className="max-w-7xl mx-auto mb-8">
                 <p className="text-xs tracking-[0.3em] uppercase mb-3 font-title text-bb-gold">
                     <Compass size={12} className="inline mr-2" />
                     RUTA DEL CAZADOR

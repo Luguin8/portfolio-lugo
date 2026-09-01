@@ -134,9 +134,10 @@ html {
   outline-offset: 2px;
 }
 
-/* ── Scroll offset: compensate for fixed navbar (~64px) ── */
+/* ── Scroll offset: land just below the fixed navbar (~56px) so a nav
+   jump doesn't leave a big empty band above the section content ── */
 section[id] {
-  scroll-margin-top: 64px;
+  scroll-margin-top: 52px;
 }
 
 /* ── Soft section edge: a faded hairline instead of a hard rule so

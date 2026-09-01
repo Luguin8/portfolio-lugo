@@ -56,7 +56,7 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
         return (
             <section
                 id="projects"
-                className="py-24 px-6 flex justify-center bb-section-edge"
+                className="pt-8 pb-20 px-6 flex justify-center bb-section-edge"
             >
                 <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--bb-muted)" }}>
                     No hay obras registradas aún.
@@ -68,11 +68,11 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
     return (
         <section
             id="projects"
-            className="py-24 px-6 relative bb-section-edge"
+            className="pt-8 pb-20 px-6 relative bb-section-edge"
             style={{ overflowX: "clip" }}
         >
             {/* Section header */}
-            <div className="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row md:justify-between md:items-end gap-8">
+            <div className="max-w-7xl mx-auto mb-8 flex flex-col md:flex-row md:justify-between md:items-end gap-8">
                 <div>
                     <p
                         className="text-xs tracking-[0.3em] uppercase mb-3"

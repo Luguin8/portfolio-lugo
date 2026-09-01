@@ -67,7 +67,7 @@ function ColHeader({ icon, label }: { icon: React.ReactNode; label: string }) {
 
 export default function Extras() {
     return (
-        <section id="extras" className="py-16 px-6 relative bb-section-edge">
+        <section id="extras" className="pt-8 pb-20 px-6 relative bb-section-edge">
             <div className="max-w-7xl mx-auto">
 
                 {/* Section header */}

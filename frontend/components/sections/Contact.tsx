@@ -18,7 +18,7 @@ export default function Contact() {
     return (
         <section
             id="contact"
-            className="py-28 px-6 relative overflow-hidden"
+            className="pt-8 pb-24 px-6 relative overflow-hidden md:min-h-[90vh]"
         >
             <div className="max-w-6xl mx-auto relative z-10 grid md:grid-cols-2 gap-16 items-start">
 
