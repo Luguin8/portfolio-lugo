@@ -21,6 +21,7 @@ const NAV_LINKS = [
     { href: "#skills", label: "Arsenal" },
     { href: "#projects", label: "Obras" },
     { href: "#process", label: "Proceso" },
+    { href: "#extras", label: "Historia" },
     { href: "#contact", label: "Contacto" },
 ];
 
@@ -88,11 +89,10 @@ export default function Navbar() {
                     paddingBottom: "1rem",
                     ...(isScrolled
                         ? {
-                            // Subtle backdrop that reads as depth, not a divider rule.
-                            background: "rgba(5, 4, 3, 0.92)",
+                            // Just a translucent blurred backdrop — no shadow, no rule.
+                            background: "rgba(5, 4, 3, 0.85)",
                             backdropFilter: "blur(10px)",
                             WebkitBackdropFilter: "blur(10px)",
-                            boxShadow: "0 14px 34px -18px rgba(0, 0, 0, 0.9)",
                         }
                         : {}),
                 }}
@@ -128,7 +128,7 @@ export default function Navbar() {
                     </Link>
 
                     {/* NAV LINKS */}
-                    <div className="hidden md:flex items-center gap-10">
+                    <div className="hidden md:flex items-center gap-5 lg:gap-9">
                         {NAV_LINKS.map((link) => (
                             <Link
                                 key={link.href}

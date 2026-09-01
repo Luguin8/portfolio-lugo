@@ -155,17 +155,14 @@ export default function ProjectGridClient({ initialProjects }: { initialProjects
             {/* ── DESKTOP: Grid / Carousel ── */}
             <div className="relative w-full hidden md:block">
                 {!isManual ? (
-                    <div
-                        className="flex mask-gradient-sides py-8"
-                        style={{ overflowX: "clip", overflowY: "visible" }}
-                    >
+                    <div className="py-6" style={{ overflowX: "clip" }}>
                         <motion.div
-                            className="flex gap-6 px-4 items-stretch"
-                            animate={{ x: ["0%", "-33.33%"] }}
-                            transition={{ duration: 50, ease: "linear", repeat: Infinity }}
+                            className="flex gap-6 px-4 items-start w-max"
+                            animate={{ x: ["0%", "-33.333%"] }}
+                            transition={{ duration: 55, ease: "linear", repeat: Infinity }}
                         >
                             {infiniteProjects.map((project, idx) => (
-                                <div key={`${project.id}-${idx}-inf`} className="w-[340px] md:w-[430px] shrink-0 h-full">
+                                <div key={`${project.id}-${idx}-inf`} className="w-[340px] md:w-[420px] shrink-0">
                                     <ProjectCard project={project} onClick={() => setSelectedProject(project)} />
                                 </div>
                             ))}

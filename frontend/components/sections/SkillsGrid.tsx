@@ -89,7 +89,7 @@ export default function SkillsGrid() {
             className="py-24 px-6 relative bb-section-edge"
         >
             {/* Section header */}
-            <div className="max-w-7xl mx-auto mb-14">
+            <div className="max-w-7xl mx-auto mb-10">
                 <p className="text-xs tracking-[0.3em] uppercase mb-3 font-title text-bb-gold">
                     <Cpu size={12} className="inline mr-2" />
                     ESTADÍSTICAS DEL CAZADOR
@@ -99,9 +99,6 @@ export default function SkillsGrid() {
                     <span className="text-bb-white" style={{ textShadow: "none" }}>Tecnológico</span>
                 </h2>
                 <div className="bb-separator max-w-[400px]" />
-                <p className="mt-4 text-lg max-w-2xl font-body italic text-bb-muted">
-                    Stack integral: desde interfaces web y apps móviles hasta análisis de datos, soporte técnico de hardware y desarrollo de videojuegos.
-                </p>
             </div>
 
             {/* Category grid – 2 cols on md, 4 cols on xl */}

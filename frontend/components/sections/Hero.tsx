@@ -33,8 +33,10 @@ export default function Hero() {
                     className="space-y-8 text-center lg:text-left"
                 >
                     {/* Eyebrow */}
-                    <p className="text-xs tracking-[0.35em] uppercase font-title text-bb-gold">
-                        ✦ &nbsp; Full Stack · Mobile · Data · Automatización &nbsp; ✦
+                    <p className="whitespace-nowrap text-[0.6rem] sm:text-[0.7rem] md:text-xs tracking-[0.14em] sm:tracking-[0.22em] lg:tracking-[0.35em] uppercase font-title text-bb-gold">
+                        <span className="text-bb-gold/70">✦</span>
+                        &nbsp;&nbsp;Full Stack · Mobile · Data · Automatización&nbsp;&nbsp;
+                        <span className="text-bb-gold/70">✦</span>
                     </p>
 
                     {/* Main title */}
